@@ -1,0 +1,262 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+
+.sellApartment-container{
+	margin: 0;
+	padding: 20px;
+	overflow:hidden;
+}
+
+.catogery-title{
+	display:flex;
+
+	font-size: 35px;
+    /* text-align: center; */
+    font-family: sans-serif;
+    color: #655f5f;
+}
+.type{
+	font-size: 3vw;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: #655f5f;
+    padding: 0px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+hr{
+    margin-bottom: 12px;
+}
+
+.title-input{
+	width: 100%;
+	font-size:35px;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: #655f5f;
+    padding: 0px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.forminputtext{
+    width: 100%;
+    height: 95px;
+    border: 2px solid #9a9797;
+    border-radius: 10px;
+    outline: none;
+    font-size: 41px;
+    color: #3c3b3b;
+    padding: 0px 20px 0px 20px;
+    box-sizing: border-box;
+}
+#front-facing{
+	font-size:50px;
+	width: 100%;
+    height: 95px;
+    border: 2px solid #9a9797;
+    border-radius: 10px;
+    outline: none;
+    color: #3c3b3b;
+    padding: 0px 20px 0px 20px;
+    box-sizing: border-box;
+}
+
+#front-facing option{
+	font-size:20px;
+}
+
+
+.header-title{
+	width: 100%;
+	font-size:60px;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: #655f5f;
+    padding: 0px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+#next-to-title{
+	font-size:50px;
+	width: 100%;
+    height: 95px;
+    border: 2px solid #9a9797;
+    border-radius: 10px;
+    outline: none;
+    color: #3c3b3b;
+    padding: 0px 20px 0px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    font-family:sans-serif;
+    font-weight: bold;
+    color:#fff;
+    background:#3b81ca;
+}
+.ra-image{
+    position: absolute;
+    left: 44px;
+    width: 61px;
+    margin-top: 18px;
+}
+.upload-contents{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	padding:0px 20px 0px 20px;
+}
+.devides2 .cover-pic{
+	height:25vw;
+	width:25vw;
+	border:2px solid blue;
+	background:red;
+	border-radius:30px;
+}
+.devides1{
+    font-size: 50px;
+    text-align: center;
+    font-family: sans-serif;
+    color: #655f5f;
+}
+.file-upload{
+    cursor: pointer;
+    font-size:50px;
+	width: 100%;
+    height: 200px;
+    border: 2px solid #9a9797;
+    border-radius: 10px;
+    outline: none;
+    color: #3c3b3b;
+    padding: 0px 20px 0px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family:sans-serif;
+    font-weight: bold;
+    color:#fff;
+    background:#9589c5;
+    overflow: hidden;
+}
+.file-upload img{
+  width: 80px;
+  margin-left: 30px;
+  cursor: pointer;
+}
+.file-upload input[type='file']{
+  height: 200px;
+  width: 100%;
+  position: absolute;
+  opacity: 0;
+}
+.uploaded-images{
+	display:flex;
+	justify-content:space-around;
+	flex-wrap:wrap;
+	align-items:center;
+
+}
+.uploaded-images .upld-img{
+	margin:20px 0px 20px 0px;
+	height:250px;
+	width:250px;
+	border:2px solid blue;
+	background:red;
+	border-radius:30px;
+}
+.profile-devider{
+	display:flex;
+	justify-content:space-around;
+	align-items:center;
+    font-size: 50px;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #655f5f;
+}
+.avtar-icon{
+	height:20vw;
+	width:20vw;
+	border:2px solid blue;
+	background:red;
+	border-radius:50%;
+}
+.circle{
+    height: 50px;
+    width: 131px;
+    background: red;
+    border-radius: 25px;
+    display:flex;
+    justify-content:flex-start;
+    transition: all 0.3s ease;
+
+}
+.circle .inner{
+	height: 50px;
+	width: 50px;
+	border-radius:50%;
+	background:blue;
+    transition: all 0.3s ease;
+}
+.circle-on{
+    display: flex;
+    justify-content: flex-end;
+    box-shadow: inset 1px 1px 10px black, 0px 0px 30px #22ffa3, 0px 0px 45px #22ffa3, 0px 0px 60px #22ffa3;
+    background: green;
+    transition: all 0.3s;
+}
+.inner-on{
+    box-shadow: inset 1px 1px 20px black;
+    background: #22ffa3;
+    transition:all 0.3s;
+}
+.address-box{
+  background: red;
+  padding: 20px;
+  border-radius: 5px;
+}
+.address-type{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.address-type div{
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  display: flex;
+  color: #fff;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+.address-type .manually{
+  cursor: pointer;
+  background: blue;
+}
+.address-type .location{
+  background: green;
+  cursor: pointer;
+}
+.address-type .manually:active{
+  background: #fff;
+  color: #333;
+}
+
+.address-type .location:active{
+  background: #fff;
+  color: #333;
+}
+.address-text{
+  width: 100%;
+  margin-top: 10px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 20px;
+  text-transform: capitalize;
+ }

@@ -1,0 +1,20 @@
+.location-info {
+  display: flex;
+  flex-direction: row;
+  max-width: 70%;
+  margin-left: 1em;
+}
+.toplandingmain {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+.search-container {
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}

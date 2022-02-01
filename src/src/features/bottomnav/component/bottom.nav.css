@@ -1,0 +1,29 @@
+#bottomTab {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  height: 7vh;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px 10px 0px 10px;
+  background: #fff;
+  justify-content: space-between;
+}
+.navdivision {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 4px;
+}
+.navdivision:hover {
+  background-color: pink;
+}
+.navtitle {
+  margin: 4px;
+  padding: 0;
+  font-size: 15px;
+}

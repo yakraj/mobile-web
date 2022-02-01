@@ -1,0 +1,9 @@
+#archiveContainer {
+  display: flex;
+  flex-wrap: wrap;
+  position: fixed;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 80%;
+  justify-content: space-around;
+}
