@@ -1,0 +1,57 @@
+.userinfo .userimage {
+  height: 45px;
+  margin-left: 5px;
+  width: 45px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.615);
+}
+.user-product-info {
+  display: flex;
+  box-sizing: border-box;
+  background: yellow;
+  border-top: 2px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 2px solid rgba(128, 128, 128, 0.5);
+  justify-content: space-between;
+  padding: 5px;
+  align-items: center;
+}
+.product-details-title h3 {
+  margin: 5px;
+  color: grey;
+}
+.userinfo {
+  display: flex;
+  align-items: center;
+}
+.userinfo .information h3,
+p {
+  margin: 0;
+  color: grey;
+  font-size: 13px;
+}
+.chatcall-section {
+  margin-bottom: 100px;
+}
+.chat-call-action img {
+  margin-right: 10px;
+}
+.chat-call-action h4 {
+  margin: 0;
+  color: rgb(73, 73, 73);
+}
+.chatcall-section {
+  display: flex;
+  justify-content: space-around;
+}
+.chat-call-action {
+  box-sizing: border-box;
+  background: skyblue;
+  width: 45%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+}

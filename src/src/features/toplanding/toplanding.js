@@ -1,6 +1,6 @@
 import React from "react";
 import "./component/toplanding.css";
-
+import { Link } from "react-router-dom";
 export const TopLanding = (props) => {
   return (
     <>
@@ -25,13 +25,15 @@ export const TopLanding = (props) => {
           />
         </div>
       </div>
-      <div className="search-container">
-        <img
-          alt="search bar"
-          style={{ width: "95%", marginLeft: "5px" }}
-          src={require("../../../assets/search.png")}
-        />
-      </div>
+      <Link to="/search">
+        <div className="search-container">
+          <img
+            alt="search bar"
+            style={{ width: "95%", marginLeft: "5px" }}
+            src={require("../../../assets/search.png")}
+          />
+        </div>
+      </Link>
     </>
   );
 };

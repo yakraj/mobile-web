@@ -1,5 +1,5 @@
 #productArchive {
-  width: 48%;
+  width: 100%;
   overflow: hidden;
   height: 250px;
   display: flex;
@@ -25,12 +25,14 @@
 
 .productPrice {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: bold;
+  color: grey;
 }
 .productTitle {
   margin: 0;
-  font-size: 1rem;
+  color: grey;
+  font-size: 0.7rem;
   font-weight: bold;
 }
 .productdetail {
@@ -56,6 +58,7 @@
 }
 .addresslabel {
   font-size: 11px;
+  color: grey;
 }
 .locationContainer {
   display: flex;

@@ -1,0 +1,79 @@
+.ChatTopnav {
+  /* display: flex; */
+  height: 50px;
+  box-sizing: border-box;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 10px grey;
+  justify-content: space-around;
+}
+.slick-active .ChattingTab {
+  cursor: pointer;
+  box-sizing: border-box;
+  color: grey;
+  width: 100%;
+  text-align: center;
+  height: 50px;
+  vertical-align: middle;
+  border-bottom: 3px solid rgb(29, 157, 243);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+.usermessages {
+  height: 88vh;
+  overflow: scroll;
+  /* background-color: red; */
+}
+.productimage {
+  height: 50px;
+  width: 90px;
+  background-size: cover;
+  background-position: center center;
+  border: 1px solid grey;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.chatarchive {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.342);
+  box-sizing: border-box;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+}
+.leftsidearchive {
+  display: flex;
+  align-items: center;
+}
+.rightsidearchive {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+}
+.productinfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.productinfo h3 {
+  margin: 0;
+  color: grey;
+}
+.productArchive {
+  font-size: 13px;
+  color: grey;
+  padding: 10px;
+  text-transform: uppercase;
+  /* position: absolute; */
+  margin-right: 70px;
+  margin-top: 10px;
+  width: 40px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 15px;
+  background: rgba(255, 0, 0, 0.651);
+}

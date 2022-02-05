@@ -1,6 +1,7 @@
 import React from "react";
 import "./component/productarchive.css";
 import Background from "../../../assets/mobile.jpg";
+import { NavLink } from "react-router-dom";
 export const ProductArchive = () => {
   const Archives = [
     {
@@ -88,44 +89,47 @@ export const ProductArchive = () => {
 
   return Archives.map((x, i) => {
     return (
-      <div id="productArchive">
-        <div
-          className="productImage"
-          style={{
-            backgroundImage: `url(${Background})`,
-          }}
-        ></div>
-        {/* <img
+      <NavLink style={{ width: "48%", textDecoration: "none" }} to="/product">
+        <div id="productArchive">
+          <div
+            className="productImage"
+            style={{
+              backgroundImage: `url(${Background})`,
+            }}
+          ></div>
+          {/* <img
         className="productImage"
         alt="productimage"
         src={require("../../../assets/mobile.jpg")}
       /> */}
-        <div className="bottomInfo">
-          <div className="productinfo">
-            {/* left side */}
-            <div className="productdetail">
-              <h2 className="productPrice">Rs. {x.price}</h2>
-              <h1 className="productTitle">{x.title}</h1>
+          <div className="bottomInfo">
+            <div className="productinfo">
+              {/* left side */}
+              <div className="productdetail">
+                <h2 className="productPrice">Rs. {x.price}</h2>
+                <h1 className="productTitle">{x.title}</h1>
+              </div>
+              {/* right side */}
+              <div onClick={() => console.log("hearted")} className="heart">
+                <img
+                  style={{ height: "22px", width: "22px" }}
+                  src={require("../../../assets/icon/heart.png")}
+                  alt="heart "
+                />
+              </div>
             </div>
-            {/* right side */}
-            <div className="heart">
+            <div className="locationContainer">
               <img
-                style={{ height: "22px", width: "22px" }}
-                src={require("../../../assets/icon/heart.png")}
+                className="blackblue"
+                style={{ height: "20px", width: "20px" }}
+                src={require("../../../assets/icon/location.png")}
                 alt="heart "
               />
+              <p className="addresslabel">{x.address}</p>
             </div>
           </div>
-          <div className="locationContainer">
-            <img
-              style={{ height: "20px", width: "20px" }}
-              src={require("../../../assets/icon/location.png")}
-              alt="heart "
-            />
-            <p className="addresslabel">{x.address}</p>
-          </div>
         </div>
-      </div>
+      </NavLink>
     );
   });
 };
