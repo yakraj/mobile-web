@@ -1,0 +1,81 @@
+.profile-change-container {
+  height: 20vh;
+  background: #aaf3f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile-change-container .profile-image {
+  height: 10vh;
+  width: 10vh;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 50%;
+  border: 2px solid grey;
+}
+
+.user-name-update {
+  padding: 10px;
+}
+.user-name-update h4 {
+  color: grey;
+  margin: 0 0 5px 0;
+}
+.user-name-update input {
+  width: 90%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.651);
+  padding: 5px;
+}
+.update-button {
+  display: flex;
+  justify-content: center;
+}
+.update-location-container {
+  padding: 10px;
+}
+.update-button div {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  background: green;
+  font-weight: bold;
+  color: #fff;
+}
+
+.contact-details-edit {
+  width: 100%;
+  /* margin: 5px; */
+  font-size: 20px;
+  padding: 5px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.651);
+  font-weight: bold;
+  color: grey;
+}
+.update-user-mobile {
+  padding: 10px;
+}
+.contact-details-mobile-container input {
+  width: 90%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.651);
+  padding: 5px;
+}
+.contact-details-mobile-container {
+  display: flex;
+  width: 100%;
+  margin-top: 15px;
+}
+.profile-image-edit-pen {
+  background: green;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  opacity: 0.7;
+  margin-left: -20px;
+  margin-top: 40px;
+}

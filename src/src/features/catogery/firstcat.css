@@ -1,0 +1,30 @@
+.first-catogery-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 30px;
+}
+.first-catogery-touchable {
+  display: flex;
+  margin: 10px;
+  align-items: center;
+  flex-direction: column;
+}
+.first-catogery-touchable h3 {
+  font-size: 12px;
+  margin: 0;
+  color: grey;
+}
+.first-catogery-icon {
+  height: 60px;
+  width: 60px;
+  background: #fff;
+  box-shadow: 0 0 10px grey;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}

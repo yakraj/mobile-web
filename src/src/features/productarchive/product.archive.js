@@ -2,7 +2,7 @@ import React from "react";
 import "./component/productarchive.css";
 import Background from "../../../assets/mobile.jpg";
 import { NavLink } from "react-router-dom";
-export const ProductArchive = () => {
+export const ProductArchive = ({ deleter, sold }) => {
   const Archives = [
     {
       title: "Used oppo phone",
@@ -110,13 +110,27 @@ export const ProductArchive = () => {
                 <h1 className="productTitle">{x.title}</h1>
               </div>
               {/* right side */}
-              <div onClick={() => console.log("hearted")} className="heart">
-                <img
-                  style={{ height: "22px", width: "22px" }}
-                  src={require("../../../assets/icon/heart.png")}
-                  alt="heart "
-                />
-              </div>
+              {deleter ? (
+                <div
+                  style={{ background: "red" }}
+                  onClick={() => console.log("hearted")}
+                  className="heart"
+                >
+                  <img
+                    style={{ height: "22px", width: "22px" }}
+                    src={require("../../../assets/icon/bin.png")}
+                    alt="heart "
+                  />
+                </div>
+              ) : (
+                <div onClick={() => console.log("hearted")} className="heart">
+                  <img
+                    style={{ height: "22px", width: "22px" }}
+                    src={require("../../../assets/icon/heart.png")}
+                    alt="heart "
+                  />
+                </div>
+              )}{" "}
             </div>
             <div className="locationContainer">
               <img
@@ -128,6 +142,7 @@ export const ProductArchive = () => {
               <p className="addresslabel">{x.address}</p>
             </div>
           </div>
+          {sold && <div className="productmarksold">sold</div>}
         </div>
       </NavLink>
     );

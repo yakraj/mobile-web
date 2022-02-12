@@ -1,13 +1,14 @@
 .ChatTopnav {
   /* display: flex; */
-  height: 50px;
+
   box-sizing: border-box;
   align-items: center;
   box-sizing: border-box;
-  box-shadow: 1px 1px 10px grey;
-  justify-content: space-around;
+  box-shadow: 1px 2px 5px grey;
+  text-transform: uppercase;
+  color: grey;
 }
-.slick-active .ChattingTab {
+/* .slick-active .ChattingTab {
   cursor: pointer;
   box-sizing: border-box;
   color: grey;
@@ -20,7 +21,7 @@
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
-}
+} */
 .usermessages {
   height: 88vh;
   overflow: scroll;
@@ -50,25 +51,27 @@
 }
 .rightsidearchive {
   flex-direction: column;
+  position: relative;
   display: flex;
   align-items: center;
 }
-.productinfo {
+.chatproductinfo {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
 }
-.productinfo h3 {
+.chatproductinfo h3 {
   margin: 0;
   color: grey;
 }
-.productArchive {
+.deleteproductArchive {
   font-size: 13px;
+  cursor: pointer;
   color: grey;
   padding: 10px;
   text-transform: uppercase;
-  /* position: absolute; */
+  position: absolute;
   margin-right: 70px;
   margin-top: 10px;
   width: 40px;
@@ -76,4 +79,16 @@
   cursor: pointer;
   border-radius: 15px;
   background: rgba(255, 0, 0, 0.651);
+}
+.chattingcomponent {
+  height: 87vh;
+  overflow: scroll;
+}
+.accountuicomponent {
+  height: 70vh;
+  overflow: scroll;
+}
+.accountuiadscomponent {
+  height: 65vh;
+  overflow: scroll;
 }

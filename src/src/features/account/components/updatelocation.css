@@ -1,0 +1,52 @@
+.use-my-loction-button {
+  background: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  text-transform: capitalize;
+  padding: 10px;
+  border-radius: 10px;
+}
+.location-update-input {
+  border: 2px solid rgba(128, 128, 128, 0.548);
+  width: 94%;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.location-update-reccomendation {
+  background: pink;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: bold;
+  color: green;
+  padding: 5px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.651);
+}
+
+.location-map-container {
+  height: 30vh;
+  /* background: red; */
+  background-image: url("../../../../assets/mapbox.png");
+  background-size: cover;
+  background-position: center center;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 5px;
+  border: 2px solid rgba(59, 54, 54, 0.774);
+}
+
+.update-location-button {
+  background: red;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 10px;
+  border-radius: 5px;
+}

@@ -1,0 +1,48 @@
+.topNavchatui {
+  background: rgba(189, 241, 243, 0.418);
+  display: flex;
+  justify-content: space-between;
+}
+.chatuileft {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.returnchatui:hover {
+  background: aqua;
+  height: 70%;
+  border-radius: 40px;
+}
+.returnchatui {
+  display: flex;
+  align-items: center;
+}
+.chatperson {
+  height: 35px;
+  width: 35px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 50%;
+}
+.chatuileft h3 {
+  color: grey;
+  text-transform: capitalize;
+  margin-left: 10px;
+}
+
+.typechatbottom {
+  position: relative;
+  bottom: 0;
+  background: yellow;
+  display: flex;
+  box-sizing: border-box;
+  padding: 10px;
+  align-items: center;
+}
+.messagetypeui {
+  width: 100%;
+  margin-right: 5px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  /* outline: 1px solid grey; */
+}

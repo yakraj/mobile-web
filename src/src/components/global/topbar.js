@@ -1,10 +1,10 @@
 import React from "react";
 import "./topbar.css";
 import { useNavigate } from "react-router-dom";
-export const Topbar = ({ title, bcC }) => {
+export const Topbar = ({ title, bcC, logout }) => {
   const navigate = useNavigate();
   return (
-    <div style={{ background: bcC ? bcC : "#84a3a040" }} className="topbar">
+    <div style={{ background: bcC ? bcC : "#84a3a090" }} className="topbar">
       {/* this is leftside */}
       <div className="topbarleft">
         <img
@@ -18,6 +18,13 @@ export const Topbar = ({ title, bcC }) => {
         />
         <h1>{title}</h1>
       </div>
+      {logout && (
+        <img
+          alt="log out"
+          style={{ filter: "invert(50%)" }}
+          src={require("../../../assets/icon/logout.svg").default}
+        />
+      )}
     </div>
   );
 };

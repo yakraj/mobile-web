@@ -1,0 +1,20 @@
+.second-cato-all-cato {
+  /* width: 100%; */
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-left: 7px;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin: 1px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+}
+.second-cato-all-cato h3 {
+  color: grey;
+  margin: 0;
+}
+.secnd-leftside {
+  display: flex;
+}

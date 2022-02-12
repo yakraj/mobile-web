@@ -65,3 +65,14 @@
   justify-content: flex-start;
   align-items: center;
 }
+.productmarksold {
+  padding: 5px;
+  margin: 5px;
+  background: green;
+  width: 70%;
+  border-radius: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: bold;
+}

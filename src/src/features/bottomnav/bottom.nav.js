@@ -47,7 +47,7 @@ export const BottomNav = () => {
           margin: 0,
           padding: 0,
         }}
-        to="/"
+        to="/sell-seco-catogery"
       >
         <div className="navdivision">
           <img
@@ -65,7 +65,7 @@ export const BottomNav = () => {
           margin: 0,
           padding: 0,
         }}
-        to="/"
+        to="/catogeryfirst"
       >
         <div className="navdivision">
           <img
@@ -83,7 +83,7 @@ export const BottomNav = () => {
           margin: 0,
           padding: 0,
         }}
-        to="/"
+        to="/account"
       >
         <div className="navdivision">
           <img

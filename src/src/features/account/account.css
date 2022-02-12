@@ -1,0 +1,48 @@
+.accountprofile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(69 228 233 / 46%);
+}
+.profileImage {
+  height: 70px;
+  width: 70px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 50%;
+  border: 1px solid grey;
+}
+.profilename {
+  display: flex;
+  color: grey;
+  align-items: center;
+}
+.profilename h4 {
+  margin: 5px;
+}
+
+.edit-icon img {
+  height: 35px;
+  width: 35px;
+}
+.edit-icon {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.navigate-container {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+}
+.navigate-icon {
+  margin-left: 15px;
+  background: blue;
+  padding: 10px;
+  display: flex;
+  border-radius: 10px;
+}
