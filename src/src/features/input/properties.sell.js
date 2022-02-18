@@ -382,7 +382,15 @@ export const InputSell = (props) => {
               />
             );
           })}
-          <Link to="/important-info">
+          <Link
+            state={{
+              price: price,
+
+              RenderItems: null,
+            }}
+            style={{ textDecoration: "none" }}
+            to="/important-info"
+          >
             <div
               className="update-button next-button-properties"
               // tblC={bg.green}

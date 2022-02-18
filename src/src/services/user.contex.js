@@ -1,7 +1,5 @@
-import React, { useState, useEffect, lodash, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { getTextLoc } from "./components/search.service";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import {
   userAdui,
   Registeruser,
@@ -19,9 +17,6 @@ import {
   Deleteuserad,
   Updateaddress,
 } from "./components/user.service";
-
-import { SearchContext } from "./search.context";
-import { Alert } from "react-native";
 
 export const UserContext = React.createContext();
 export const UserContextProvider = ({ children }) => {
@@ -66,7 +61,7 @@ export const UserContextProvider = ({ children }) => {
     matchPassword = false;
   }
 
-  if (registermobileNumber.length == 10) {
+  if (registermobileNumber.length === 10) {
     NumberExistance(registermobileNumber).then((response) => {
       setmessageExi(response);
       setnumberExiLoadi(false);
@@ -156,16 +151,16 @@ export const UserContextProvider = ({ children }) => {
 
   const UpdateAddress = (address, location, user) => {
     Updateaddress(address, location, user).then((response) => {
-      if (response == "sorry") {
+      if (response === "sorry") {
         console.log("sorry");
       } else {
-        Alert.alert("Success", "You have successfully updated your address.", [
-          {
-            text: "Ok",
+        // Alert.alert("Success", "You have successfully updated your address.", [
+        //   {
+        //     text: "Ok",
 
-            style: "cancel",
-          },
-        ]);
+        //     style: "cancel",
+        //   },
+        // ]);
 
         setsearchaddressName(response[0].address);
         setlattitude(response[0].location[0]);
@@ -178,64 +173,6 @@ export const UserContextProvider = ({ children }) => {
     GetUserAds(user).then((response) => setuserAds(response));
   };
 
-  const removeAllStoreData = () => {
-    const RemoveuserInfo = async () => {
-      try {
-        await AsyncStorage.removeItem("@userinfo");
-      } catch (e) {
-        // remove error
-      }
-      // console.log("Done.");
-    };
-    const Removeuserfavourites = async () => {
-      try {
-        await AsyncStorage.removeItem("@favourites");
-      } catch (e) {
-        // remove error
-      }
-      // console.log("Done.");
-    };
-    const RemoveuserAds = async () => {
-      try {
-        await AsyncStorage.removeItem("@myads");
-      } catch (e) {
-        // remove error
-      }
-      // console.log("Done.");
-    };
-    const RemoveuserLocation = async () => {
-      try {
-        await AsyncStorage.removeItem("@userlocation");
-      } catch (e) {
-        // remove error
-      }
-      // console.log("Done.");
-    };
-    const RemoveuserChatarchive = async () => {
-      try {
-        await AsyncStorage.removeItem("@chatarchive");
-      } catch (e) {
-        // remove error
-      }
-      // console.log("Done.");
-    };
-    const RemoveuserChats = async () => {
-      try {
-        await AsyncStorage.removeItem("@chatcontent");
-      } catch (e) {
-        // remove error
-      }
-      // console.log("Done.");
-    };
-
-    RemoveuserInfo();
-    Removeuserfavourites();
-    RemoveuserAds();
-    RemoveuserLocation();
-    RemoveuserChatarchive();
-    RemoveuserChats();
-  };
-
   const Logout = () => {
     setusercrd([]);
     setFavAds([]);
@@ -244,7 +181,7 @@ export const UserContextProvider = ({ children }) => {
     setlongitude();
     setSignedin(false);
     setfavourites([]);
-    removeAllStoreData();
+    // removeAllStoreData();
   };
 
   const DeleteUserAd = (adid, user) => {
@@ -253,7 +190,7 @@ export const UserContextProvider = ({ children }) => {
 
   const GetFavourites = (user) => {
     fetFavourites(user).then((response) => {
-      response[0].hearts == null
+      response[0].hearts === null
         ? setfavourites([])
         : setfavourites(response[0].hearts);
     });
@@ -266,21 +203,21 @@ export const UserContextProvider = ({ children }) => {
         : setFavAds(response);
     });
   };
-  const UpdateFavourites = (username, fav) => {
-    const findInc = favourites ? favourites.includes(fav) : [];
-    var newFev = favourites;
-    findInc || !findInc.length == 0
-      ? setfavourites(
-          favourites.filter((x) => x !== fav),
-          (newFev = newFev.filter((x) => x !== fav))
-        )
-      : (setfavourites([...favourites, fav]), (newFev = [...newFev, fav]));
-    // console.log(newFev);
-    updateFavourites(username, newFev).then((res) => {
-      setfavourites(res[0].hearts);
-      GetFavouriteAds(newFev);
-    });
-  };
+  // const UpdateFavourites = (username, fav) => {
+  //   const findInc = favourites ? favourites.includes(fav) : [];
+  //   var newFev = favourites;
+  //   findInc || !findInc.length === 0
+  //     ? setfavourites(
+  //         favourites.filter((x) => x !=== fav),
+  //         (newFev = newFev.filter((x) => x !=== fav))
+  //       )
+  //     : (setfavourites([...favourites, fav]), (newFev = [...newFev, fav]));
+  //   // console.log(newFev);
+  //   updateFavourites(username, newFev).then((res) => {
+  //     setfavourites(res[0].hearts);
+  //     GetFavouriteAds(newFev);
+  //   });
+  // };
 
   const GetAddress = (placeid) => {
     getLatLong(placeid).then((response) => {
@@ -331,128 +268,34 @@ export const UserContextProvider = ({ children }) => {
     // userAddresssugg, setuserAddresssugg
   };
   // storing data as offline function
-  const StoreUserCrd = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("@userinfo", jsonValue);
-    } catch (e) {
-      console.log("unable to store data", e);
-    }
-  };
-  const Storefavourite = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("@favourites", jsonValue);
-    } catch (e) {
-      console.log("unable to store data", e);
-    }
-  };
-  const StoreMyads = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("@myads", jsonValue);
-    } catch (e) {
-      console.log("unable to store data", e);
-    }
-  };
-  const StoreLocalLocation = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("@userlocation", jsonValue);
-    } catch (e) {
-      console.log("unable to store data", e);
-    }
-  };
 
   // retrieve data as offline function
 
-  const RetrieveUser = async () => {
-    const RestoreUserData = (user) => {
-      setusercrd(user);
-      user.username ? setSignedin(true) : null;
-    };
-    try {
-      const jsonValue = await AsyncStorage.getItem("@userinfo");
-      return jsonValue != null ? RestoreUserData(JSON.parse(jsonValue)) : null;
-    } catch (e) {
-      console.log("unable to retrieve data", e);
-    }
-  };
+  // const RetrieveUser = async () => {
+  //   const RestoreUserData = (user) => {
+  //     setusercrd(user);
+  //     user.username ? setSignedin(true) : null;
+  //   };
+  //   try {
+  //     const jsonValue = await AsyncStorage.getItem("@userinfo");
+  //     return jsonValue != null ? RestoreUserData(JSON.parse(jsonValue)) : null;
+  //   } catch (e) {
+  //     console.log("unable to retrieve data", e);
+  //   }
+  // };
   // retrieve favourites
-  const RetrieveFavourites = async () => {
-    const RestoreFavourites = (favourites) => {
-      setfavourites(favourites);
-      GetFavouriteAds(favourites);
-    };
-    try {
-      const jsonValue = await AsyncStorage.getItem("@favourites");
-      return jsonValue != null
-        ? RestoreFavourites(JSON.parse(jsonValue))
-        : null;
-    } catch (e) {
-      console.log("unable to retrieve data", e);
-    }
-  };
-  // retrieve myads
-  const RetrieveMyads = async () => {
-    const RestoreFavourites = (ads) => {
-      setuserAds(ads);
-    };
-    try {
-      const jsonValue = await AsyncStorage.getItem("@myads");
-      return jsonValue != null
-        ? RestoreFavourites(JSON.parse(jsonValue))
-        : null;
-    } catch (e) {
-      console.log("unable to retrieve data", e);
-    }
-  };
-  const RetrieveLocalLocation = async () => {
-    const RestoreLocation = (location) => {
-      // setuserAds(responseads);
-      setlattitude(location.lattitude);
-      setlongitude(location.longitude);
-      setsearchaddressName(location.searchaddressName);
-    };
-    try {
-      const jsonValue = await AsyncStorage.getItem("@userlocation");
-      return jsonValue != null ? RestoreLocation(JSON.parse(jsonValue)) : null;
-    } catch (e) {
-      console.log("unable to retrieve data", e);
-    }
-  };
+
   // retriving datas
-  useEffect(() => {
-    RetrieveUser();
-  }, []);
+  // useEffect(() => {
+  //   RetrieveUser();
+  // }, []);
   // this is for dashboard ads
   useEffect(() => {
     GetuseruiAds();
     GetFavouriteAds(favourites);
   }, []);
 
-  useEffect(() => {
-    RetrieveFavourites();
-    RetrieveMyads();
-    RetrieveLocalLocation();
-  }, []);
   // storing datas
-  useEffect(() => {
-    StoreUserCrd(usercrd);
-  }, [usercrd]);
-  useEffect(() => {
-    Storefavourite(favourites);
-  }, [favourites]);
-  useEffect(() => {
-    StoreMyads(userAds);
-  }, [userAds]);
-  useEffect(() => {
-    StoreLocalLocation({
-      lattitude: lattitude,
-      longitude: longitude,
-      searchaddressName: searchaddressName,
-    });
-  }, [lattitude, longitude, searchaddressName]);
 
   // /////////////////////////////////////////////////
 
@@ -517,7 +360,7 @@ export const UserContextProvider = ({ children }) => {
         GetFavourites,
         favourites,
         setfavourites,
-        UpdateFavourites,
+        // UpdateFavourites,
         GetFavouriteAds,
         loginerror,
         gettnbinfo,

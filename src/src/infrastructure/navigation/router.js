@@ -19,6 +19,12 @@ import { SellSecondCat } from "./../../features/catogery/sellCatogery/second.com
 import { SellSubCatogery } from "./../../features/catogery/sellCatogery/subcatogery/subcatogery.component";
 import { InputSell } from "../../features/input/properties.sell";
 import { InputImportantInfo } from "./../../features/input/important.info";
+import { UploadImages } from "./../../features/input/upload.image";
+import { PersonalInfo } from "./../../features/input/personal.info";
+import { LoginUser } from "../../features/account/login.user";
+import { CreateAccount } from "../../features/account/create.account";
+import { VerifyOTP } from "../../features/account/verify.otp";
+import { RegisterUser } from "../../features/account/register.user";
 export const RouterApp = () => {
   return (
     <div>
@@ -41,6 +47,12 @@ export const RouterApp = () => {
         <Route path="/sell-sub-catogery" element={<SellSubCatogery />} />
         <Route path="/input-sell" element={<InputSell />} />
         <Route path="/important-info" element={<InputImportantInfo />} />
+        <Route path="/upload-images" element={<UploadImages />} />
+        <Route path="/personal-info" element={<PersonalInfo />} />
+        <Route path="/login-user" element={<LoginUser />} />
+        <Route path="/create-account" element={<CreateAccount />} />
+        <Route path="/verify-otp" element={<VerifyOTP />} />
+        <Route path="/register-user" element={<RegisterUser />} />
         {/* <Route pat
 h="contact" element={ <Contact/> } /> */}
       </Routes>

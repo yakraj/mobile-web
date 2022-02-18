@@ -43,7 +43,7 @@ export const ProductView = () => {
           </div>
         </div>
         <div className="userinfo">
-          <div className="information">
+          <div className="productinformation">
             <h3>Ashmita Pariyar</h3>
             <p>View Profile</p>
           </div>

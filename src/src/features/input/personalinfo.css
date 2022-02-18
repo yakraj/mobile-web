@@ -1,0 +1,107 @@
+.personal-information-container {
+  padding: 10px;
+  box-sizing: border-box;
+}
+.person-info {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+}
+.person-info .person-icon {
+  height: 6rem;
+  width: 6rem;
+  border-radius: 50%;
+  background-image: url(../../../assets/profile.jpg);
+  background-size: cover;
+  background-position: center center;
+  margin-right: 15px;
+}
+.person-info-right h4 {
+  margin: 0;
+  padding-bottom: 4px;
+  color: grey;
+}
+.person-info-right h3 {
+  margin: 0;
+  color: grey;
+}
+
+.phone-number-permission h4 {
+  margin: 0;
+  color: grey;
+}
+.phone-number-permission {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.switch-button {
+  display: flex;
+  align-items: center;
+  width: 2.5rem;
+  height: 1rem;
+  border-radius: 15px;
+  background: skyblue;
+}
+.switch-button div {
+  height: 1.2rem;
+  width: 1.2rem;
+  background: green;
+  border-radius: 50%;
+}
+.phone-Number-show-container {
+  display: flex;
+  padding: 30px 10px;
+  width: 100%;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  margin: 5px 0px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone-Number-show-container h2 {
+  margin: 0;
+  color: grey;
+}
+.phone-Number-show-container input {
+  height: 2rem;
+  margin-left: 10px;
+  padding: 4px;
+}
+.location-input-sec {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.location-input-sec input {
+  width: 100%;
+  padding: 5px;
+  height: 2rem;
+}
+.location-input-sec img {
+  margin-left: -5px;
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.location-search-container {
+  width: 100%;
+  border: 1px solid grey;
+  border-radius: 15px;
+  overflow: hidden;
+}
+.location-reccomendation-container {
+  background: pink;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  font-weight: bold;
+  color: green;
+}
+.location-reccomendation-container img {
+  width: 2rem;
+  height: 2rem;
+}

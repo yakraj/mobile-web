@@ -1,0 +1,39 @@
+.register-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.userImage-register input {
+  height: 7rem;
+  width: 7rem;
+  background: red;
+  opacity: 0;
+}
+.userImage-register {
+  margin: 2rem 0px;
+  overflow: hidden;
+  height: 6rem;
+  border: 1px solid grey;
+  background-image: url("../../../assets/profile.jpg");
+  width: 6rem;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 50%;
+}
+.register-container input {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  font-size: 1rem;
+  padding: 5px;
+}
+.register-create-password {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  /* background: red; */
+}
+.create-password {
+  font-weight: bold;
+  color: grey;
+  border-bottom: 1px solid grey;
+}

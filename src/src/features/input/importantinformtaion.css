@@ -1,0 +1,84 @@
+.important-information-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 50px;
+}
+.important-information-container input {
+  width: 100%;
+  height: 2.5rem;
+  box-sizing: border-box;
+}
+.title-hint-container div {
+  display: flex;
+}
+.title-hint-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.title-text-container h3 {
+  margin: 0;
+  color: grey;
+}
+.title-text-container {
+  margin-bottom: 2px;
+  border-bottom: 1px solid grey;
+}
+
+.tags-container input {
+  width: 100%;
+  font-size: 15px;
+  border: none;
+  border-bottom: 3px solid grey;
+  min-width: 20%;
+}
+.tags-container {
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding: 5px;
+  box-shadow: 0px 0px 5px blue;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+.created-tags-list h3 {
+  margin: 0;
+}
+.created-tags-list {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  background: grey;
+  margin: 5px;
+  padding: 8px;
+  border-radius: 5px;
+}
+.tag-remove-button {
+  /* background: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  margin-right: 0;
+}
+.tag-remove-button div {
+  height: 20px;
+  opacity: 0.7;
+  width: 4px;
+  background: red;
+  transform: rotate(-45deg);
+}
+
+.tag-remove-button div::after {
+  content: "";
+  height: 20px;
+  width: 4px;
+  background: red;
+  position: absolute;
+  transform: rotate(90deg);
+}

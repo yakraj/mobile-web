@@ -1,11 +1,15 @@
 import React, { useState, useContext } from "react";
 import { SectionPart } from "./properties.sell";
+import "./importantinformtaion.css";
 // import { InputSellContext } from "../../services/sell.input.context";
 // import { UserContext } from "../../services/user.contex";
 import { TagsContent } from "./tags.subcomponent";
 import { Theme } from "../../infrastructure/theme/index";
 import { Topbar } from "./../../components/global/topbar";
+import { Link, useLocation } from "react-router-dom";
 export const InputImportantInfo = (props, { navigation, route }) => {
+  const location = useLocation();
+  const { RenderItems, catogery, price, subcatogery } = location.state;
   const {
     UsedDuration,
     setUsedDuration, // for Brandname
@@ -34,9 +38,9 @@ export const InputImportantInfo = (props, { navigation, route }) => {
     setWorkPosition,
     SalaryAmount,
     setSalaryAmount,
-    adTitle,
+    // adTitle,
     setadTitle,
-    adDescription,
+    // adDescription,
     setadDescription,
     adPrice,
     setadPrice,
@@ -47,6 +51,10 @@ export const InputImportantInfo = (props, { navigation, route }) => {
   } = props;
   // useContext(InputSellContext);
 
+  // this is mock data for trial
+  var adTitle = "";
+  var adDescription = "";
+  // mock data ends here for trial
   const { bg, text, theme } = Theme.colors;
   const [TextC, setTextC] = useState("");
   //  this is for tags
@@ -66,36 +74,36 @@ export const InputImportantInfo = (props, { navigation, route }) => {
     const [Desclen, setDesclen] = useState("");
 
     return (
-      <>
+      <div className="title-text-container">
         <h3 size={20} weight="bold" marT={5}>
           {title}
         </h3>
 
         {children}
-      </>
+      </div>
     );
   };
 
   const TextHint = ({ title, hint, adTitle }) => {
     return (
-      <div width="100%" ali="flex-start">
-        <h3 ali="left">{hint}</h3>
+      <div className="title-hint-container">
+        <p ali="left">{hint}</p>
         {title === "Description" || title === "Add title" ? (
-          <div fdr="row" position="absolute" Right="0" Bottom="0">
-            <h3
-              color={
-                title === "Add title"
-                  ? adTitle.length == 70
-                    ? text.red
-                    : text.grey
-                  : adTitle.length == 2000
-                  ? text.red
-                  : text.grey
-              }
+          <div>
+            <p
+            // color={
+            //   title === "Add title"
+            //     ? adTitle.length == 70
+            //       ? text.red
+            //       : text.grey
+            //     : adTitle.length == 2000
+            //     ? text.red
+            //     : text.grey
+            // }
             >
               {adTitle.length}
-            </h3>
-            <h3>/{title === "Add title" ? 70 : 2000}</h3>
+            </p>
+            <p>/{title === "Add title" ? 70 : 2000}</p>
           </div>
         ) : null}
       </div>
@@ -104,25 +112,25 @@ export const InputImportantInfo = (props, { navigation, route }) => {
 
   return (
     <>
-      <Topbar navigation={navigation}>Important Information</Topbar>
+      <Topbar title="Important Information" />
       <div>
-        <div jus="flex-start" ali="flex-start" padd={10}>
-          {route.params.RenderItems && (
+        <div className="important-information-container">
+          {/* {RenderItems && (
             <div fdr="row">
               <h3 weight="bold">Catogery: </h3>
-              <h3>{route.params.catogery}</h3>
+              <h3>{catogery}</h3>
             </div>
           )}
-          {route.params.RenderItems && (
+          {RenderItems && (
             <>
               <div fdr="row">
                 <h3 weight="bold">Sub-catogery: </h3>
-                <h3>{route.params.subcatogery}</h3>
+                <h3>{subcatogery}</h3>
               </div>
             </>
-          )}
+          )} */}
 
-          <input type="text" multiline={false} title="Add title" />
+          <TextField type="text" multiline={false} title="Add title" />
           <input
             type="text"
             style={{
@@ -162,8 +170,8 @@ export const InputImportantInfo = (props, { navigation, route }) => {
             defaultValue={adTitle}
             // placeholder={placeholder}
           /> */}
-          <input type="text" title="Description" multiline={true} />
-          <input
+          <TextField type="text" title="Description" multiline={true} />
+          <textarea
             type="text"
             style={{
               borderWidth: 1,
@@ -173,9 +181,10 @@ export const InputImportantInfo = (props, { navigation, route }) => {
               fontSize: 15,
               marginTop: 5,
               width: "100%",
+              boxSizing: "border-box",
               color: text.grey,
             }}
-            maxLength={2000}
+            // maxLength={2000}
             multiline={true}
             onChangeText={(e) => setadDescription(e)}
             defaultValue={adDescription}
@@ -186,45 +195,50 @@ export const InputImportantInfo = (props, { navigation, route }) => {
             title="Description"
             hint="Add brif description about your product, what makes customer buy your product as like features, condition or your selling reason."
           />
-          {route.params.RenderItems &&
-            route.params.RenderItems.map((ren, i) => {
+          {RenderItems &&
+            RenderItems.map((ren, i) => {
               return (
                 <SectionPart
                   key={i}
-                  property={route.params.RenderItems[i].property}
-                  find={eval(route.params.RenderItems[i].find)}
-                  title={route.params.RenderItems[i].title}
-                  SetOn={eval(route.params.RenderItems[i].SetOn)}
-                  items={route.params.RenderItems[i].items}
-                  keytype={route.params.RenderItems[i].keytype}
-                  placeholder={route.params.RenderItems[i].placeholder}
-                  Item={route.params.RenderItems[i].Item}
-                  maxLength={
-                    route.params.RenderItems[i].maxLength
-                      ? route.params.RenderItems[i].maxLength
-                      : null
-                  }
-                  labelDesc={route.params.RenderItems[i].labelDesc}
+                  property={RenderItems[i].property}
+                  find={eval(RenderItems[i].find)}
+                  title={RenderItems[i].title}
+                  SetOn={eval(RenderItems[i].SetOn)}
+                  items={RenderItems[i].items}
+                  keytype={RenderItems[i].keytype}
+                  placeholder={RenderItems[i].placeholder}
+                  Item={RenderItems[i].Item}
+                  // maxLength={
+                  // RenderItems[i].maxLength ? RenderItems[i].maxLength : null
+                  // }
+                  labelDesc={RenderItems[i].labelDesc}
                 />
               );
             })}
 
-          {route.params.price && (
+          {price && (
             <div ali="flex-start" width="100%">
-              <input
+              <TextField
                 type="text"
-                multiline={true}
                 dvalue="₹.|  "
                 keytype="keytype"
                 title="Price"
               />
-              <div position="absolute" Left="7" Top="51">
+              <div
+                style={{
+                  position: "absolute",
+                  marginTop: "15px",
+                  marginLeft: "10px",
+                }}
+                position="absolute"
+                Left="7"
+                Top="51"
+              >
                 <img
                   alt="rs thumb"
                   height="20"
-                  opacity="0.5"
                   width="15"
-                  source={require("../../../assets/rs.png")}
+                  src={require("../../../assets/rs.png")}
                 />
               </div>
               <input
@@ -233,15 +247,15 @@ export const InputImportantInfo = (props, { navigation, route }) => {
                 style={{
                   borderWidth: 1,
                   borderColor: "grey",
-                  paddingLeft: 25,
                   borderRadius: 5,
                   padding: 8,
+                  paddingLeft: "25px",
                   fontSize: 15,
                   marginTop: 5,
                   width: "100%",
                   color: text.grey,
                 }}
-                maxLength={10}
+                // maxLength={10}
                 onChangeText={(e) => setadPrice(e)}
                 defaultValue={adPrice}
 
@@ -256,9 +270,12 @@ export const InputImportantInfo = (props, { navigation, route }) => {
           )}
 
           {/* tags starts from here */}
-          <h3 size={20} weight="bold" marT={5}>
-            Tags
-          </h3>
+          <TextField
+            type="text"
+            dvalue="₹.|  "
+            keytype="keytype"
+            title="Tags"
+          />
           <TagsContent
             setTags={setTags}
             tags={tags}
@@ -266,25 +283,15 @@ export const InputImportantInfo = (props, { navigation, route }) => {
             setTextC={setTextC}
           />
           {/* tags ends at here */}
-          {adTitle.length > 4 &&
+          {/* {adTitle.length > 4 &&
             adDescription.length > 4 &&
-            adPrice.length >= 2 && (
-              <div
-                onpress={() => navigation.navigate("upload-images")}
-                tblC="green"
-                touchable
-                width="100%"
-                padd={10}
-                bcC={bg.nextInput}
-                border="1px grey"
-                borR={5}
-                marT={10}
-              >
-                <h3 size={25} color={text.white} weight="bold">
-                  Next
-                </h3>
-              </div>
-            )}
+            adPrice.length >= 2 && ( */}
+          <Link style={{ textDecoration: "none" }} to="/upload-images">
+            <div className="next-button-properties">
+              <h3 weight="bold">Next</h3>
+            </div>
+          </Link>
+          {/* )} */}
         </div>
       </div>
     </>

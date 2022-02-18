@@ -1,6 +1,7 @@
 import React from "react";
 import "./topbar.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 export const Topbar = ({ title, bcC, logout }) => {
   const navigate = useNavigate();
   return (
@@ -19,11 +20,13 @@ export const Topbar = ({ title, bcC, logout }) => {
         <h1>{title}</h1>
       </div>
       {logout && (
-        <img
-          alt="log out"
-          style={{ filter: "invert(50%)" }}
-          src={require("../../../assets/icon/logout.svg").default}
-        />
+        <Link to="/login-user">
+          <img
+            alt="log out"
+            style={{ filter: "invert(50%)" }}
+            src={require("../../../assets/icon/logout.svg").default}
+          />
+        </Link>
       )}
     </div>
   );

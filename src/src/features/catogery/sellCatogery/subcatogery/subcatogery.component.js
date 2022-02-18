@@ -29,7 +29,7 @@ export const SellSubCatogery = (props) => {
             return (
               <Link
                 style={{ textDecoration: "none" }}
-                to="/input-sell"
+                to={Cato[i].to === "skip" ? "/important-info" : "/input-sell"}
                 state={{
                   catogery: catogery,
                   subcatogery: Cato[i].title,

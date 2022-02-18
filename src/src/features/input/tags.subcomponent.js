@@ -4,7 +4,19 @@ import { Theme } from "./../../infrastructure/theme/index";
 export const TagsContent = (props) => {
   const { bg, text, theme } = Theme.colors;
 
-  const { tags, setTags, TextC, setTextC } = props;
+  const {
+    // tags,
+    // setTags,
+    // TextC,
+    // setTextC,
+    hello,
+  } = props;
+  // this is mock data for frontend development
+
+  const [TextC, setTextC] = useState("");
+  const [tags, setTags] = useState([]);
+  console.log(TextC);
+  // mock data ends here for frontend development
   // useContext(InputSellContext);
   if (TextC.length > 3) {
     if (TextC.slice(-1) === ",") {
@@ -22,6 +34,7 @@ export const TagsContent = (props) => {
   return (
     <>
       <div
+        className="tags-container"
         border="1px blue"
         borR={5}
         fwr="wrap"
@@ -42,8 +55,10 @@ export const TagsContent = (props) => {
                   marr={2.5}
                   borR={10}
                   jus="center"
+                  className="created-tags-list"
                 >
                   <div
+                    className="tag-remove-button"
                     tblC={bg.red}
                     tofl
                     height="15px"
@@ -52,23 +67,11 @@ export const TagsContent = (props) => {
                     position="absolute"
                     Right="3"
                     Top="3"
-                    onpress={() => {
-                      console.log("presed");
+                    onClick={() => {
+                      RemovingTags(tags[i]);
                     }}
                   >
-                    <div
-                      height="15px"
-                      width="2px"
-                      bcC={bg.red}
-                      transform="rotate(-45deg)"
-                    />
-                    <div
-                      height="15px"
-                      width="2px"
-                      bcC={bg.red}
-                      marT={-15}
-                      transform="rotate(45deg)"
-                    />
+                    <div />
                   </div>
 
                   <h3
@@ -85,30 +88,34 @@ export const TagsContent = (props) => {
             })
           : null}
 
-        {length == 200 ? null : (
+        {length === 200 ? null : (
           <input
             type="text"
-            maxLength={200 - length}
+            // maxLength={200 - length}
             value={TextC}
-            onChangeText={(e) => setTextC(e)}
+            onChange={(e) => {
+              setTextC(e.target.value);
+            }}
+            // onChangeText={(e) => setTextC(e)}
             onSubmitEditing={() => {
               setTextC("");
               TextC.length > 3 && setTags([...tags, TextC]);
             }}
+            placeholder="Create your Tag / use , to saperate"
             style={{
-              borderBottomColor: bg.grey,
-              borderBottomWidth: 2,
-              minWidth: tags.length ? "20%" : "90%",
+              // border: "1px solid grey",
+              borderRadius: "5px",
+              // width: tags.length ? "20%" : "90%",
             }}
           />
         )}
       </div>
-      <div fdr="row" width="100%" jus="space-between">
-        <h3 ali="left">Set effective tags as your ad.</h3>
-        <div fdr="row">
-          <h3 color={length + TextC.length === 200 && bg.red}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <p ali="left">Set effective tags as your ad.</p>
+        <div style={{ display: "flex" }}>
+          <p color={length + TextC.length === 200 && bg.red}>
             {length + TextC.length}
-          </h3>
+          </p>
           <p>/200</p>
         </div>
       </div>
