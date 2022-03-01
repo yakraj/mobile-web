@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Topbar } from "./../../components/global/topbar";
 import "./register.css";
 import { Link } from "react-router-dom";
+import { UserContext } from "./../../services/user.contex";
 export const RegisterUser = () => {
+  const {
+    UserRegister,
+    setregcnfpassword,
+    regcnfpassword,
+    setregfirstName,
+    setreglastName,
+    setImages,
+  } = useContext(UserContext);
   const [imagefile, setimagefile] = useState();
   const [newpassword, setnewpassword] = useState("");
   const [focusNewpassword, setfocusnewpassword] = useState(false);
 
-  const [confirmpassword, setconfirmpassword] = useState("");
   var hasNumber = /\d/;
   const fileSelect = (e) => {
     const { files } = e.target;
+    setImages(files);
     setimagefile(URL.createObjectURL(files[0]));
   };
-  console.log(newpassword === confirmpassword);
-  console.log(confirmpassword);
   return (
     <>
       <Topbar title="Register" />
@@ -27,8 +34,16 @@ export const RegisterUser = () => {
         >
           <input onChange={fileSelect} accept="image/*" type="file" />
         </div>
-        <input type="text" placeholder="First Name" />
-        <input type="text" placeholder="Last Name" />
+        <input
+          onChange={(e) => setregfirstName(e.target.value)}
+          type="text"
+          placeholder="First Name"
+        />
+        <input
+          onChange={(e) => setreglastName(e.target.value)}
+          type="text"
+          placeholder="Last Name"
+        />
         <div className="register-create-password">
           <div className="create-password">Create Password</div>
           <input
@@ -70,26 +85,36 @@ export const RegisterUser = () => {
             type="password"
             style={{
               border:
-                newpassword === confirmpassword
+                newpassword === regcnfpassword
                   ? "1px solid grey"
                   : "2px solid red",
               outline: "none",
             }}
-            onChange={(e) => setconfirmpassword(e.target.value)}
+            onChange={(e) => setregcnfpassword(e.target.value)}
             placeholder="Confirm Password"
           />
         </div>
 
-        <Link
+        {/* <Link
           style={{ textDecoration: "none", width: "80%" }}
           to="/personal-info"
+        > */}
+        <div
+          style={{
+            width: "60%",
+            margin: "10px",
+            opacity: newpassword === regcnfpassword ? 1 : 0.5,
+          }}
+          onClick={() =>
+            newpassword === regcnfpassword ? UserRegister() : null
+          }
+          className=" next-button-properties"
         >
-          <div style={{ margin: "10px" }} className=" next-button-properties">
-            <h3 size={25} weight="bold">
-              Submit
-            </h3>
-          </div>
-        </Link>
+          <h3 size={25} weight="bold">
+            Submit
+          </h3>
+        </div>
+        {/* </Link> */}
       </div>
     </>
   );

@@ -2,90 +2,90 @@ import React from "react";
 import "./component/productarchive.css";
 import Background from "../../../assets/mobile.jpg";
 import { NavLink } from "react-router-dom";
-export const ProductArchive = ({ deleter, sold }) => {
-  const Archives = [
-    {
-      title: "Used oppo phone",
-      thumbnail: "1641133267608-4d2ee2e4-59ca-47fc-b156-0962182d820e.jpg",
-      address: "midc malegaon sinnar",
-      price: "11000",
-      supercatogery: "mobiletablet",
-      adid: "4d2ee2e4-59ca-47fc-b156-0962182d820e.jpga6okxxcdgwu",
-      seller: "Tulsia6okxxbfk6t",
-    },
-    {
-      title: "Lenovo 2018",
-      thumbnail: "1641489082364-f2b035fe-4cbb-4018-a246-824dbf09868c.jpg",
-      address: "midc malegaon sinnar",
-      price: "25000",
-      supercatogery: "pclaptop",
-      adid: "f2b035fe-4cbb-4018-a246-824dbf09868c.jpg5dgky387tpa",
-      seller: "Ashmita5hgkxxicbt5",
-    },
-    {
-      title: "Secret code",
-      thumbnail: "1641469855084-e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg",
-      address: "midc malegaon sinnar",
-      price: "120",
-      supercatogery: "regular",
-      adid: "e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg4ooky2wrpwh",
-      seller: "Yakraj5hgkxxi7y4e",
-    },
-    {
-      title: "Used oppo phone",
-      thumbnail: "1641133267608-4d2ee2e4-59ca-47fc-b156-0962182d820e.jpg",
-      address: "midc malegaon sinnar",
-      price: "11000",
-      supercatogery: "mobiletablet",
-      adid: "4d2ee2e4-59ca-47fc-b156-0962182d820e.jpga6okxxcdgwu",
-      seller: "Tulsia6okxxbfk6t",
-    },
-    {
-      title: "Lenovo 2018",
-      thumbnail: "1641489082364-f2b035fe-4cbb-4018-a246-824dbf09868c.jpg",
-      address: "midc malegaon sinnar",
-      price: "25000",
-      supercatogery: "pclaptop",
-      adid: "f2b035fe-4cbb-4018-a246-824dbf09868c.jpg5dgky387tpa",
-      seller: "Ashmita5hgkxxicbt5",
-    },
-    {
-      title: "Secret code",
-      thumbnail: "1641469855084-e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg",
-      address: "midc malegaon sinnar",
-      price: "120",
-      supercatogery: "regular",
-      adid: "e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg4ooky2wrpwh",
-      seller: "Yakraj5hgkxxi7y4e",
-    },
-    {
-      title: "Used oppo phone",
-      thumbnail: "1641133267608-4d2ee2e4-59ca-47fc-b156-0962182d820e.jpg",
-      address: "midc malegaon sinnar",
-      price: "11000",
-      supercatogery: "mobiletablet",
-      adid: "4d2ee2e4-59ca-47fc-b156-0962182d820e.jpga6okxxcdgwu",
-      seller: "Tulsia6okxxbfk6t",
-    },
-    {
-      title: "Lenovo 2018",
-      thumbnail: "1641489082364-f2b035fe-4cbb-4018-a246-824dbf09868c.jpg",
-      address: "midc malegaon sinnar",
-      price: "25000",
-      supercatogery: "pclaptop",
-      adid: "f2b035fe-4cbb-4018-a246-824dbf09868c.jpg5dgky387tpa",
-      seller: "Ashmita5hgkxxicbt5",
-    },
-    {
-      title: "Secret code",
-      thumbnail: "1641469855084-e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg",
-      address: "midc malegaon sinnar",
-      price: "120",
-      supercatogery: "regular",
-      adid: "e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg4ooky2wrpwh",
-      seller: "Yakraj5hgkxxi7y4e",
-    },
-  ];
+export const ProductArchive = ({ deleter, sold, Archives = [] }) => {
+  // const Archives = [
+  //   {
+  //     title: "Used oppo phone",
+  //     thumbnail: "1641133267608-4d2ee2e4-59ca-47fc-b156-0962182d820e.jpg",
+  //     address: "midc malegaon sinnar",
+  //     price: "11000",
+  //     supercatogery: "mobiletablet",
+  //     adid: "4d2ee2e4-59ca-47fc-b156-0962182d820e.jpga6okxxcdgwu",
+  //     seller: "Tulsia6okxxbfk6t",
+  //   },
+  //   {
+  //     title: "Lenovo 2018",
+  //     thumbnail: "1641489082364-f2b035fe-4cbb-4018-a246-824dbf09868c.jpg",
+  //     address: "midc malegaon sinnar",
+  //     price: "25000",
+  //     supercatogery: "pclaptop",
+  //     adid: "f2b035fe-4cbb-4018-a246-824dbf09868c.jpg5dgky387tpa",
+  //     seller: "Ashmita5hgkxxicbt5",
+  //   },
+  //   {
+  //     title: "Secret code",
+  //     thumbnail: "1641469855084-e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg",
+  //     address: "midc malegaon sinnar",
+  //     price: "120",
+  //     supercatogery: "regular",
+  //     adid: "e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg4ooky2wrpwh",
+  //     seller: "Yakraj5hgkxxi7y4e",
+  //   },
+  //   {
+  //     title: "Used oppo phone",
+  //     thumbnail: "1641133267608-4d2ee2e4-59ca-47fc-b156-0962182d820e.jpg",
+  //     address: "midc malegaon sinnar",
+  //     price: "11000",
+  //     supercatogery: "mobiletablet",
+  //     adid: "4d2ee2e4-59ca-47fc-b156-0962182d820e.jpga6okxxcdgwu",
+  //     seller: "Tulsia6okxxbfk6t",
+  //   },
+  //   {
+  //     title: "Lenovo 2018",
+  //     thumbnail: "1641489082364-f2b035fe-4cbb-4018-a246-824dbf09868c.jpg",
+  //     address: "midc malegaon sinnar",
+  //     price: "25000",
+  //     supercatogery: "pclaptop",
+  //     adid: "f2b035fe-4cbb-4018-a246-824dbf09868c.jpg5dgky387tpa",
+  //     seller: "Ashmita5hgkxxicbt5",
+  //   },
+  //   {
+  //     title: "Secret code",
+  //     thumbnail: "1641469855084-e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg",
+  //     address: "midc malegaon sinnar",
+  //     price: "120",
+  //     supercatogery: "regular",
+  //     adid: "e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg4ooky2wrpwh",
+  //     seller: "Yakraj5hgkxxi7y4e",
+  //   },
+  //   {
+  //     title: "Used oppo phone",
+  //     thumbnail: "1641133267608-4d2ee2e4-59ca-47fc-b156-0962182d820e.jpg",
+  //     address: "midc malegaon sinnar",
+  //     price: "11000",
+  //     supercatogery: "mobiletablet",
+  //     adid: "4d2ee2e4-59ca-47fc-b156-0962182d820e.jpga6okxxcdgwu",
+  //     seller: "Tulsia6okxxbfk6t",
+  //   },
+  //   {
+  //     title: "Lenovo 2018",
+  //     thumbnail: "1641489082364-f2b035fe-4cbb-4018-a246-824dbf09868c.jpg",
+  //     address: "midc malegaon sinnar",
+  //     price: "25000",
+  //     supercatogery: "pclaptop",
+  //     adid: "f2b035fe-4cbb-4018-a246-824dbf09868c.jpg5dgky387tpa",
+  //     seller: "Ashmita5hgkxxicbt5",
+  //   },
+  //   {
+  //     title: "Secret code",
+  //     thumbnail: "1641469855084-e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg",
+  //     address: "midc malegaon sinnar",
+  //     price: "120",
+  //     supercatogery: "regular",
+  //     adid: "e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg4ooky2wrpwh",
+  //     seller: "Yakraj5hgkxxi7y4e",
+  //   },
+  // ];
 
   return Archives.map((x, i) => {
     return (
@@ -94,7 +94,7 @@ export const ProductArchive = ({ deleter, sold }) => {
           <div
             className="productImage"
             style={{
-              backgroundImage: `url(${Background})`,
+              backgroundImage: `url(http://localhost:5001/uploads/${x.thumbnail})`,
             }}
           ></div>
           {/* <img

@@ -42,7 +42,7 @@ export const UserContextProvider = ({ children }) => {
   const [uiadnterr, setuiadnterr] = useState(false);
   const [numberExiLoadi, setnumberExiLoadi] = useState(false);
   // const [matchPassword, setmatchpassword] = useState(true);
-
+  var hellooo = "what are you doing is this ok";
   // use address
   const [lattitude, setlattitude] = useState("");
   const [longitude, setlongitude] = useState("");
@@ -59,14 +59,6 @@ export const UserContextProvider = ({ children }) => {
     matchPassword = true;
   } else {
     matchPassword = false;
-  }
-
-  if (registermobileNumber.length === 10) {
-    NumberExistance(registermobileNumber).then((response) => {
-      setmessageExi(response);
-      setnumberExiLoadi(false);
-      setnumberExiLoadi(false);
-    });
   }
 
   const GetuseruiAds = () => {
@@ -86,6 +78,13 @@ export const UserContextProvider = ({ children }) => {
   // console.log(regfirstName, reglastName, regnewpassword, regcnfpassword);
 
   const UserRegister = () => {
+    // console.log(
+    //   images,
+    //   regcnfpassword,
+    //   registermobileNumber,
+    //   regfirstName,
+    //   reglastName
+    // );
     setlodreg(true);
     // console.log("func excuted");
     Registeruser(
@@ -96,6 +95,7 @@ export const UserContextProvider = ({ children }) => {
       reglastName
     )
       .then((res) => {
+        console.log(res);
         setlodreg(false);
         setusercrd(res[0]);
         setSignedin(true);
@@ -326,6 +326,7 @@ export const UserContextProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        hellooo,
         userAds,
         FavAds,
         getUserAds,

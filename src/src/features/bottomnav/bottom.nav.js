@@ -8,8 +8,6 @@ export const BottomNav = () => {
   useEffect(() => {
     setcurrentpath(location.pathname);
   });
-  console.log(currentpath);
-
   return (
     <div id="bottomTab">
       <NavLink

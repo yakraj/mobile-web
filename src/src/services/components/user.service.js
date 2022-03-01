@@ -180,15 +180,15 @@ export const Registeruser = (
   data.append("mobile", registermobileNumber);
   data.append("firstname", regfirstName);
   data.append("lastname", reglastName);
-  if (images) {
-    let extArray = images.path.split("/");
-    let extension = extArray[extArray.length - 1];
-    data.append("fileData", {
-      uri: images.path,
-      type: "image/jpeg",
-      name: extension,
-    });
-  }
+  // if (images) {
+  //   // let extArray = images.path.split("/");
+  //   // let extension = extArray[extArray.length - 1];
+  //   data.append("fileData", {
+  //     uri: images.path,
+  //     type: "image/jpeg",
+  //     name: images.name,
+  //   });
+  // }
   const config = {
     method: "POST",
     headers: {
