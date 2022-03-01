@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./component/bottom.nav.css";
 import { NavLink, useLocation } from "react-router-dom";
+import { UserContext } from "./../../services/user.contex";
 
 export const BottomNav = () => {
+  const { signedin } = useContext(UserContext);
+
   const [currentpath, setcurrentpath] = useState("");
   const location = useLocation();
   useEffect(() => {
@@ -164,7 +167,7 @@ export const BottomNav = () => {
           margin: 0,
           padding: 0,
         }}
-        to="/account"
+        to={signedin ? "/account" : "/login-user"}
       >
         <div className="navdivision">
           <img

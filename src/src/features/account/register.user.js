@@ -11,6 +11,7 @@ export const RegisterUser = () => {
     setregfirstName,
     setreglastName,
     setImages,
+    images,
   } = useContext(UserContext);
   const [imagefile, setimagefile] = useState();
   const [newpassword, setnewpassword] = useState("");

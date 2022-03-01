@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getTextLoc } from "./components/search.service";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   userAdui,
   Registeruser,
@@ -20,6 +21,7 @@ import {
 
 export const UserContext = React.createContext();
 export const UserContextProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [username, sertusername] = useState("yakraj289");
   const [loadinguiads, setloadinguiads] = useState(false);
   const [useruiAds, setuseuiAds] = useState([]);
@@ -78,6 +80,7 @@ export const UserContextProvider = ({ children }) => {
   // console.log(regfirstName, reglastName, regnewpassword, regcnfpassword);
 
   const UserRegister = () => {
+    console.log("function executed");
     // console.log(
     //   images,
     //   regcnfpassword,
@@ -95,10 +98,10 @@ export const UserContextProvider = ({ children }) => {
       reglastName
     )
       .then((res) => {
-        console.log(res);
         setlodreg(false);
         setusercrd(res[0]);
         setSignedin(true);
+        navigate("/account");
       })
       .catch((err) => {
         setlodreg(false);
@@ -114,7 +117,7 @@ export const UserContextProvider = ({ children }) => {
         } else {
           setlodlogin(false);
           setusercrd(response[0]);
-          GetChatlist(response[0].username);
+          // GetChatlist(response[0].username);
           if (response[0].location) {
             setlattitude(response[0].location[0]);
             setlongitude(response[0].location[1]);
@@ -122,6 +125,7 @@ export const UserContextProvider = ({ children }) => {
 
           response[0].address && setsearchaddressName(response[0].address);
           setSignedin(true);
+          navigate("/account");
           setloginerror("");
           fetFavourites(response[0].username).then((response) => {
             FavouriteAds(response[0].hearts).then((response) => {
@@ -391,6 +395,7 @@ export const UserContextProvider = ({ children }) => {
         StartOtpTimer,
         DeleteUserAd,
         UpdateAddress,
+        setusercrd,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./account.css";
 import { Topbar } from "../../components/global/topbar";
 import profile from "../../../assets/profile.jpg";
@@ -6,7 +6,10 @@ import { TwoTotab } from "./../../components/toptab/twotoptab";
 import { ThreeTotab } from "../../components/toptab/toptab";
 import { ProductArchive } from "./../productarchive/product.archive";
 import { Link } from "react-router-dom";
+import { UserContext } from "./../../services/user.contex";
 export const Account = () => {
+  const { usercrd } = useContext(UserContext);
+  console.log(usercrd);
   const NavigateIcon = ({ icon, type, route }) => {
     return (
       <Link to={`/${route}`}>
@@ -85,14 +88,21 @@ export const Account = () => {
       <Topbar logout title="My account" bcC="rgb(69 228 233 / 46%)" />
       <div className="accountprofile">
         <div
-          style={{ backgroundImage: `url(${profile})` }}
+          // `url(http://localhost:5001/uploads/${x.thumbnail})
+          style={{
+            backgroundImage: `url(http://localhost:5001/useravatar/${usercrd.image})`,
+          }}
           className="profileImage"
         />
-        <div className="profilename">
-          <h4 style={{ marginRight: "4px" }}>Tulsi Pariyar </h4>
-          <h4> | 7709543082</h4>
-        </div>
-        <p>Sahare, Nepal</p>
+        {usercrd && (
+          <div className="profilename">
+            <h4 style={{ marginRight: "4px" }}>
+              {usercrd.firstname + " " + usercrd.lastname}
+            </h4>
+            <h4> | {usercrd.mobile}</h4>
+          </div>
+        )}
+        <p>{usercrd.address}</p>
         <div className="edit-icon">
           <Link to="/editprofile">
             <img
