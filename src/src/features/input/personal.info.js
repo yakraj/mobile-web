@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Topbar } from "./../../components/global/topbar";
 import "./personalinfo.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { InputSellContext } from "./../../services/sell.input.context";
+import { UserContext } from "./../../services/user.contex";
 export const PersonalInfo = () => {
-  const [switchtoggle, setswitchtoggle] = useState(false);
+  const navigate = useNavigate();
+  const {
+    NewProductAd,
+    UploadAdThumbnail,
+    allowMobile,
+    setAllowMobile,
+    MobNumber,
+    setMobNumber,
+  } = useContext(InputSellContext);
+  const { usercrd, signedin } = useContext(UserContext);
+
+  const SubmitButton = () => {
+    signedin ? UploadAdThumbnail(usercrd) : navigate("/user-login");
+  };
+  console.log(MobNumber);
+
   return (
     <>
       <Topbar title="Personal Information" />
@@ -18,16 +35,23 @@ export const PersonalInfo = () => {
         <div className="phone-number-permission">
           <h4>Allow people to call you for this Ad.</h4>
           <div
-            style={{ justifyContent: switchtoggle ? "flex-end" : "flex-start" }}
-            onClick={() => setswitchtoggle(!switchtoggle)}
+            style={{ justifyContent: allowMobile ? "flex-end" : "flex-start" }}
+            onClick={() => setAllowMobile(!allowMobile)}
             className="switch-button"
           >
             <div />
           </div>
         </div>
-        <div className="phone-Number-show-container">
+        <div
+          style={{ opacity: allowMobile ? 1 : 0.3 }}
+          className="phone-Number-show-container"
+        >
           <h2>Phone:</h2>
-          <input type="text" value="7709543082" />
+          <input
+            onChange={(e) => setMobNumber(e.target.value)}
+            type="text"
+            value={MobNumber ? MobNumber : "+977 " + usercrd.mobile}
+          />
         </div>
         <div className="location-search-container">
           <div className="location-input-sec">
@@ -50,23 +74,23 @@ export const PersonalInfo = () => {
             src={require("../../../assets/mapbox.png")}
           />
         </div>
-        <Link style={{ textDecoration: "none" }} to="/personal-info">
-          <div
-            className=" next-button-properties"
-            // tblC={bg.green}
-            touchable
-            width="100%"
-            padd={10}
-            // bcC={bg.skyblue}
-            border="1px grey"
-            borR={5}
-            marT={10}
-          >
-            <h3 size={25} weight="bold">
-              Submit
-            </h3>
-          </div>
-        </Link>
+
+        <div
+          className=" next-button-properties"
+          // tblC={bg.green}
+          onClick={() => SubmitButton()}
+          touchable
+          width="100%"
+          padd={10}
+          // bcC={bg.skyblue}
+          border="1px grey"
+          borR={5}
+          marT={10}
+        >
+          <h3 size={25} weight="bold">
+            Submit
+          </h3>
+        </div>
       </div>
     </>
   );

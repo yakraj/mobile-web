@@ -24,15 +24,19 @@
   align-items: center;
   font-weight: bold;
   color: green;
+  cursor: pointer;
   padding: 5px;
   box-sizing: border-box;
   border-bottom: 1px solid rgba(128, 128, 128, 0.651);
 }
 
 .location-map-container {
-  height: 30vh;
+  height: 500px;
   /* background: red; */
-  background-image: url("../../../../assets/mapbox.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-image: url("../../../../assets/mapbox.png"); */
   background-size: cover;
   background-position: center center;
   box-sizing: border-box;

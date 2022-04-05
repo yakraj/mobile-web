@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Topbar } from "./../../components/global/topbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./../../services/user.contex";
 import {
   SendOTP,
@@ -8,6 +8,7 @@ import {
 } from "./../../services/components/user.service";
 
 export const CreateAccount = () => {
+  const navigate = useNavigate();
   const {
     setregistermobileNumber,
     registermobileNumber,
@@ -32,6 +33,7 @@ export const CreateAccount = () => {
             if (response === "successfully send otp") {
               StartOtpTimer();
               // navigation.navigate("confirm-otp");
+              navigate(messageExi ? "/create-account" : "/verify-otp");
             }
           })
           .catch((err) => {
@@ -71,18 +73,13 @@ export const CreateAccount = () => {
               )
             : null}
 
-          <Link
-            style={{ textDecoration: "none", width: "100%" }}
-            to={messageExi ? "/create-account" : "/verify-otp"}
+          <div
+            onClick={() => !messageExi && naviFunc()}
+            style={{ opacity: messageExi ? "0.5" : "1" }}
+            className="login-button"
           >
-            <div
-              onClick={() => !messageExi && naviFunc()}
-              style={{ opacity: messageExi ? "0.5" : "1" }}
-              className="login-button"
-            >
-              Generate OTP
-            </div>
-          </Link>
+            Generate OTP
+          </div>
         </div>
       </div>
     </>

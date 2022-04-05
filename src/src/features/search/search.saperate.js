@@ -86,7 +86,7 @@ export const SearchScreen = () => {
           </div>
         </div>
       )}
-      {locationfocus && (
+      {locationfocus && !inputfocus && (
         <div className="locreccomendation">
           <div className="location-sugg">
             <img

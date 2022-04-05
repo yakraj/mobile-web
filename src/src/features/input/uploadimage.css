@@ -47,7 +47,8 @@
   width: 100%;
   background: grey;
   box-sizing: border-box;
-  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: contain;
   background-position: center center;
 }
 .upload-image-delete {

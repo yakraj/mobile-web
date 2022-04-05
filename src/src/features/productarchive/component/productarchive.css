@@ -34,9 +34,13 @@
   color: grey;
   font-size: 0.7rem;
   font-weight: bold;
+  white-space: nowrap;
+  width: 90%;
+  overflow: hidden;
 }
 .productdetail {
   display: flex;
+  width: 85%;
   flex-direction: column;
 }
 .productinfo {

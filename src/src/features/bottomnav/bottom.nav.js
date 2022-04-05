@@ -12,7 +12,10 @@ export const BottomNav = () => {
     setcurrentpath(location.pathname);
   });
   return (
-    <div id="bottomTab">
+    <div
+      style={{ display: location.pathname === "/chattingui" ? "none" : "flex" }}
+      id="bottomTab"
+    >
       <NavLink
         style={{
           textDecoration: "none",
@@ -52,6 +55,7 @@ export const BottomNav = () => {
         style={{
           textDecoration: "none",
           position: "relative",
+          color: "grey",
           margin: 0,
           padding: 0,
         }}

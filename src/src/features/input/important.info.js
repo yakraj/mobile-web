@@ -2,11 +2,12 @@ import React, { useState, useContext } from "react";
 import { SectionPart } from "./properties.sell";
 import "./importantinformtaion.css";
 // import { InputSellContext } from "../../services/sell.input.context";
-// import { UserContext } from "../../services/user.contex";
+import { UserContext } from "../../services/user.contex";
 import { TagsContent } from "./tags.subcomponent";
 import { Theme } from "../../infrastructure/theme/index";
 import { Topbar } from "./../../components/global/topbar";
 import { Link, useLocation } from "react-router-dom";
+import { InputSellContext } from "../../services/sell.input.context";
 export const InputImportantInfo = (props, { navigation, route }) => {
   const location = useLocation();
   const { RenderItems, catogery, price, subcatogery } = location.state;
@@ -26,6 +27,7 @@ export const InputImportantInfo = (props, { navigation, route }) => {
     Printer,
     setPrinter,
     Bookyear,
+    BookAuthor,
     setBookAuthor,
     setBookyear,
     ClothSize,
@@ -38,9 +40,9 @@ export const InputImportantInfo = (props, { navigation, route }) => {
     setWorkPosition,
     SalaryAmount,
     setSalaryAmount,
-    // adTitle,
+    adTitle,
     setadTitle,
-    // adDescription,
+    adDescription,
     setadDescription,
     adPrice,
     setadPrice,
@@ -48,18 +50,15 @@ export const InputImportantInfo = (props, { navigation, route }) => {
     setadTags,
     tags,
     setTags,
-  } = props;
-  // useContext(InputSellContext);
+  } = useContext(InputSellContext);
 
   // this is mock data for trial
-  var adTitle = "";
-  var adDescription = "";
+
   // mock data ends here for trial
   const { bg, text, theme } = Theme.colors;
   const [TextC, setTextC] = useState("");
   //  this is for tags
-  const { username } = props;
-  // useContext(UserContext);
+  const { username } = useContext(UserContext);
   const TextField = ({
     multiline,
     title,
@@ -115,7 +114,8 @@ export const InputImportantInfo = (props, { navigation, route }) => {
       <Topbar title="Important Information" />
       <div>
         <div className="important-information-container">
-          {/* {RenderItems && (
+          {/* {RenderIteimport { UserContext } from './../../services/user.contex';
+ms && (
             <div fdr="row">
               <h3 weight="bold">Catogery: </h3>
               <h3>{catogery}</h3>
@@ -143,9 +143,9 @@ export const InputImportantInfo = (props, { navigation, route }) => {
               width: "100%",
               color: bg.grey,
             }}
-            // maxLength={70}
-            // onChangeText={(e) => setadTitle(e)}
-            // defaultValue={adTitle}
+            maxlength={70}
+            onChange={(e) => setadTitle(e.target.value)}
+            value={adTitle}
             // placeholder={placeholder}
           />
           <TextHint
@@ -184,12 +184,14 @@ export const InputImportantInfo = (props, { navigation, route }) => {
               boxSizing: "border-box",
               color: text.grey,
             }}
-            // maxLength={2000}
+            maxlength={2000}
             multiline={true}
-            onChangeText={(e) => setadDescription(e)}
+            // onChange={(e) => console.log(e.target.value)}
+            onInput={(e) => setadDescription(e.target.value)}
             defaultValue={adDescription}
             // placeholder={placeholder}
           />
+
           <TextHint
             adTitle={adDescription}
             title="Description"
@@ -255,8 +257,8 @@ export const InputImportantInfo = (props, { navigation, route }) => {
                   width: "100%",
                   color: text.grey,
                 }}
-                // maxLength={10}
-                onChangeText={(e) => setadPrice(e)}
+                maxlength={10}
+                onChange={(e) => setadPrice(e.target.value)}
                 defaultValue={adPrice}
 
                 // placeholder={placeholder}

@@ -32,7 +32,7 @@ export const RouterApp = () => {
         {/* <Route path="/" element={<Home />} /> */}
         <Route path="/" element={<Explore />} />
         <Route path="/search" element={<SearchScreen />} />
-        <Route path="/product" element={<ProductView />} />
+        <Route path="/product/:id" element={<ProductView />} />
         <Route path="/chatarchive" element={<ChatArchive />} />
         <Route path="/chattingui" element={<ChattingUI />} />
         <Route path="/account" element={<Account />} />

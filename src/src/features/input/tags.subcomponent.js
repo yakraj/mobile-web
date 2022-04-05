@@ -1,21 +1,13 @@
 import React, { useState, useContext } from "react";
 // import { InputSellContext } from "../../services/sell.input.context";
 import { Theme } from "./../../infrastructure/theme/index";
+import { InputSellContext } from "./../../services/sell.input.context";
 export const TagsContent = (props) => {
   const { bg, text, theme } = Theme.colors;
 
-  const {
-    // tags,
-    // setTags,
-    // TextC,
-    // setTextC,
-    hello,
-  } = props;
+  const { tags, setTags, TextC, setTextC } = useContext(InputSellContext);
   // this is mock data for frontend development
 
-  const [TextC, setTextC] = useState("");
-  const [tags, setTags] = useState([]);
-  console.log(TextC);
   // mock data ends here for frontend development
   // useContext(InputSellContext);
   if (TextC.length > 3) {
@@ -51,7 +43,6 @@ export const TagsContent = (props) => {
                 <div
                   key={i}
                   padd={8}
-                  bcC={bg.GraniteGray}
                   marr={2.5}
                   borR={10}
                   jus="center"

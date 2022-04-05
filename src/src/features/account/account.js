@@ -8,8 +8,9 @@ import { ProductArchive } from "./../productarchive/product.archive";
 import { Link } from "react-router-dom";
 import { UserContext } from "./../../services/user.contex";
 export const Account = () => {
-  const { usercrd } = useContext(UserContext);
-  console.log(usercrd);
+  const { usercrd, userAds, FavAds, searchaddressName } =
+    useContext(UserContext);
+
   const NavigateIcon = ({ icon, type, route }) => {
     return (
       <Link to={`/${route}`}>
@@ -25,8 +26,8 @@ export const Account = () => {
       </Link>
     );
   };
-
   const UserFavourites = () => {
+    console.log();
     return (
       <div
         style={{
@@ -36,11 +37,11 @@ export const Account = () => {
           justifyContent: "space-around",
         }}
       >
-        <ProductArchive />
+        <ProductArchive Archives={FavAds} />
       </div>
     );
   };
-  const UserOwnAds = () => {
+  const UserOwnAds = (ads) => {
     return (
       <div
         style={{
@@ -50,7 +51,24 @@ export const Account = () => {
           justifyContent: "space-around",
         }}
       >
-        <ProductArchive deleter={true} />
+        <ProductArchive Archives={userAds} deleter={true} />
+      </div>
+    );
+  };
+  const UsersoldAds = (ads) => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          flexWrap: "wrap",
+          justifyContent: "space-around",
+        }}
+      >
+        <ProductArchive
+          Archives={userAds.filter((x) => x.status === "sold")}
+          deleter={true}
+        />
       </div>
     );
   };
@@ -64,13 +82,19 @@ export const Account = () => {
           justifyContent: "space-around",
         }}
       >
-        <ProductArchive deleter={true} sold />
+        <ProductArchive
+          Archives={userAds.filter((x) => x.status === "active")}
+          deleter={true}
+          sold
+        />
       </div>
     );
   };
 
   const Favourites = <UserFavourites />;
   const UserAds = <UserOwnAds />;
+  const UserSoldAds = <UsersoldAds />;
+
   const UserActiveAds = <UserOwnActiveAds />;
   const Myads = (
     <ThreeTotab
@@ -79,7 +103,7 @@ export const Account = () => {
       thirdTabname="Sold"
       firstSlideContent={UserAds}
       secondSlideContent={UserActiveAds}
-      thirdSlideContent={UserAds}
+      thirdSlideContent={UserSoldAds}
       screenname="accountad"
     />
   );
@@ -102,7 +126,9 @@ export const Account = () => {
             <h4> | {usercrd.mobile}</h4>
           </div>
         )}
-        <p>{usercrd.address}</p>
+        <p style={{ width: "80%", textAlign: "center" }}>
+          {searchaddressName ? searchaddressName : usercrd.address}
+        </p>
         <div className="edit-icon">
           <Link to="/editprofile">
             <img

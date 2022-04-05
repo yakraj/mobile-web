@@ -1,5 +1,6 @@
 import React, { useState, useEffect, lodash } from "react";
-import { UploadImage, CreateAd } from "./components/sell.service";
+import { UploadImage, CreateAd, AdThumbnail } from "./components/sell.service";
+import imageCompression from "browser-image-compression";
 export const InputSellContext = React.createContext();
 
 export const InputSellProvider = ({ children }) => {
@@ -10,7 +11,7 @@ export const InputSellProvider = ({ children }) => {
 
   // states for apratments and house
   const [images, setImages] = useState([]);
-
+  const [cmpImg, setcmpImg] = useState([]);
   // THESE ARE SOME STATES FOR IMPORTANT INFORMATION;
   const [adTitle, setadTitle] = useState("");
   const [adDescription, setadDescription] = useState("");
@@ -53,6 +54,7 @@ export const InputSellProvider = ({ children }) => {
   // Used Duration
   const [UsedMonths, setUsedMonths] = useState();
   const [UsedYears, setUsedYears] = useState();
+  const [UsedDuration, setUsedDuration] = useState();
 
   // For Job
   const [SalaryPeriod, setSalaryPeriod] = useState();
@@ -75,6 +77,7 @@ export const InputSellProvider = ({ children }) => {
   const [MonitorSize, setMonitorSize] = useState();
   // for Brand
   const [Brandname, setBrandname] = useState();
+
   // for mobile
   const [MobileCamera, setMobileCamera] = useState();
   const [Mobilebattery, setMobilebattery] = useState();
@@ -95,6 +98,37 @@ export const InputSellProvider = ({ children }) => {
   //  this is for mobile number
   const [isEnabled, setIsEnabled] = useState(true);
   const [MobNumber, setMobNumber] = useState();
+  const [allowMobile, setAllowMobile] = useState(true);
+
+  async function singleFileCompressor(files, setfile, extendfile) {
+    // console.log(files);
+    const imageFile = files;
+    // console.log("originalFile instanceof Blob", imageFile instanceof Blob); // true
+    // console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+
+    const options = {
+      maxSizeMB: 0.5,
+      maxWidthOrHeight: 400,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      // console.log(
+      //   "compressedFile instanceof Blob",
+      //   compressedFile instanceof Blob
+      // ); // true
+      // console.log(
+      //   `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
+      // ); // smaller than maxSizeMB
+      // setfile && setfile(compressedFile);
+      return compressedFile;
+      // extendfile && extendfile([...cmpImg, compressedFile]);
+
+      // await uploadToServer(compressedFile); // write your own logic
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const SellProducts = () => {
     UploadImage(images, "yakraj");
@@ -140,14 +174,14 @@ export const InputSellProvider = ({ children }) => {
     setBookAuthor("");
   };
 
-  const NewProductAd = (username) => {
-    CreateAd(
-      (data = {
+  const NewProductAd = (thumb, username) => {
+    CreateAd({
+      data: {
         catogery: catogery,
         subcatogery: subcatogery,
         superCatogery: superCatogery,
         seller: username.username,
-        Thumbnail: Thumbnail,
+        Thumbnail: thumb,
         adTitle: adTitle,
         adDescription: adDescription,
         adPrice: adPrice,
@@ -162,7 +196,7 @@ export const InputSellProvider = ({ children }) => {
         Mobilebattery: Mobilebattery,
         MobileOs: MobileOs,
         UsedYears: UsedYears,
-        images: images,
+        images: cmpImg,
         UsedMonths: UsedMonths,
         ComputerStorageType: ComputerStorageType,
         ComputerGraphics: ComputerGraphics,
@@ -181,9 +215,9 @@ export const InputSellProvider = ({ children }) => {
         Bookyear: Bookyear,
         BookAuthor: BookAuthor,
         clearFunc: clearFunc,
-        mobile: MobNumber ? MobNumber : username.mobile,
-      })
-    );
+        mobile: allowMobile ? (MobNumber ? MobNumber : username.mobile) : null,
+      },
+    });
   };
   const cotogeryJoiner = (catogery, subcatogery, superCatogery) => {
     setcatogery(catogery);
@@ -193,6 +227,15 @@ export const InputSellProvider = ({ children }) => {
 
   const confirminput = () => {
     // console.log(MonitorType, MonitorSize);
+  };
+
+  const UploadAdThumbnail = (user) => {
+    // console.log(Thumbnail);
+    AdThumbnail(singleFileCompressor(Thumbnail)).then((response) =>
+      response.status === 200
+        ? response.json().then((res) => NewProductAd(res, user))
+        : console.log("something went wrong")
+    );
   };
 
   return (
@@ -223,7 +266,8 @@ export const InputSellProvider = ({ children }) => {
         setApartFaceing,
         CarpetArea,
         setCarpetArea,
-
+        allowMobile,
+        setAllowMobile,
         // for rent and sell offices
         Washrooms,
         setWashrooms,
@@ -352,6 +396,11 @@ export const InputSellProvider = ({ children }) => {
         setIsEnabled,
         MobNumber,
         setMobNumber,
+        cmpImg,
+        setcmpImg,
+        UsedDuration,
+        setUsedDuration,
+        UploadAdThumbnail,
       }}
     >
       {children}

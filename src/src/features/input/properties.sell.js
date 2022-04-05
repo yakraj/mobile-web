@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./properties.css";
-// import { InputSellConh3 } from "../../services/sell.input.conh3";
 import { Theme } from "./../../infrastructure/theme/index";
+import { InputSellContext } from "./../../services/sell.input.context";
 import { Properties } from "../../features/catogery/component/component.details";
 import { Topbar } from "../../components/global/topbar";
 import { Link, useLocation } from "react-router-dom";
@@ -27,40 +27,32 @@ export const SectionPart = ({
   labelDesc,
   maxLength,
 }) => {
-  // const {
-  //   ComputerGraphics,
-  //   setComputerGraphics,
-  //   ComputerGraphicsMemory,
-  //   setComputerGraphicsMemory,
-  //   facingDropdown,
-  //   setComputerStorage,
-  //   ComputerStorageType,
-  //   setComputerStorageType,
-  //   setFacingDropdown,
-  //   setComputerProcessor,
-  //   //  for used
-  //   // used duration
-  //   UsedMonths,
-  //   setUsedMonths,
-  //   UsedYears,
-  //   setUsedYears,
+  const {
+    ComputerGraphics,
+    setComputerGraphics,
+    ComputerGraphicsMemory,
+    setComputerGraphicsMemory,
+    facingDropdown,
+    ComputerStorage,
+    setComputerStorage,
+    ComputerStorageType,
+    setComputerStorageType,
+    setFacingDropdown,
+    setComputerProcessor,
+    //  for used
+    // used duration
+    UsedMonths,
+    setUsedMonths,
+    UsedYears,
+    setUsedYears,
 
-  //   // for Monitor
-  //   MonitorType,
-  //   setMonitorType,
-  //   MonitorSize,
-  //   setMonitorSize,
-  // } = props;
+    // for Monitor
+    MonitorType,
+    setMonitorType,
+    MonitorSize,
+    setMonitorSize,
+  } = useContext(InputSellContext);
 
-  // useConh3(InputSellConh3);
-
-  const p = ({ children }) => {
-    return (
-      <h3 color="blue" size={13} opacity={0.5}>
-        {children}
-      </h3>
-    );
-  };
   return (
     <>
       <div>
@@ -70,6 +62,9 @@ export const SectionPart = ({
             <>
               <input
                 type="text"
+                onChange={(e) => SetOn(e.target.value)}
+                value={find}
+                maxlength={maxLength}
                 style={{
                   borderWidth: 1,
                   borderColor: bg.grey,
@@ -91,13 +86,20 @@ export const SectionPart = ({
             <div className="twoinput">
               {Item[0].property === "Text" ? (
                 <div style={{ width: "48%", boxSizing: "border-box" }}>
-                  <input type="text" placeholder={Item[0].placeholder} />
+                  <input
+                    value={eval(Item[0].find)}
+                    onChange={(e) => eval(Item[0].SetOn)(e.target.value)}
+                    type="text"
+                    placeholder={Item[0].placeholder}
+                  />
                   <p>{Item[0].labelDesc}</p>
                 </div>
               ) : (
                 <div style={{ width: "48%" }}>
                   <div width="100%" marT={5} borR={5} border="1px grey">
                     <select
+                      value={eval(Item[0].find)}
+                      onChange={(e) => eval(Item[0].SetOn)(e.target.value)}
                       style={{
                         color: bg.black,
                         height: 50,
@@ -132,13 +134,20 @@ export const SectionPart = ({
               )}
               {Item[1].property === "Text" ? (
                 <div style={{ width: "48%" }}>
-                  <input type="text" placeholder={Item[1].placeholder} />
+                  <input
+                    value={eval(Item[1].find)}
+                    onChange={(e) => eval(Item[1].SetOn)(e.target.value)}
+                    type="text"
+                    placeholder={Item[1].placeholder}
+                  />
                   <p>{Item[1].labelDesc}</p>
                 </div>
               ) : (
                 <div style={{ width: "48%" }}>
                   <div width="100%" marT={5} borR={5} border="1px grey">
                     <select
+                      value={eval(Item[1].find)}
+                      onChange={(e) => eval(Item[1].SetOn)(e.target.value)}
                       style={{
                         color: bg.black,
                         height: 50,
@@ -178,8 +187,13 @@ export const SectionPart = ({
               {items.map((it, i) => {
                 return (
                   <div
+                    key={i}
+                    onClick={() => SetOn(items[i])}
                     className="radio-item-option"
-                    bcC={find === items[i] ? bg.green : bg.white}
+                    style={{
+                      color: find === items[i] ? "white" : "grey",
+                      background: find === items[i] ? "green" : "white",
+                    }}
                   >
                     {items[i]}
                   </div>
@@ -337,8 +351,7 @@ export const InputSell = (props) => {
     setBrandname,
     MonitorSize,
     setMonitorSize,
-  } = props;
-  // useConh3(InputSellConh3);
+  } = useContext(InputSellContext);
 
   // return <h1>hello this is properties</h1>;
   return (

@@ -1,150 +1,116 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./component/productarchive.css";
 import Background from "../../../assets/mobile.jpg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { UserContext } from "./../../services/user.contex";
 export const ProductArchive = ({ deleter, sold, Archives = [] }) => {
-  // const Archives = [
-  //   {
-  //     title: "Used oppo phone",
-  //     thumbnail: "1641133267608-4d2ee2e4-59ca-47fc-b156-0962182d820e.jpg",
-  //     address: "midc malegaon sinnar",
-  //     price: "11000",
-  //     supercatogery: "mobiletablet",
-  //     adid: "4d2ee2e4-59ca-47fc-b156-0962182d820e.jpga6okxxcdgwu",
-  //     seller: "Tulsia6okxxbfk6t",
-  //   },
-  //   {
-  //     title: "Lenovo 2018",
-  //     thumbnail: "1641489082364-f2b035fe-4cbb-4018-a246-824dbf09868c.jpg",
-  //     address: "midc malegaon sinnar",
-  //     price: "25000",
-  //     supercatogery: "pclaptop",
-  //     adid: "f2b035fe-4cbb-4018-a246-824dbf09868c.jpg5dgky387tpa",
-  //     seller: "Ashmita5hgkxxicbt5",
-  //   },
-  //   {
-  //     title: "Secret code",
-  //     thumbnail: "1641469855084-e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg",
-  //     address: "midc malegaon sinnar",
-  //     price: "120",
-  //     supercatogery: "regular",
-  //     adid: "e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg4ooky2wrpwh",
-  //     seller: "Yakraj5hgkxxi7y4e",
-  //   },
-  //   {
-  //     title: "Used oppo phone",
-  //     thumbnail: "1641133267608-4d2ee2e4-59ca-47fc-b156-0962182d820e.jpg",
-  //     address: "midc malegaon sinnar",
-  //     price: "11000",
-  //     supercatogery: "mobiletablet",
-  //     adid: "4d2ee2e4-59ca-47fc-b156-0962182d820e.jpga6okxxcdgwu",
-  //     seller: "Tulsia6okxxbfk6t",
-  //   },
-  //   {
-  //     title: "Lenovo 2018",
-  //     thumbnail: "1641489082364-f2b035fe-4cbb-4018-a246-824dbf09868c.jpg",
-  //     address: "midc malegaon sinnar",
-  //     price: "25000",
-  //     supercatogery: "pclaptop",
-  //     adid: "f2b035fe-4cbb-4018-a246-824dbf09868c.jpg5dgky387tpa",
-  //     seller: "Ashmita5hgkxxicbt5",
-  //   },
-  //   {
-  //     title: "Secret code",
-  //     thumbnail: "1641469855084-e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg",
-  //     address: "midc malegaon sinnar",
-  //     price: "120",
-  //     supercatogery: "regular",
-  //     adid: "e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg4ooky2wrpwh",
-  //     seller: "Yakraj5hgkxxi7y4e",
-  //   },
-  //   {
-  //     title: "Used oppo phone",
-  //     thumbnail: "1641133267608-4d2ee2e4-59ca-47fc-b156-0962182d820e.jpg",
-  //     address: "midc malegaon sinnar",
-  //     price: "11000",
-  //     supercatogery: "mobiletablet",
-  //     adid: "4d2ee2e4-59ca-47fc-b156-0962182d820e.jpga6okxxcdgwu",
-  //     seller: "Tulsia6okxxbfk6t",
-  //   },
-  //   {
-  //     title: "Lenovo 2018",
-  //     thumbnail: "1641489082364-f2b035fe-4cbb-4018-a246-824dbf09868c.jpg",
-  //     address: "midc malegaon sinnar",
-  //     price: "25000",
-  //     supercatogery: "pclaptop",
-  //     adid: "f2b035fe-4cbb-4018-a246-824dbf09868c.jpg5dgky387tpa",
-  //     seller: "Ashmita5hgkxxicbt5",
-  //   },
-  //   {
-  //     title: "Secret code",
-  //     thumbnail: "1641469855084-e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg",
-  //     address: "midc malegaon sinnar",
-  //     price: "120",
-  //     supercatogery: "regular",
-  //     adid: "e1881a86-80f2-4c11-85ac-f5c798ac0adc.jpg4ooky2wrpwh",
-  //     seller: "Yakraj5hgkxxi7y4e",
-  //   },
-  // ];
+  const { usercrd, signedin, UpdateFavourites, favourites } =
+    useContext(UserContext);
+  const navigate = useNavigate();
 
-  return Archives.map((x, i) => {
-    return (
-      <NavLink style={{ width: "48%", textDecoration: "none" }} to="/product">
-        <div id="productArchive">
-          <div
-            className="productImage"
-            style={{
-              backgroundImage: `url(http://localhost:5001/uploads/${x.thumbnail})`,
-            }}
-          ></div>
-          {/* <img
+  const navigateNow = (id) => {
+    navigate(id);
+  };
+
+  return Archives.length ? (
+    Archives.map((x, i) => {
+      return signedin && usercrd.username === x.seller ? null : (
+        <div style={{ width: "48%", textDecoration: "none" }}>
+          <div id="productArchive">
+            <div
+              onClick={() => navigateNow(`/product/${x.adid}`)}
+              className="productImage"
+              style={{
+                backgroundImage: `url(http://localhost:5001/product-thumbnail/${x.thumbnail})`,
+              }}
+            ></div>
+            {/* <img
         className="productImage"
         alt="productimage"
         src={require("../../../assets/mobile.jpg")}
       /> */}
-          <div className="bottomInfo">
-            <div className="productinfo">
-              {/* left side */}
-              <div className="productdetail">
-                <h2 className="productPrice">Rs. {x.price}</h2>
-                <h1 className="productTitle">{x.title}</h1>
-              </div>
-              {/* right side */}
-              {deleter ? (
+            <div className="bottomInfo">
+              <div className="productinfo">
+                {/* left side */}
                 <div
-                  style={{ background: "red" }}
-                  onClick={() => console.log("hearted")}
-                  className="heart"
+                  onClick={() => navigateNow(`/product/${x.adid}`)}
+                  className="productdetail"
                 >
-                  <img
-                    style={{ height: "22px", width: "22px" }}
-                    src={require("../../../assets/icon/bin.png")}
-                    alt="heart "
-                  />
+                  <h2 className="productPrice">Rs. {x.price}</h2>
+                  <h1 className="productTitle">{x.title}</h1>
                 </div>
-              ) : (
-                <div onClick={() => console.log("hearted")} className="heart">
-                  <img
-                    style={{ height: "22px", width: "22px" }}
-                    src={require("../../../assets/icon/heart.png")}
-                    alt="heart "
-                  />
-                </div>
-              )}{" "}
+                {/* right side */}
+                {deleter ? (
+                  <div
+                    style={{ background: "red" }}
+                    onClick={() => console.log("hearted")}
+                    className="heart"
+                  >
+                    <img
+                      style={{ height: "22px", width: "22px" }}
+                      src={require("../../../assets/icon/bin.png")}
+                      alt="heart "
+                    />
+                  </div>
+                ) : (
+                  <div
+                    onClick={() =>
+                      signedin
+                        ? UpdateFavourites(usercrd.username, x.adid)
+                        : navigate("/login-user")
+                    }
+                    className="heart"
+                  >
+                    <img
+                      className={
+                        favourites.length && favourites.includes(x.adid)
+                          ? "blackred"
+                          : ""
+                      }
+                      style={{
+                        height: "22px",
+                        width: "22px",
+                        cursor: "pointer",
+                      }}
+                      src={require("../../../assets/icon/heart.png")}
+                      alt="heart "
+                    />
+                  </div>
+                )}
+              </div>
+              <div
+                onClick={() => navigateNow(`/product/${x.adid}`)}
+                className="locationContainer"
+              >
+                <img
+                  className="blackblue"
+                  style={{ height: "20px", width: "20px" }}
+                  src={require("../../../assets/icon/location.png")}
+                  alt="heart "
+                />
+                <p className="addresslabel">{x.address}</p>
+              </div>
             </div>
-            <div className="locationContainer">
-              <img
-                className="blackblue"
-                style={{ height: "20px", width: "20px" }}
-                src={require("../../../assets/icon/location.png")}
-                alt="heart "
-              />
-              <p className="addresslabel">{x.address}</p>
-            </div>
+            {sold && <div className="productmarksold">sold</div>}
           </div>
-          {sold && <div className="productmarksold">sold</div>}
         </div>
-      </NavLink>
-    );
-  });
+      );
+    })
+  ) : (
+    <div
+      style={{
+        display: "flex",
+        marginTop: "50px",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
+      <img
+        width="50%"
+        src={require("../../../assets/empty.png")}
+        alt="empty "
+      />
+      <h4>Did not found Anything</h4>
+    </div>
+  );
 };

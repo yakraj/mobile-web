@@ -77,35 +77,27 @@ export const UserContextProvider = ({ children }) => {
       });
   };
 
-  // console.log(regfirstName, reglastName, regnewpassword, regcnfpassword);
-
   const UserRegister = () => {
-    console.log("function executed");
-    // console.log(
-    //   images,
-    //   regcnfpassword,
-    //   registermobileNumber,
-    //   regfirstName,
-    //   reglastName
-    // );
     setlodreg(true);
-    // console.log("func excuted");
-    Registeruser(
-      images,
-      regcnfpassword,
-      registermobileNumber,
-      regfirstName,
-      reglastName
-    )
-      .then((res) => {
-        setlodreg(false);
-        setusercrd(res[0]);
-        setSignedin(true);
-        navigate("/account");
-      })
-      .catch((err) => {
-        setlodreg(false);
-      });
+    regcnfpassword &&
+      registermobileNumber &&
+      regfirstName &&
+      Registeruser(
+        images,
+        regcnfpassword,
+        registermobileNumber,
+        regfirstName,
+        reglastName
+      )
+        .then((res) => {
+          setlodreg(false);
+          setusercrd(res[0]);
+          setSignedin(true);
+          navigate("/account");
+        })
+        .catch((err) => {
+          setlodreg(false);
+        });
   };
 
   const LoginUser = (phone, key, GetChatlist) => {
@@ -113,11 +105,14 @@ export const UserContextProvider = ({ children }) => {
     UserLogin(phone, key).then((response) => {
       if (response) {
         if (response === "Wrong Mobile or Password") {
+          setlodlogin(false);
           setloginerror(response);
         } else {
           setlodlogin(false);
           setusercrd(response[0]);
-          // GetChatlist(response[0].username);
+          getUserAds(response[0].username);
+          GetChatlist(response[0].username);
+          GetFavourites(response[0].username);
           if (response[0].location) {
             setlattitude(response[0].location[0]);
             setlongitude(response[0].location[1]);
@@ -125,20 +120,21 @@ export const UserContextProvider = ({ children }) => {
 
           response[0].address && setsearchaddressName(response[0].address);
           setSignedin(true);
-          navigate("/account");
+          navigate(-1);
           setloginerror("");
-          fetFavourites(response[0].username).then((response) => {
-            FavouriteAds(response[0].hearts).then((response) => {
-              response === "unable to get any related data"
-                ? setFavAds([])
-                : setFavAds(response);
-            });
-          });
+          // fetFavourites(response[0].username).then((response) => {
+          //   FavouriteAds(response[0].hearts).then((response) => {
+          //     response === "unable to get any related data"
+          //       ? setFavAds([])
+          //       : setFavAds(response);
+          //   });
+          // });
         }
       }
     });
   };
   const Updateavatar = (image, user) => {
+    console.log("function executed");
     UpdateuserIcon(image, user).then((response) => setusercrd(response[0]));
   };
 
@@ -197,6 +193,7 @@ export const UserContextProvider = ({ children }) => {
       response[0].hearts === null
         ? setfavourites([])
         : setfavourites(response[0].hearts);
+      GetFavouriteAds(response[0].hearts);
     });
   };
 
@@ -207,21 +204,33 @@ export const UserContextProvider = ({ children }) => {
         : setFavAds(response);
     });
   };
-  // const UpdateFavourites = (username, fav) => {
-  //   const findInc = favourites ? favourites.includes(fav) : [];
-  //   var newFev = favourites;
-  //   findInc || !findInc.length === 0
-  //     ? setfavourites(
-  //         favourites.filter((x) => x !=== fav),
-  //         (newFev = newFev.filter((x) => x !=== fav))
-  //       )
-  //     : (setfavourites([...favourites, fav]), (newFev = [...newFev, fav]));
-  //   // console.log(newFev);
-  //   updateFavourites(username, newFev).then((res) => {
-  //     setfavourites(res[0].hearts);
-  //     GetFavouriteAds(newFev);
-  //   });
-  // };
+  const UpdateFavourites = (username, fav) => {
+    const findInc = favourites ? favourites.includes(fav) : [];
+    var newFev = favourites;
+
+    if (findInc || !findInc.length == 0) {
+      setfavourites(
+        favourites.filter((x) => x !== fav),
+        (newFev = newFev.filter((x) => x !== fav))
+      );
+    } else {
+      setfavourites([...favourites, fav]);
+      newFev = [...newFev, fav];
+    }
+
+    // findInc || !findInc.length == 0
+    //   ? setfavourites(
+    //       favourites.filter((x) => x !== fav),
+    //       (newFev = newFev.filter((x) => x !== fav))
+    //     )
+    //   : (setfavourites([...favourites, fav]), (newFev = [...newFev, fav]));
+    // console.log(newFev);
+    updateFavourites(username, newFev).then((res) => {
+      console.log("this is function is working");
+      setfavourites(res[0].hearts);
+      GetFavouriteAds(newFev);
+    });
+  };
 
   const GetAddress = (placeid) => {
     getLatLong(placeid).then((response) => {
@@ -365,7 +374,7 @@ export const UserContextProvider = ({ children }) => {
         GetFavourites,
         favourites,
         setfavourites,
-        // UpdateFavourites,
+        UpdateFavourites,
         GetFavouriteAds,
         loginerror,
         gettnbinfo,
@@ -396,6 +405,8 @@ export const UserContextProvider = ({ children }) => {
         DeleteUserAd,
         UpdateAddress,
         setusercrd,
+        loadreg,
+        lodLogin,
       }}
     >
       {children}

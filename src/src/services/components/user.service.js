@@ -146,20 +146,12 @@ export const GetUserAds = (user) =>
 export const UpdateuserIcon = (images, user) => {
   const data = new FormData();
   data.append("username", user);
-  if (images) {
-    let extArray = images.path.split("/");
-    let extension = extArray[extArray.length - 1];
-    data.append("fileData", {
-      uri: images.path,
-      type: "image/jpeg",
-      name: extension,
-    });
-  }
+  images && data.append("fileData", images);
   const config = {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "multipart/form-data",
+      // "Content-Type": "multipart/form-data",
     },
     body: data,
   };
@@ -181,17 +173,17 @@ export const Registeruser = (
   data.append("firstname", regfirstName);
   data.append("lastname", reglastName);
 
-  // images && data.append("fileData", images[0]);
+  images && data.append("fileData", images);
 
-  if (images) {
-    // let extArray = images.path.split("/");
-    // let extension = extArray[extArray.length - 1];
-    data.append("fileData", {
-      uri: images.path,
-      type: "image/jpeg",
-      name: images.name,
-    });
-  }
+  // if (images) {
+  //   // let extArray = images.path.split("/");
+  //   // let extension = extArray[extArray.length - 1];
+  //   data.append("fileData", {
+  //     uri: images[0].path,
+  //     type: "image/jpeg",
+  //     name: images[0].name,
+  //   });
+  // }
   const config = {
     method: "POST",
     headers: {

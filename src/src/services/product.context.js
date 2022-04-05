@@ -5,6 +5,7 @@ import {
   GetOnlyProductLikes,
   productLv,
   updateProductLike,
+  WebInfo,
   productinfo,
 } from "./components/product.service";
 export const ProductContext = React.createContext();
@@ -14,11 +15,11 @@ export const ProductContextProvider = ({ children }) => {
   const [productInfo, setproductInfo] = useState();
   const [isloadingplv, setisloadingplv] = useState(false);
   const [isloadingproductinfo, setisloadingproductinfo] = useState(false);
-
+  const [webInfo, setWebInfo] = useState();
   const GetproductLikes = (adid, user) => {
     GetProductLikes(adid, user).then((response) => setProductLikes(response));
   };
-  const GetonlyProductLikes = (adid, user) => {
+  const GetonlyProductLikes = (adid) => {
     GetOnlyProductLikes(adid).then((response) => setProductLikes(response));
   };
 
@@ -42,6 +43,12 @@ export const ProductContextProvider = ({ children }) => {
     });
   };
 
+  const webProductInfo = (adid) => {
+    WebInfo(adid).then((response) => {
+      setWebInfo(response);
+    });
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -57,6 +64,8 @@ export const ProductContextProvider = ({ children }) => {
         isloadingproductinfo,
         setisloadingplv,
         setisloadingproductinfo,
+        webProductInfo,
+        webInfo,
       }}
     >
       {children}

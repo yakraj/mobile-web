@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../subcatogery/subcatogery.cat.css";
 import { SecondCato } from "../../component/secondCato.details";
 import { Properties } from "../../component/component.details";
 import { Theme } from "../../../../infrastructure/theme/index";
 import { Topbar } from "../../../../components/global/topbar";
 import { Link, useLocation } from "react-router-dom";
+import { InputSellContext } from "../../../../services/sell.input.context";
 export const SellSubCatogery = (props) => {
+  const { cotogeryJoiner } = useContext(InputSellContext);
   let location = useLocation();
   // console.log(location.state);
   // const { navigation } = props;
@@ -28,6 +30,10 @@ export const SellSubCatogery = (props) => {
           {Cato.map((pro, i) => {
             return (
               <Link
+                key={i}
+                onClick={() =>
+                  cotogeryJoiner(catogery, Cato[i].title, Cato[i].superCatogery)
+                }
                 style={{ textDecoration: "none" }}
                 to={Cato[i].to === "skip" ? "/important-info" : "/input-sell"}
                 state={{

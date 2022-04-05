@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Topbar } from "./../../../components/global/topbar";
-import Profile from "../../../../assets/profile.jpg";
 import "./updateprofile.css";
+import imageCompression from "browser-image-compression";
 import { Link } from "react-router-dom";
+import { host } from "../../../services/host.network";
+
 import { UserContext } from "./../../../services/user.contex";
 export const EditProfile = () => {
   const { usercrd, Updateavatar, UpdateName, UpdateMobile } =
@@ -12,7 +14,27 @@ export const EditProfile = () => {
   useEffect(() => {
     seticon("");
   }, [seticon]);
-
+  async function handleImageUpload(files) {
+    const imageFile = files[0];
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 460,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      Updateavatar(compressedFile, usercrd.username);
+      // setImages(compressedFile);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const fileSelect = (e) => {
+    const { files } = e.target;
+    console.log(files[0]);
+    handleImageUpload(files);
+    seticon(URL.createObjectURL(files[0]));
+  };
   const [firstname, setfirstname] = useState(usercrd.firstname);
   const [lastname, setlastname] = useState(usercrd.lastname);
   const [mobile, setmobile] = useState(usercrd.mobile);
@@ -23,9 +45,24 @@ export const EditProfile = () => {
       <div className="profile-change-container">
         <div
           className="profile-image"
-          style={{ backgroundImage: `url(${Profile})` }}
-        />
-
+          style={{
+            backgroundImage: `url(${
+              icon ? icon : host + "/useravatar/" + usercrd.image
+            })`,
+          }}
+        >
+          <input
+            onChange={fileSelect}
+            style={{
+              opacity: "0",
+              height: "100%",
+              width: "100%",
+              background: "red",
+            }}
+            type="file"
+            accept="image/*"
+          />
+        </div>
         <div className="profile-image-edit-pen">
           <img
             height="20px"

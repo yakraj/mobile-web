@@ -4,6 +4,7 @@
   position: fixed;
   overflow-x: hidden;
   overflow-y: scroll;
-  /* height: 83%; */
+  height: 83%;
+  width: 100%;
   justify-content: space-around;
 }

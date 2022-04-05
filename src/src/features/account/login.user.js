@@ -3,12 +3,15 @@ import "./loginuser.css";
 import { Topbar } from "./../../components/global/topbar";
 import { Link } from "react-router-dom";
 import { UserContext } from "./../../services/user.contex";
+import { ChattingContext } from "./../../services/chatting.context";
 
 export const LoginUser = () => {
-  const { GetuseruiAds, LoginUser, loginerror } = useContext(UserContext);
-  useEffect(() => {
-    GetuseruiAds();
-  }, []);
+  const { GetChatlist } = useContext(ChattingContext);
+  const { GetuseruiAds, LoginUser, loginerror, lodLogin } =
+    useContext(UserContext);
+  // useEffect(() => {
+  //   GetuseruiAds();
+  // }, []);
 
   const [mobile, setmobile] = useState();
   const [key, setkey] = useState();
@@ -30,9 +33,22 @@ export const LoginUser = () => {
             placeholder="password"
           />
           {loginerror && <p style={{ color: "red" }}>{loginerror}</p>}
-          <div onClick={() => LoginUser(mobile, key)} className="login-button">
-            Log In
-          </div>
+
+          {lodLogin ? (
+            <img
+              width="50"
+              src={require("../../../assets/loading.gif")}
+              alt="loading"
+            />
+          ) : (
+            <div
+              onClick={() => LoginUser(mobile, key, GetChatlist)}
+              className="login-button"
+            >
+              Log In
+            </div>
+          )}
+
           <Link style={{ textDecoration: "none" }} to="/create-account">
             <p
               className="create-account"

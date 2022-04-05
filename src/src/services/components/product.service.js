@@ -31,3 +31,9 @@ export const productinfo = (adid) =>
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ adid: adid }),
   }).then((res) => res.json());
+export const WebInfo = (adid) =>
+  fetch(host + "/web/product/info", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ adid: adid }),
+  }).then((res) => res.json());

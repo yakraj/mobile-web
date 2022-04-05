@@ -1,27 +1,220 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./style/product.css";
+
+import { Link, useNavigate } from "react-router-dom";
 import { Topbar } from "./../../components/global/topbar";
 import user from "../../../assets/profile.jpg";
+import PinchZoomPan from "react-image-zoom-pan";
+import Slider from "react-slick";
+import { useLocation } from "react-router-dom";
+import { ProductContext } from "./../../services/product.context";
+import { host } from "../../services/host.network";
+import { UserContext } from "./../../services/user.contex";
+import { ChattingContext } from "./../../services/chatting.context";
 export const ProductView = () => {
-  const tryit = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  return (
-    <div style={{ marginBottom: "10%" }}>
-      <Topbar title="Lenovo new set" />
-      {/* this is for image section */}
-      <div className="product-images">
-        <img alt="product " src={require("../../../assets/mobile.jpg")} />
+  const navigate = useNavigate();
+  const {
+    ProductLV,
+    ProductInfo,
+    ProductLikes,
+    userViews,
+    GetonlyProductLikes,
+    productInfo,
+    webProductInfo,
+    updateProductLike,
+    webInfo,
+    GetproductLikes,
+  } = useContext(ProductContext);
+
+  const { getUserchatData, setNewchatid, chatArchive, getUserschat } =
+    useContext(ChattingContext);
+
+  const { usercrd, signedin } = useContext(UserContext);
+
+  const data = useLocation();
+  const [zoomImage, setZoomImage] = useState(false);
+  useEffect(() => {
+    data.hash ? setZoomImage(true) : setZoomImage(false);
+  });
+
+  useEffect(() => {
+    ProductInfo(data.pathname.substring(9));
+    ProductLV(data.pathname.substring(9));
+    signedin
+      ? GetproductLikes(data.pathname.substring(9), usercrd.username)
+      : GetonlyProductLikes(data.pathname.substring(9));
+    webProductInfo(data.pathname.substring(9));
+  }, []);
+
+  const Cfinder = () => {
+    var contains = chatArchive.find(
+      (x) => x.productid === data.pathname.substring(9)
+    );
+    if (contains) {
+      return contains.chatid;
+    } else {
+      return undefined;
+    }
+  };
+  const settings = {
+    dots: true,
+    adaptiveHeight: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    arrows: false,
+    slidesToScroll: 1,
+  };
+  const LinkImage = () => {
+    navigate("#images");
+  };
+  const LinkBack = () => {
+    navigate("");
+  };
+
+  const LikeButton = () => {
+    signedin
+      ? updateProductLike(data.pathname.substring(9), usercrd.username)
+      : navigate("/login-user");
+  };
+  const WishButton = () => {};
+  const ChatButton = () => {
+    signedin
+      ? navigate("/chattingui", {
+          state: {
+            Details: {
+              buyer: usercrd.username,
+              seller: userViews[2],
+              adid: data.pathname.substring(9),
+              chatid: Cfinder(),
+            },
+          },
+        })
+      : navigate("/login-user");
+    getUserchatData(userViews[2]);
+    setNewchatid(undefined);
+    Cfinder() && getUserschat(Cfinder());
+  };
+  const ImgePopup = () => {
+    return (
+      <div
+        id="images"
+        style={{
+          display: zoomImage ? "block" : "none",
+          height: "100vh",
+          position: "fixed",
+          width: "100%",
+          background: "black",
+          zIndex: 1001,
+          top: 0,
+          left: 0,
+        }}
+      >
+        <div
+          onClick={() => LinkBack()}
+          style={{
+            position: "absolute",
+            top: "15px",
+            left: "15px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "10px",
+            opacity: "0.7",
+            borderRadius: "50%",
+            background: "pink",
+            zIndex: 101,
+          }}
+        >
+          <img
+            width="30px"
+            src={require("../../../assets/icon/back.png")}
+            alt="back imgae"
+          />
+        </div>
+        <Slider {...settings}>
+          {productInfo &&
+            productInfo[2].images.map((x, i) => {
+              return (
+                <div key={i}>
+                  {/* <div
+                    style={{
+                      height: "100vh",
+                      // position: "fixed",
+                      zIndex: 100,
+                      top: 0,
+                      left: 0,
+                      backgroundImage: `url(http://localhost:5001/uploads/${x})`,
+                      // backgroundImage: `url(https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg)`,
+                    }}
+                    className="productImages"
+                  ></div> */}
+                  <div style={{ background: "black", height: "100vh" }}>
+                    <PinchZoomPan zoomButtons={false} position="center">
+                      <img
+                        width="100%"
+                        alt="Test"
+                        src={`${host}/uploads/${x}`}
+                      />
+                    </PinchZoomPan>
+                  </div>
+                </div>
+              );
+            })}
+        </Slider>
       </div>
+    );
+  };
+
+  return (
+    <div
+      style={{
+        marginBottom: "10%",
+        position: zoomImage ? "fixed" : "relative",
+      }}
+    >
+      <Topbar title={webInfo && webInfo.title} />
+      <ImgePopup />
+      {/* this is for image section */}
+      <Slider {...settings}>
+        {productInfo &&
+          productInfo[2].images.map((x, i) => {
+            return (
+              <div key={i}>
+                <div
+                  onClick={() => LinkImage()}
+                  style={{
+                    backgroundImage: `url(${host}/uploads/${x})`,
+                    // backgroundImage: `url(https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg)`,
+                  }}
+                  className="productImages"
+                ></div>
+              </div>
+            );
+          })}
+      </Slider>
+
       {/* this is for product and user info */}
       <div className="user-product-info">
         <div className="user-product-info-left">
           {/* icons */}
-          <div className="product-icons">
-            <img
-              width="30px"
-              alt="like"
-              src={require("../../../assets/icon/like.svg").default}
-            />
-            <p style={{ margin: 0, fontSize: "12px", color: "grey" }}>1015</p>
+          <div onClick={() => LikeButton()} className="product-icons">
+            {ProductLikes[0] ? (
+              <img
+                width="30px"
+                alt="like"
+                src={require("../../../assets/icon/like.png")}
+              />
+            ) : (
+              <img
+                width="30px"
+                alt="like"
+                src={require("../../../assets/icon/like.svg").default}
+              />
+            )}
+            <p style={{ margin: 0, fontSize: "12px", color: "grey" }}>
+              {ProductLikes}
+            </p>
           </div>
           <div className="product-icons">
             <img
@@ -39,25 +232,34 @@ export const ProductView = () => {
               alt="view"
               src={require("../../../assets/icon/view.svg").default}
             />
-            <p style={{ margin: 0, fontSize: "12px", color: "grey" }}>54</p>
+            <p style={{ margin: 0, fontSize: "12px", color: "grey" }}>
+              {userViews && userViews[0].views}
+            </p>
           </div>
         </div>
         <div className="userinfo">
           <div className="productinformation">
-            <h3>Ashmita Pariyar</h3>
+            <h3>
+              {userViews &&
+                userViews[1].firstname + " " + userViews[1].lastname}
+            </h3>
             <p>View Profile</p>
           </div>
-          <div
-            className="userimage"
-            style={{ backgroundImage: `url(${user})` }}
-          />
+          {userViews && (
+            <div
+              className="userimage"
+              style={{
+                backgroundImage: `url(${host}/useravatar/${userViews[1].image})`,
+              }}
+            />
+          )}
         </div>
       </div>
       {/* product main info */}
       <div className="product-imp-info">
-        <h3 className="product-title">Lenovo new set</h3>
+        <h3 className="product-title">{webInfo && webInfo.title}</h3>
         <div className="product-price-date">
-          <h3>₹ 25000</h3>
+          <h3>₹ {webInfo && webInfo.price}</h3>
           <p>27 June 2021</p>
         </div>
         <div className="product-location">
@@ -67,37 +269,79 @@ export const ProductView = () => {
             src={require("../../../assets/icon/location.png")}
             alt="location"
           />
-          <p>midc malegaon sinnar</p>
+          <p>{webInfo && webInfo.address}</p>
         </div>
       </div>
       {/* product details container */}
-      <div class="product-details">
-        <div className="product-details-title">
-          <img
-            width="12%"
-            height="12%"
-            src={require("../../../assets/decorate.png")}
-            alt="decorate"
-          />
-          <h3>Product Details</h3>
-          <img
-            width="12%"
-            height="12%"
-            src={require("../../../assets/decorate.png")}
-            alt="decorate"
-          />
+      {productInfo && Object.keys(productInfo[0]).length ? (
+        <div className="product-details">
+          <div id="product" className="product-details-title">
+            <img
+              width="12%"
+              height="12%"
+              src={require("../../../assets/decorate.png")}
+              alt="decorate"
+            />
+            <h3>Product Details</h3>
+            <img
+              width="12%"
+              height="12%"
+              src={require("../../../assets/decorate.png")}
+              alt="decorate"
+            />
+          </div>
+          {productInfo &&
+            Object.keys(productInfo[0]).map((x, i) => {
+              return (
+                <h3
+                  style={{
+                    textTransform: "capitalize",
+                    display: "flex",
+                    alignItems: "center",
+                    margin: "4px",
+                    color: "#000000c4",
+                    fontSize: "15px",
+                  }}
+                  key={i}
+                >
+                  {x.replace("_", " ")}: {"  "}
+                  <p
+                    style={{ fontWeight: 600, marginLeft: "10px" }}
+                    trans="uppercase"
+                    weight="normal"
+                  >
+                    {Object.values(productInfo[0])[i]}
+                  </p>
+                </h3>
+              );
+            })}
         </div>
-        {tryit.map((x, i) => {
-          return (
-            <div key={i} className="product-details-items">
-              <strong>Processor:</strong>
-              <p style={{ marginLeft: "5px" }}>intel</p>
-            </div>
-          );
-        })}
-      </div>
+      ) : null}
       {/* product description */}
-      <div class="product-details">
+      {productInfo && productInfo[1].description && (
+        <div className="product-details">
+          <div className="product-details-title">
+            <img
+              width="12%"
+              height="12%"
+              src={require("../../../assets/decorate.png")}
+              alt="decorate"
+            />
+            <h3>Product Description</h3>
+            <img
+              width="12%"
+              height="12%"
+              src={require("../../../assets/decorate.png")}
+              alt="decorate"
+            />
+          </div>
+          <p style={{ margin: "5px", textAlign: "center" }}>
+            {productInfo && productInfo[1].description}
+          </p>
+        </div>
+      )}
+
+      <div className="product-details">
         <div className="product-details-title">
           <img
             width="12%"
@@ -105,7 +349,7 @@ export const ProductView = () => {
             src={require("../../../assets/decorate.png")}
             alt="decorate"
           />
-          <h3>Product Description</h3>
+          <h3>Location Information</h3>
           <img
             width="12%"
             height="12%"
@@ -113,31 +357,36 @@ export const ProductView = () => {
             alt="decorate"
           />
         </div>
-        <p style={{ margin: "5px", textAlign: "center" }}>
-          What is description with example? The definition of a description is a
-          statement that gives details about someone or something. An example of
-          description is a story about the places visited on a family trip. ...
-          The type description of the fungus was written by a botanist.
-        </p>
+        <img
+          width="100%"
+          src={require("../../../assets/mapbox.png")}
+          alt="location"
+        />
       </div>
 
       {/* chat call action */}
       <div className="chatcall-section">
-        <div className="chat-call-action">
+        <div onClick={() => ChatButton()} className="chat-call-action">
           <img
             alt="chat"
             src={require("../../../assets/navigation/chat.svg").default}
           />
           <h4>Chat</h4>
         </div>
-        <div className="chat-call-action">
-          <img
-            width="15%"
-            alt="chat"
-            src={require("../../../assets/icon/call.png")}
-          />
-          <h4>Call</h4>
-        </div>
+        {userViews && userViews[3] && (
+          <a
+            style={{ textDecoration: "none" }}
+            href={"tel:" + userViews[3]}
+            className="chat-call-action"
+          >
+            <img
+              width="15%"
+              alt="chat"
+              src={require("../../../assets/icon/call.png")}
+            />
+            <h4>Call</h4>
+          </a>
+        )}
       </div>
     </div>
   );

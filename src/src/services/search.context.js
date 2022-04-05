@@ -1,5 +1,4 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
-export const SearchContext = createContext();
 import { UserContext } from "./user.contex";
 import {
   Getautosuggest,
@@ -12,6 +11,7 @@ import {
   Autocomplete,
   getTextLoc,
 } from "./components/search.service";
+export const SearchContext = createContext();
 export const SearchProvider = ({ children }) => {
   const [autosuggest, setAutoSuggest] = useState([]);
   const [subCatogeryreco, setsubCatogeryreco] = useState([]);
@@ -97,11 +97,11 @@ export const SearchProvider = ({ children }) => {
   const GetFilteredAds = (filter) => {
     const FindSimilar = filterValues.find((f) => f.id === filter);
 
-    FindSimilar
-      ? null
-      : getFiltered(searchKeyword, filter).then((json) =>
-          setFilterValues([...filterValues, { id: filter, value: json }])
-        );
+    // FindSimilar
+    //   ? null
+    //   : getFiltered(searchKeyword, filter).then((json) =>
+    //       setFilterValues([...filterValues, { id: filter, value: json }])
+    //     );
   };
   const GetTextLocation = (geo) => {
     // console.log(geo);

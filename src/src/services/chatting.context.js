@@ -8,7 +8,6 @@ import {
   CreatefirstChat,
   DeleteChatArchive,
 } from "./components/chatting.service";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { UserContext } from "../services/user.contex";
 export const ChattingContext = React.createContext();
@@ -22,7 +21,8 @@ export const ChattingProvider = ({ children }) => {
   const [UserChatsLoading, setUserChatsLoading] = useState(false);
   const [Newchatid, setNewchatid] = useState("");
   const [madeLoop, setMadeloop] = useState([]);
-
+  const [LastchatId, setLastchatId] = useState("");
+  const [activeArchive, setactiveArchive] = useState([]);
   const makeChanges = () => {
     fetch("http://192.168.87.142:5001/getmessages", {
       method: "post",
@@ -31,9 +31,8 @@ export const ChattingProvider = ({ children }) => {
         ACCEPT: "application/json",
         "Content-Type": "application/json",
       },
-    })
-      .then((response) => response.json())
-      .then((response) => setsocketmessage(response));
+    }).then((response) => response.json());
+    // .then((response) => setsocketmessage(response));
   };
 
   const { username } = useContext(UserContext);
@@ -64,8 +63,10 @@ export const ChattingProvider = ({ children }) => {
   const ProductChatPoll = (chatid, activeChatid) => {
     return CreateChatPool(chatid)
       .then((response) => {
+        // console.log(response);
         var findInclude = ReturnChats.find((x) => x.id === chatid);
-        if (!response.data === "end") {
+        if (response.data === "end") {
+        } else {
           if (findInclude) {
             var removeChat = ReturnChats.filter((x) => x.id !== chatid);
             setReturnChats([
@@ -79,42 +80,69 @@ export const ChattingProvider = ({ children }) => {
             ]);
           }
         }
+        // if (!response.data === "end") {
+        //   console.log("on end", response.data);
+        //   if (findInclude) {
+        //     var removeChat = ReturnChats.filter((x) => x.id !== chatid);
+        //     setReturnChats([
+        //       ...removeChat,
+        //       { id: response.data[0], content: response.data[1] },
+        //     ]);
+        //   } else {
+        //     console.log("on set", response.data);
+        //     setReturnChats([
+        //       ...ReturnChats,
+        //       { id: response.data[0], content: response.data[1] },
+        //     ]);
+        //   }
+        // }
       })
       .finally(() => {
         return PollMaker(chatid);
       });
   };
+
   const getUserschat = (chatid) => {
+    setUserData("");
     setactiveChatid(chatid);
     setUserChatsLoading(true);
-    return getProductChats(chatid).then((response) => {
-      var findInc = madeLoop.find((x) => x === chatid);
-      findInc ? null : setMadeloop([...madeLoop, chatid]);
+    const filterActivearchive = activeArchive.find((x) => x === chatid);
 
-      var findInclude = ReturnChats.find((x) => x.id === chatid);
-      if (findInclude) {
-        var removeChat = ReturnChats.filter((x) => x.id !== chatid);
-        setReturnChats([
-          ...removeChat,
-          { id: response[0], content: response[1] },
-        ]);
-      } else {
-        setReturnChats([
-          ...ReturnChats,
-          { id: response[0], content: response[1] },
-        ]);
-      }
+    if (filterActivearchive) {
+    } else {
+      setactiveArchive([...activeArchive, chatid]);
+    }
+    return filterActivearchive
+      ? null
+      : getProductChats(chatid).then((response) => {
+          var findInc = madeLoop.find((x) => x === chatid);
+          // findInc ? null : setMadeloop([...madeLoop, chatid]);
 
-      setUserChatsLoading(false);
-      setTimeout(() => {
-        !findInc && PollMaker(chatid);
-      }, 1000);
-    });
+          var findInclude = ReturnChats.find((x) => x.id === chatid);
+          if (findInclude) {
+            var removeChat = ReturnChats.filter((x) => x.id !== chatid);
+            setReturnChats([
+              ...removeChat,
+              { id: response[0], content: response[1] },
+            ]);
+          } else {
+            setReturnChats([
+              ...ReturnChats,
+              { id: response[0], content: response[1] },
+            ]);
+          }
+
+          setUserChatsLoading(false);
+          setTimeout(() => {
+            !findInc && PollMaker(chatid);
+          }, 1000);
+        });
   };
 
   const createFirstchat = (buyer, seller, adid, chatText) => {
     CreatefirstChat(buyer, seller, adid, chatText).then((response) => {
       setChatArchive([...chatArchive, response[0]]);
+      setLastchatId(response[1][0]);
       setReturnChats([
         ...ReturnChats,
         { id: response[1][0], content: [response[1][1]] },
@@ -160,63 +188,12 @@ export const ChattingProvider = ({ children }) => {
     DeleteChatArchive(chatid, userid).then((response) => {
       setChatArchive(response);
     });
+    setReturnChats(ReturnChats.filter((x) => x.id !== chatid));
   };
 
   // storing data for offline
-  const StoreChatArchive = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("@chatarchive", jsonValue);
-    } catch (e) {
-      console.log("unable to store data", e);
-    }
-  };
-  const StoreChatContent = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("@chatcontent", jsonValue);
-    } catch (e) {
-      console.log("unable to store data", e);
-    }
-  };
-  // retreiving data for offline
-  const RetrieveChatArchive = async () => {
-    const RestoreChatArchive = (chatarchive) => {
-      setChatArchive(chatarchive);
-    };
-    try {
-      const jsonValue = await AsyncStorage.getItem("@chatarchive");
-      return jsonValue != null
-        ? RestoreChatArchive(JSON.parse(jsonValue))
-        : null;
-    } catch (e) {
-      console.log("unable to retrieve data", e);
-    }
-  };
-  const RetrieveChatContent = async () => {
-    const RestoreChatContent = (chats) => {
-      setReturnChats(chats);
-    };
-    try {
-      const jsonValue = await AsyncStorage.getItem("@chatcontent");
-      return jsonValue != null
-        ? RestoreChatContent(JSON.parse(jsonValue))
-        : null;
-    } catch (e) {
-      console.log("unable to retrieve data", e);
-    }
-  };
+
   // function workers
-  useEffect(() => {
-    RetrieveChatArchive();
-    RetrieveChatContent();
-  }, []);
-  useEffect(() => {
-    StoreChatArchive(chatArchive);
-  }, [chatArchive]);
-  useEffect(() => {
-    StoreChatContent(ReturnChats);
-  }, [ReturnChats]);
 
   return (
     <ChattingContext.Provider
@@ -229,6 +206,7 @@ export const ChattingProvider = ({ children }) => {
         loadingChat,
         getUserchatData,
         userData,
+        setUserData,
         getUserschat,
         ReturnChats,
         UserChatsLoading,
@@ -240,6 +218,8 @@ export const ChattingProvider = ({ children }) => {
         Newchatid,
         setNewchatid,
         deleteChatArchive,
+        LastchatId,
+        setLastchatId,
       }}
     >
       {children}

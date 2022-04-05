@@ -7,6 +7,7 @@
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.615);
 }
+
 .user-product-info {
   display: flex;
   box-sizing: border-box;
@@ -31,6 +32,41 @@ p {
   color: grey;
   font-size: 13px;
 }
+.slick-dots {
+  margin-bottom: 40px !important;
+}
+
+.slick-dots li button:before {
+  font-family: "slick";
+  font-size: 6px;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  content: "•";
+  text-align: center;
+  opacity: 0.25;
+  color: red;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.productImages {
+  padding-bottom: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 70vh;
+  width: 100%;
+  background: #000;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
 .chatcall-section {
   margin-bottom: 100px;
 }
@@ -48,7 +84,8 @@ p {
 .chat-call-action {
   box-sizing: border-box;
   background: skyblue;
-  width: 45%;
+  width: 100%;
+  margin: 5px;
   padding: 10px;
   display: flex;
   justify-content: center;
