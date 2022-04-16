@@ -2,16 +2,13 @@ import React, { useContext, useEffect } from "react";
 import "./updatelocation.css";
 import { Topbar } from "./../../../components/global/topbar";
 import { useJsApiLoader } from "@react-google-maps/api";
+import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../../services/search.context";
 import { UserContext } from "./../../../services/user.contex";
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-} from "react-google-maps";
+import { Gmap } from "../../GoogleMap/mapapi";
 
 export const UpdateLocation = () => {
+  const navigate = useNavigate();
   const {
     setsearchaddressName,
     searchaddressName,
@@ -24,6 +21,7 @@ export const UpdateLocation = () => {
     setlattitude,
     setlongitude,
     UpdateAddress,
+    signedin,
     usercrd,
   } = useContext(UserContext);
 
@@ -54,7 +52,9 @@ export const UpdateLocation = () => {
     height: "100%",
   };
 
-  console.log(lattitude, longitude);
+  useEffect(() => {
+    setLocationValue(searchaddressName);
+  }, [searchaddressName, setLocationValue]);
   const center = {
     lat: lattitude ? parseFloat(lattitude) : 28.394345401646063,
     lng: longitude ? parseFloat(longitude) : 81.86099197715521,
@@ -77,32 +77,20 @@ export const UpdateLocation = () => {
     setMap(null);
   }, []);
 
-  const Map = () => {
-    return (
-      <GoogleMap
-        defaultZoom={18}
-        defaultCenter={{
-          lat: lattitude ? parseFloat(lattitude) : 28.394345401646063,
-          lng: longitude ? parseFloat(longitude) : 81.86099197715521,
-        }}
-      >
-        <Marker
-          position={{
-            lat: lattitude && parseFloat(lattitude),
-            lng: longitude && parseFloat(longitude),
-          }}
-        />
-      </GoogleMap>
-    );
+  const CurrentLocationReq = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      GetTextLocation([position.coords.latitude, position.coords.longitude]);
+    });
   };
-
-  const WrappedMap = withScriptjs(withGoogleMap(Map));
 
   return (
     <>
       <Topbar title="Update Location" />
       <div style={{ padding: "10px", boxSizing: "border-box" }}>
-        <div className="use-my-loction-button">
+        <div
+          onClick={() => CurrentLocationReq()}
+          className="use-my-loction-button"
+        >
           <img
             height="30px"
             width="30px"
@@ -115,8 +103,9 @@ export const UpdateLocation = () => {
         <input
           className="location-update-input"
           type="text"
+          value={LocationValue}
           onChange={(e) => setLocationValue(e.target.value)}
-          placeholder="Sahare Nepal"
+          placeholder="Your city/locality"
         />
         {/* location reccomendation */}
         <div>
@@ -148,14 +137,33 @@ export const UpdateLocation = () => {
           style={{ width: "100%", height: "500px" }}
           className="location-map-container"
         >
-          <WrappedMap
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyD-Fh1LhCtCgcsv_HWERqm4abtYpScMigs`}
-            loadingElement={<div style={{ height: "100%", width: "100%" }} />}
-            containerElement={<div style={{ height: "100%", width: "100%" }} />}
-            mapElement={<div style={{ height: "100%" }} />}
-          />
+          <Gmap lattitude={lattitude} longitude={longitude} />
         </div>
-        <div className="update-location-button">Update Location</div>
+        <div
+          style={{ marginBottom: "60px" }}
+          // onCilck={() => {
+          //   console.log("hello there0");
+          //   signedin
+          //     ? UpdateAddress(
+          //         searchaddressName,
+          //         [lattitude, longitude],
+          //         usercrd.username
+          //       )
+          //     : navigate("/login-user");
+          // }}
+          onClick={() => {
+            signedin
+              ? UpdateAddress(
+                  searchaddressName,
+                  [lattitude, longitude],
+                  usercrd.username
+                )
+              : navigate("/login-user");
+          }}
+          className="update-location-button"
+        >
+          Update Location
+        </div>
       </div>
     </>
   );

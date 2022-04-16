@@ -1,9 +1,11 @@
 import React, { useState, useEffect, lodash } from "react";
 import { UploadImage, CreateAd, AdThumbnail } from "./components/sell.service";
+import { useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 export const InputSellContext = React.createContext();
 
 export const InputSellProvider = ({ children }) => {
+  const navigate = useNavigate();
   // these are cagoterizing
   const [catogery, setcatogery] = useState();
   const [subcatogery, setsubcatogery] = useState();
@@ -174,7 +176,7 @@ export const InputSellProvider = ({ children }) => {
     setBookAuthor("");
   };
 
-  const NewProductAd = (thumb, username) => {
+  const NewProductAd = (thumb, username, lattitude, longitude) => {
     CreateAd({
       data: {
         catogery: catogery,
@@ -215,6 +217,8 @@ export const InputSellProvider = ({ children }) => {
         Bookyear: Bookyear,
         BookAuthor: BookAuthor,
         clearFunc: clearFunc,
+        lattitude: lattitude,
+        longitude: longitude,
         mobile: allowMobile ? (MobNumber ? MobNumber : username.mobile) : null,
       },
     });
@@ -229,13 +233,17 @@ export const InputSellProvider = ({ children }) => {
     // console.log(MonitorType, MonitorSize);
   };
 
-  const UploadAdThumbnail = (user) => {
+  const UploadAdThumbnail = (user, lattitude, longitude) => {
     // console.log(Thumbnail);
-    AdThumbnail(singleFileCompressor(Thumbnail)).then((response) =>
-      response.status === 200
-        ? response.json().then((res) => NewProductAd(res, user))
-        : console.log("something went wrong")
-    );
+    lattitude
+      ? AdThumbnail(singleFileCompressor(Thumbnail)).then((response) =>
+          response.status === 200
+            ? response
+                .json()
+                .then((res) => NewProductAd(res, user, lattitude, longitude))
+            : console.log("something went wrong")
+        )
+      : navigate("/login-user");
   };
 
   return (

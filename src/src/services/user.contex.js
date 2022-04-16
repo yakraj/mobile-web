@@ -133,6 +133,7 @@ export const UserContextProvider = ({ children }) => {
       }
     });
   };
+  console.log(lattitude, longitude);
   const Updateavatar = (image, user) => {
     console.log("function executed");
     UpdateuserIcon(image, user).then((response) => setusercrd(response[0]));
@@ -152,7 +153,7 @@ export const UserContextProvider = ({ children }) => {
   const UpdateAddress = (address, location, user) => {
     Updateaddress(address, location, user).then((response) => {
       if (response === "sorry") {
-        console.log("sorry");
+        window.alert("unable to update your address. Please try again");
       } else {
         // Alert.alert("Success", "You have successfully updated your address.", [
         //   {
@@ -162,6 +163,7 @@ export const UserContextProvider = ({ children }) => {
         //   },
         // ]);
 
+        window.alert("Successfully updated your location.");
         setsearchaddressName(response[0].address);
         setlattitude(response[0].location[0]);
         setlongitude(response[0].location[1]);

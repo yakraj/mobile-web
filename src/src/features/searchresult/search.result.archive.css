@@ -1,0 +1,24 @@
+.search-result-archive {
+  border-radius: 15px;
+  overflow: hidden;
+  width: 46%;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid grey;
+}
+.search-item-result .location-info-search {
+  display: flex;
+}
+.search-item-result {
+  padding: 5px;
+}
+.search-item-result .title {
+  color: grey;
+  margin: 0px;
+}
+
+.search-item-result .price {
+  margin: 0px;
+}

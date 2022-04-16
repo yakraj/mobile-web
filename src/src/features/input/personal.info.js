@@ -1,9 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Topbar } from "./../../components/global/topbar";
 import "./personalinfo.css";
 import { Link, useNavigate } from "react-router-dom";
 import { InputSellContext } from "./../../services/sell.input.context";
 import { UserContext } from "./../../services/user.contex";
+import { SearchContext } from "./../../services/search.context";
+import { Gmap } from "../GoogleMap/mapapi";
+
 export const PersonalInfo = () => {
   const navigate = useNavigate();
   const {
@@ -14,12 +17,49 @@ export const PersonalInfo = () => {
     MobNumber,
     setMobNumber,
   } = useContext(InputSellContext);
-  const { usercrd, signedin } = useContext(UserContext);
 
+  const {
+    usercrd,
+    signedin,
+    searchaddressName,
+    lattitude,
+    longitude,
+    setsearchaddressName,
+    GetAddress,
+  } = useContext(UserContext);
+  const {
+    GetTextLocation,
+    LocationValue,
+    setLocationValue,
+    RecentautocompleteKey,
+    AddressAutocomplete,
+    autocomplete,
+  } = useContext(SearchContext);
   const SubmitButton = () => {
-    signedin ? UploadAdThumbnail(usercrd) : navigate("/user-login");
+    signedin
+      ? UploadAdThumbnail(usercrd, lattitude, longitude)
+      : navigate("/user-login");
   };
-  console.log(MobNumber);
+  const CurrentLocationReq = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      GetTextLocation([position.coords.latitude, position.coords.longitude]);
+    });
+  };
+  useEffect(() => {
+    const delayAutosuggestion = setTimeout(() => {
+      if (LocationValue.length > 1) {
+        searchaddressName !== LocationValue &&
+          RecentautocompleteKey !== LocationValue &&
+          AddressAutocomplete(LocationValue);
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayAutosuggestion);
+  }, [LocationValue]);
+
+  useEffect(() => {
+    setLocationValue(searchaddressName);
+  }, [searchaddressName, setLocationValue]);
 
   return (
     <>
@@ -55,24 +95,45 @@ export const PersonalInfo = () => {
         </div>
         <div className="location-search-container">
           <div className="location-input-sec">
-            <input type="text" placeholder="sahare, nepal" />
+            <input
+              value={LocationValue}
+              onChange={(e) => setLocationValue(e.target.value)}
+              type="text"
+              placeholder="sahare, nepal"
+            />
             <img
               alt="my-location"
+              onClick={() => {
+                CurrentLocationReq();
+              }}
               src={require("../../../assets/icon/my-location.png")}
             />
           </div>
-          <div className="location-reccomendation-container">
-            <img
-              className="blackblue"
-              alt="location"
-              src={require("../../../assets/icon/location.png")}
-            />
-            Kohalpur Nepal
+          {autocomplete.map((x, i) => {
+            return (
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setLocationValue(x.description);
+                  setsearchaddressName(x.description);
+                  GetAddress(x.place_id);
+                  // textinput.current.focus();
+                }}
+                key={i}
+                className="location-reccomendation-container"
+              >
+                <img
+                  className="blackblue"
+                  alt="location"
+                  src={require("../../../assets/icon/location.png")}
+                />
+                {x.description}
+              </div>
+            );
+          })}
+          <div style={{ height: "500px", width: "100%" }}>
+            <Gmap lattitude={lattitude} longitude={longitude} />
           </div>
-          <img
-            alt="locationimage"
-            src={require("../../../assets/mapbox.png")}
-          />
         </div>
 
         <div

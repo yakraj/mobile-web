@@ -12,6 +12,9 @@
   filter: invert(70%) sepia(1) saturate(1100) hue-rotate(240deg) brightness(1)
     contrast(1);
 }
+.blackwhite {
+  filter: invert(1);
+}
 .blackred {
   filter: invert(70%) sepia(1) saturate(1100) hue-rotate(371deg) brightness(1)
     contrast(1);

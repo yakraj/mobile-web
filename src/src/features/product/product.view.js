@@ -1,5 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import "./style/product.css";
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+} from "react-google-maps";
 
 import { Link, useNavigate } from "react-router-dom";
 import { Topbar } from "./../../components/global/topbar";
@@ -11,7 +17,54 @@ import { ProductContext } from "./../../services/product.context";
 import { host } from "../../services/host.network";
 import { UserContext } from "./../../services/user.contex";
 import { ChattingContext } from "./../../services/chatting.context";
+import { Gmap } from "./../GoogleMap/mapapi";
 export const ProductView = () => {
+  const contentDiv = useRef();
+  useEffect(() => {
+    // contentDiv.current.visibilityChanged(function (element, visible) {
+    //   alert("do something");
+    // });
+  });
+
+  const Map = () => {
+    return (
+      <GoogleMap
+        mapTypeId="satellite"
+        defaultZoom={18}
+        defaultCenter={{
+          lat: productInfo
+            ? parseFloat(productInfo[3].lat)
+            : 28.394345401646063,
+          lng: productInfo
+            ? parseFloat(productInfo[3].long)
+            : 81.86099197715521,
+        }}
+      >
+        <Marker
+          position={{
+            lat: productInfo && parseFloat(productInfo[3].lat),
+            lng: productInfo && parseFloat(productInfo[3].long),
+          }}
+        />
+      </GoogleMap>
+    );
+  };
+
+  const WrappedMap = withScriptjs(withGoogleMap(Map));
+
+  const MapNow = () => {
+    return (
+      <div style={{ height: "500px", width: "100%" }}>
+        <WrappedMap
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyD-Fh1LhCtCgcsv_HWERqm4abtYpScMigs`}
+          loadingElement={<div style={{ height: "100%", width: "100%" }} />}
+          containerElement={<div style={{ height: "100%", width: "100%" }} />}
+          mapElement={<div style={{ height: "100%" }} />}
+        />
+      </div>
+    );
+  };
+
   const navigate = useNavigate();
   const {
     ProductLV,
@@ -24,19 +77,25 @@ export const ProductView = () => {
     updateProductLike,
     webInfo,
     GetproductLikes,
+    isloadingproductinfo,
   } = useContext(ProductContext);
-
   const { getUserchatData, setNewchatid, chatArchive, getUserschat } =
     useContext(ChattingContext);
 
-  const { usercrd, signedin } = useContext(UserContext);
+  const {
+    usercrd,
+    signedin,
+    favourites,
+    UpdateFavourites,
+    lattitude,
+    longitude,
+  } = useContext(UserContext);
 
   const data = useLocation();
   const [zoomImage, setZoomImage] = useState(false);
   useEffect(() => {
     data.hash ? setZoomImage(true) : setZoomImage(false);
   });
-
   useEffect(() => {
     ProductInfo(data.pathname.substring(9));
     ProductLV(data.pathname.substring(9));
@@ -95,6 +154,7 @@ export const ProductView = () => {
     setNewchatid(undefined);
     Cfinder() && getUserschat(Cfinder());
   };
+
   const ImgePopup = () => {
     return (
       <div
@@ -166,7 +226,25 @@ export const ProductView = () => {
     );
   };
 
-  return (
+  return isloadingproductinfo ? (
+    <div
+      style={{
+        height: "100vh",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
+      <img
+        width="70px"
+        alt="loading"
+        src={require("../../../assets/loading.gif")}
+      />
+      <h3>Loading...</h3>
+    </div>
+  ) : (
     <div
       style={{
         marginBottom: "10%",
@@ -217,11 +295,37 @@ export const ProductView = () => {
             </p>
           </div>
           <div className="product-icons">
-            <img
-              width="30px"
-              alt="heart"
-              src={require("../../../assets/icon/heart.svg").default}
-            />
+            {favourites.length &&
+            favourites.includes(data.pathname.substring(9)) ? (
+              <img
+                onClick={() =>
+                  signedin
+                    ? UpdateFavourites(
+                        usercrd.username,
+                        data.pathname.substring(9)
+                      )
+                    : navigate("/login-user")
+                }
+                width="30px"
+                alt="heart"
+                className="blackred"
+                src={require("../../../assets/icon/heart.png")}
+              />
+            ) : (
+              <img
+                onClick={() =>
+                  signedin
+                    ? UpdateFavourites(
+                        usercrd.username,
+                        data.pathname.substring(9)
+                      )
+                    : navigate("/login-user")
+                }
+                width="30px"
+                alt="heart"
+                src={require("../../../assets/icon/heart.svg").default}
+              />
+            )}
             <p style={{ margin: 0, fontSize: "12px", color: "grey" }}>
               wishlist
             </p>
@@ -341,32 +445,35 @@ export const ProductView = () => {
         </div>
       )}
 
-      <div className="product-details">
-        <div className="product-details-title">
-          <img
-            width="12%"
-            height="12%"
-            src={require("../../../assets/decorate.png")}
-            alt="decorate"
-          />
-          <h3>Location Information</h3>
-          <img
-            width="12%"
-            height="12%"
-            src={require("../../../assets/decorate.png")}
-            alt="decorate"
-          />
+      {productInfo && (
+        <div className="product-details">
+          <div className="product-details-title">
+            <img
+              width="12%"
+              height="12%"
+              src={require("../../../assets/decorate.png")}
+              alt="decorate"
+            />
+            <h3>Location Information</h3>
+            <img
+              width="12%"
+              height="12%"
+              src={require("../../../assets/decorate.png")}
+              alt="decorate"
+            />
+          </div>
+
+          <MapNow />
         </div>
-        <img
-          width="100%"
-          src={require("../../../assets/mapbox.png")}
-          alt="location"
-        />
-      </div>
+      )}
 
       {/* chat call action */}
       <div className="chatcall-section">
-        <div onClick={() => ChatButton()} className="chat-call-action">
+        <div
+          ref={contentDiv}
+          onClick={() => ChatButton()}
+          className="chat-call-action"
+        >
           <img
             alt="chat"
             src={require("../../../assets/navigation/chat.svg").default}

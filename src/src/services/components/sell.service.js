@@ -104,6 +104,8 @@ export const CreateAd = (Data) => {
       published_year: data.Bookyear ? data.Bookyear : null,
       author: data.BookAuthor ? data.BookAuthor : null,
       mobile: data.mobile ? data.mobile : null,
+      lattitude: data.lattitude,
+      longitude: data.longitude,
     }),
   })
     .then((response) => response.json())

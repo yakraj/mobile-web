@@ -15,19 +15,26 @@ export const TopLanding = (props) => {
         />
         {/* antoher for location */}
         {searchaddressName && (
-          <div className="location-info">
-            <img
-              alt="location expand"
-              style={{ height: "22px", width: "22px", marginRight: "5px" }}
-              src={require("../../../assets/icon/location.png")}
-            />
-            <p>{searchaddressName}</p>
-            <img
-              alt="location expand"
-              style={{ height: "20px", width: "20px", marginLeft: "5px" }}
-              src={require("../../../assets/icon/expand.png")}
-            />
-          </div>
+          <Link
+            to="/updatelocation"
+            style={{ width: "100%", textDecoration: "none" }}
+          >
+            <div className="location-info">
+              <img
+                className="blackblue"
+                alt="location expand"
+                style={{ height: "22px", width: "22px", marginRight: "5px" }}
+                src={require("../../../assets/icon/location.png")}
+              />
+              <p style={{ color: "blue" }}>{searchaddressName}</p>
+              <img
+                className="blackblue"
+                alt="location expand"
+                style={{ height: "20px", width: "20px", marginLeft: "5px" }}
+                src={require("../../../assets/icon/expand.png")}
+              />
+            </div>
+          </Link>
         )}
       </div>
       <Link to="/search">
