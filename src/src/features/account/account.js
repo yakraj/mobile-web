@@ -27,7 +27,6 @@ export const Account = () => {
     );
   };
   const UserFavourites = () => {
-    console.log();
     return (
       <div
         style={{

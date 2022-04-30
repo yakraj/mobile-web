@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { BottomNav } from "../../features/bottomnav/bottom.nav";
 
@@ -59,6 +59,17 @@ export const RouterApp = () => {
       GetTextLocation,
     } = useContext(SearchContext);
 
+    useEffect(() => {
+      const delayAutosuggestion = setTimeout(() => {
+        if (LocationValue.length > 1) {
+          searchaddressName !== LocationValue &&
+            RecentautocompleteKey !== LocationValue &&
+            AddressAutocomplete(LocationValue);
+        }
+      }, 1000);
+
+      return () => clearTimeout(delayAutosuggestion);
+    }, [LocationValue]);
     const CurrentLocationReq = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         GetTextLocation([position.coords.latitude, position.coords.longitude]);

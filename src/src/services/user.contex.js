@@ -63,12 +63,35 @@ export const UserContextProvider = ({ children }) => {
     matchPassword = false;
   }
 
-  const GetuseruiAds = () => {
+  useEffect(() => {}, [lattitude, longitude]);
+
+  const GetuseruiAds = (length) => {
     setuiadnterr(false);
     setloadinguiads(true);
-    userAdui()
+    userAdui(lattitude, longitude, length ? length : useruiAds.length)
       .then((ads) => {
-        setuseuiAds(ads);
+        if (ads === "unable") {
+        } else {
+          setuseuiAds([...useruiAds, ...ads]);
+        }
+
+        setloadinguiads(false);
+      })
+      .catch((err) => {
+        setuiadnterr(true);
+        setloadinguiads(false);
+      });
+  };
+  const ChangeGetuseruiAds = (length) => {
+    setuiadnterr(false);
+    setloadinguiads(true);
+    userAdui(lattitude, longitude, length ? length : useruiAds.length)
+      .then((ads) => {
+        if (ads === "unable") {
+        } else {
+          setuseuiAds(ads);
+        }
+
         setloadinguiads(false);
       })
       .catch((err) => {
@@ -102,40 +125,42 @@ export const UserContextProvider = ({ children }) => {
 
   const LoginUser = (phone, key, GetChatlist) => {
     setlodlogin(true);
-    UserLogin(phone, key).then((response) => {
-      if (response) {
-        if (response === "Wrong Mobile or Password") {
-          setlodlogin(false);
-          setloginerror(response);
-        } else {
-          setlodlogin(false);
-          setusercrd(response[0]);
-          getUserAds(response[0].username);
-          GetChatlist(response[0].username);
-          GetFavourites(response[0].username);
-          if (response[0].location) {
-            setlattitude(response[0].location[0]);
-            setlongitude(response[0].location[1]);
-          }
+    UserLogin(phone, key)
+      .then((response) => {
+        if (response) {
+          if (response === "Wrong Mobile or Password") {
+            setlodlogin(false);
+            setloginerror(response);
+          } else {
+            setlodlogin(false);
+            setusercrd(response[0]);
+            getUserAds(response[0].username);
+            GetChatlist(response[0].username);
+            GetFavourites(response[0].username);
+            if (response[0].location) {
+              setlattitude(response[0].location[0]);
+              setlongitude(response[0].location[1]);
+            }
 
-          response[0].address && setsearchaddressName(response[0].address);
-          setSignedin(true);
-          navigate(-1);
-          setloginerror("");
-          // fetFavourites(response[0].username).then((response) => {
-          //   FavouriteAds(response[0].hearts).then((response) => {
-          //     response === "unable to get any related data"
-          //       ? setFavAds([])
-          //       : setFavAds(response);
-          //   });
-          // });
+            response[0].address && setsearchaddressName(response[0].address);
+            setSignedin(true);
+            navigate(-1);
+            setloginerror("");
+            // fetFavourites(response[0].username).then((response) => {
+            //   FavouriteAds(response[0].hearts).then((response) => {
+            //     response === "unable to get any related data"
+            //       ? setFavAds([])
+            //       : setFavAds(response);
+            //   });
+            // });
+          }
         }
-      }
-    });
+      })
+      .catch((err) => {
+        setlodlogin(false);
+      });
   };
-  console.log(lattitude, longitude);
   const Updateavatar = (image, user) => {
-    console.log("function executed");
     UpdateuserIcon(image, user).then((response) => setusercrd(response[0]));
   };
 
@@ -228,7 +253,6 @@ export const UserContextProvider = ({ children }) => {
     //   : (setfavourites([...favourites, fav]), (newFev = [...newFev, fav]));
     // console.log(newFev);
     updateFavourites(username, newFev).then((res) => {
-      console.log("this is function is working");
       setfavourites(res[0].hearts);
       GetFavouriteAds(newFev);
     });
@@ -265,7 +289,6 @@ export const UserContextProvider = ({ children }) => {
         // setloadingmyaddress(true);
       });
   };
-
   const userAddress = (place) => {
     setrecentuseraddress(place);
     // console.log("function triggered", place);
@@ -306,9 +329,9 @@ export const UserContextProvider = ({ children }) => {
   // }, []);
   // this is for dashboard ads
   useEffect(() => {
-    GetuseruiAds();
+    ChangeGetuseruiAds(useruiAds.length);
     GetFavouriteAds(favourites);
-  }, []);
+  }, [lattitude, longitude]);
 
   // storing datas
 

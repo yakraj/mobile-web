@@ -37,7 +37,7 @@ export const PersonalInfo = () => {
   } = useContext(SearchContext);
   const SubmitButton = () => {
     signedin
-      ? UploadAdThumbnail(usercrd, lattitude, longitude)
+      ? UploadAdThumbnail(usercrd, lattitude, longitude, searchaddressName)
       : navigate("/user-login");
   };
   const CurrentLocationReq = () => {
@@ -139,7 +139,13 @@ export const PersonalInfo = () => {
         <div
           className=" next-button-properties"
           // tblC={bg.green}
-          onClick={() => SubmitButton()}
+          onClick={() => {
+            SubmitButton();
+            window.alert(
+              "We will let you know soon once your,searchaddressName ad will be published."
+            );
+            navigate("/");
+          }}
           touchable
           width="100%"
           padd={10}

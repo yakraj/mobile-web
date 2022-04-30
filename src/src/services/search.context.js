@@ -27,10 +27,25 @@ export const SearchProvider = ({ children }) => {
   const [NewAdFilter, setNewAdFilter] = useState();
   const [LocationValue, setLocationValue] = useState("");
   const [RecentautocompleteKey, setRecentautocompleteKey] = useState("");
+
+  // loading states in kilometers
+  const [in5km, setin5km] = useState([]);
+  const [in10km, setin10km] = useState([]);
+  const [in20km, setin20km] = useState([]);
+  const [in50km, setin50km] = useState([]);
+  const [in100km, setin100km] = useState([]);
+
+  const [Status, setStatus] = useState([]);
+
   // const [, set] = useState([]);
   const [loadingautocomplete, setloadingautocomplete] = useState(false);
   const [autocomplete, setautocomplete] = useState([]);
   const [SearchValue, setSearchValue] = useState("");
+
+  const [data5km, setdata5km] = useState();
+  const [data10km, setdata10km] = useState();
+  const [data20km, setdata20km] = useState();
+  const [data50km, setdata50km] = useState();
   // this is for getSuggestion
   const getSuggestions = (keyword) => {
     Getautosuggest(keyword).then((json) => setAutoSuggest(json));
@@ -45,12 +60,21 @@ export const SearchProvider = ({ children }) => {
     setuserlocation,
   } = useContext(UserContext);
 
-  const ReqAds = (key) => {
+  const ReqAds = (key, lat, long, r, offset) => {
     setgottenAds([]);
     setLoadingAds(true);
-    RequestForAds(key)
+    RequestForAds(key, lat, long, r, offset)
       .then((json) => {
-        setgottenAds(json);
+        if (r === 5) {
+          setin5km(json);
+        } else if (r === 10) {
+          setin10km(json);
+        } else if (r === 20) {
+          setin20km(json);
+        } else if (r === 50) {
+          setin50km(json);
+        }
+
         setLoadingAds(false);
         setFilterKeys([]);
         setFilterValues([]);
@@ -62,16 +86,21 @@ export const SearchProvider = ({ children }) => {
         setLoadingAds(false);
       });
   };
-
   const AddressAutocomplete = (keyword) => {
-    console.log("function executed");
     setloadingautocomplete(true);
     setRecentautocompleteKey(keyword);
     setuserlocation(keyword);
     keyword.length > 1 &&
       Autocomplete(keyword)
         .then((response) => {
-          setautocomplete(response.predictions);
+          if (response === "unable to get any data") {
+            window.alert(
+              "unable to found location as your keyword, try to change city/locality"
+            );
+          } else {
+            setautocomplete(response.predictions);
+          }
+
           setloadingautocomplete(false);
         })
         .catch((err) => {
@@ -156,6 +185,21 @@ export const SearchProvider = ({ children }) => {
         SearchValue,
         setSearchValue,
         loadingautocomplete,
+        data5km,
+        setdata5km,
+        data10km,
+        setdata10km,
+        data20km,
+        setdata20km,
+        data50km,
+        setdata50km,
+        in5km,
+        in10km,
+        in20km,
+        in50km,
+        in100km,
+        Status,
+        setStatus,
       }}
     >
       {children}

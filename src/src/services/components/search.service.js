@@ -30,10 +30,16 @@ export const subcatogeryRecomendation = (keyword) =>
     headers: { "Content-Type": "application/json" },
   }).then((response) => response.json());
 
-export const RequestForAds = (keyword) =>
+export const RequestForAds = (keyword, lat, long, r, offset) =>
   fetch(`${host}/searh/get_ads`, {
     method: "post",
-    body: JSON.stringify({ keyword: keyword }),
+    body: JSON.stringify({
+      keyword: keyword,
+      lat: lat,
+      long: long,
+      r: r,
+      offset: offset,
+    }),
     headers: { ACCEPT: "application/json", "Content-Type": "application/json" },
   }).then((response) => response.json());
 

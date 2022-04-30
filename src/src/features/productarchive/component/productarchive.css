@@ -63,6 +63,10 @@
 .addresslabel {
   font-size: 11px;
   color: grey;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: inherit;
 }
 .locationContainer {
   display: flex;

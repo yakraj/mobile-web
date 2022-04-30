@@ -6,11 +6,30 @@ import { host } from "../../services/host.network";
 import { useNavigate } from "react-router-dom";
 export const SearchResultArchive = (Archive) => {
   const navigate = useNavigate();
-  const { gottenAds } = useContext(SearchContext);
-  return gottenAds.length ? (
+  const { gottenAds, loadingAds } = useContext(SearchContext);
+
+  return loadingAds ? (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+        flexDirection: "column",
+      }}
+    >
+      <img
+        width="50%"
+        alt="archives"
+        src={require("../../../assets/loading.gif")}
+      />
+      <h3>Loading...</h3>
+    </div>
+  ) : gottenAds.length ? (
     gottenAds.map((x, i) => {
       return (
         <div
+          key={i}
           onClick={() => navigate(`/product/${x.adid}`)}
           className="search-result-archive"
         >

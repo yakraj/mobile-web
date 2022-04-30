@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./component/productarchive.css";
 import Background from "../../../assets/mobile.jpg";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ export const ProductArchive = ({ deleter, sold, Archives = [] }) => {
   return Archives.length ? (
     Archives.map((x, i) => {
       return signedin && usercrd.username === x.seller ? null : (
-        <div style={{ width: "48%", textDecoration: "none" }}>
+        <div key={i} style={{ width: "48%", textDecoration: "none" }}>
           <div id="productArchive">
             <div
               onClick={() => navigateNow(`/product/${x.adid}`)}

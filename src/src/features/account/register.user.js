@@ -38,14 +38,12 @@ export const RegisterUser = () => {
 
   const fileSelect = (e) => {
     const { files } = e.target;
-    console.log(files[0]);
     handleImageUpload(files);
     setimagefile(URL.createObjectURL(files[0]));
   };
 
   const blobToImage = (blob) => {
     const url = URL.createObjectURL(blob);
-    console.log(url);
   };
 
   return (

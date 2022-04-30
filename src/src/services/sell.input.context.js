@@ -101,6 +101,7 @@ export const InputSellProvider = ({ children }) => {
   const [isEnabled, setIsEnabled] = useState(true);
   const [MobNumber, setMobNumber] = useState();
   const [allowMobile, setAllowMobile] = useState(true);
+  const [uploadprocess, setuploadprocess] = useState(false);
 
   async function singleFileCompressor(files, setfile, extendfile) {
     // console.log(files);
@@ -137,6 +138,7 @@ export const InputSellProvider = ({ children }) => {
   };
 
   const clearFunc = () => {
+    setuploadprocess(false);
     setcatogery("");
     setsubcatogery("");
     setsuperCatogery("");
@@ -176,7 +178,8 @@ export const InputSellProvider = ({ children }) => {
     setBookAuthor("");
   };
 
-  const NewProductAd = (thumb, username, lattitude, longitude) => {
+  const NewProductAd = (thumb, username, lattitude, longitude, address) => {
+    setuploadprocess(true);
     CreateAd({
       data: {
         catogery: catogery,
@@ -188,7 +191,7 @@ export const InputSellProvider = ({ children }) => {
         adDescription: adDescription,
         adPrice: adPrice,
         tags: tags,
-        address: "midc malegaon sinnar",
+        address: address,
         Brandname: Brandname,
         MonitorSize: MonitorSize,
         ComputerProcessor: ComputerProcessor,
@@ -233,14 +236,16 @@ export const InputSellProvider = ({ children }) => {
     // console.log(MonitorType, MonitorSize);
   };
 
-  const UploadAdThumbnail = (user, lattitude, longitude) => {
+  const UploadAdThumbnail = (user, lattitude, longitude, address) => {
     // console.log(Thumbnail);
     lattitude
       ? AdThumbnail(singleFileCompressor(Thumbnail)).then((response) =>
           response.status === 200
             ? response
                 .json()
-                .then((res) => NewProductAd(res, user, lattitude, longitude))
+                .then((res) =>
+                  NewProductAd(res, user, lattitude, longitude, address)
+                )
             : console.log("something went wrong")
         )
       : navigate("/login-user");
@@ -359,7 +364,7 @@ export const InputSellProvider = ({ children }) => {
         setMobilebattery,
         MobileOs,
         setMobileOs,
-
+        uploadprocess,
         Printer,
         setPrinter,
         // this is for books

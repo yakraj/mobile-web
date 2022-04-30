@@ -16,8 +16,8 @@ export const Gmap = () => {
         mapTypeId="satellite"
         defaultZoom={18}
         defaultCenter={{
-          lat: lattitude ? parseFloat(lattitude) : 28.394345401646063,
-          lng: longitude ? parseFloat(longitude) : 81.86099197715521,
+          lat: lattitude ? parseFloat(lattitude) : 28.601789,
+          lng: longitude ? parseFloat(longitude) : 81.600906,
         }}
       >
         <Marker

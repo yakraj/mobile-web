@@ -56,8 +56,8 @@ export const UpdateLocation = () => {
     setLocationValue(searchaddressName);
   }, [searchaddressName, setLocationValue]);
   const center = {
-    lat: lattitude ? parseFloat(lattitude) : 28.394345401646063,
-    lng: longitude ? parseFloat(longitude) : 81.86099197715521,
+    lat: lattitude ? parseFloat(lattitude) : 28.5857997,
+    lng: longitude ? parseFloat(longitude) : 81.63505579999999,
   };
 
   // const { isLoaded } = useJsApiLoader({

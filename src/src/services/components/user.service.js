@@ -1,6 +1,13 @@
 import { host } from "../host.network";
-export const userAdui = () =>
-  fetch(`${host}/getuiads`).then((response) => response.json());
+export const userAdui = (lat, long, length) =>
+  fetch(`${host}/getuiads`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ length: length, lat: lat, long: long }),
+  }).then((response) => response.json());
 
 export const NumberExistance = (number) =>
   fetch(`${host}/numberexistanceverify`, {

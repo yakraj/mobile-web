@@ -21,12 +21,15 @@ export const SearchScreen = () => {
     RecentautocompleteKey,
     GetTextLocation,
     loadingautocomplete,
+    setStatus,
   } = useContext(SearchContext);
   const {
     setsearchaddressName,
     searchaddressName,
     GetAddress,
     loadingmyaddress,
+    lattitude,
+    longitude,
   } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -36,11 +39,13 @@ export const SearchScreen = () => {
   const [locsearchval, setlocsearchval] = useState(
     searchKeyword ? searchKeyword : ""
   );
-  const [Status, setStatus] = useState("");
   const searchInput = useRef();
   const locationref = useRef();
   const SearchSubmit = (data) => {
-    data.length >= 3 && ReqAds(data);
+    if (data.length >= 3) {
+      setStatus([]);
+      ReqAds(data, lattitude, longitude, 5, 0);
+    }
     setSearchKeyword(data);
     data.length >= 3
       ? navigate("/search-result")
@@ -147,28 +152,7 @@ export const SearchScreen = () => {
           />
         </div>
       </div>
-      {locationfocus && loadingmyaddress && (
-        <div className="loading-loc-sugg">
-          <div>
-            <img
-              width="30px"
-              height="30px"
-              alt="loading address"
-              src={require("../../../assets/loading.gif")}
-            />
-            <p
-              style={{
-                fontSize: "11px",
-                color: "red",
-                textTransform: "capitalize",
-              }}
-            >
-              Please try to search most relevent locationor use your current
-              location
-            </p>
-          </div>
-        </div>
-      )}
+
       {locationfocus &&
         !inputfocus &&
         (loadingautocomplete ? (
