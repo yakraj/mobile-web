@@ -14,6 +14,9 @@
 .search-item-result {
   padding: 5px;
 }
+.search-item-result .price {
+  color: "blue";
+}
 .search-item-result .title {
   color: grey;
   margin: 0px;

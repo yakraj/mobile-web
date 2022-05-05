@@ -22,6 +22,14 @@ export const SearchScreen = () => {
     GetTextLocation,
     loadingautocomplete,
     setStatus,
+    setdata5km,
+    setdata10km,
+    setdata20km,
+    setdata50km,
+    setin5km,
+    setin10km,
+    setin20km,
+    setin50km,
   } = useContext(SearchContext);
   const {
     setsearchaddressName,
@@ -44,6 +52,14 @@ export const SearchScreen = () => {
   const SearchSubmit = (data) => {
     if (data.length >= 3) {
       setStatus([]);
+      setdata5km("");
+      setdata10km("");
+      setdata20km("");
+      setdata50km("");
+      setin5km([]);
+      setin10km([]);
+      setin20km([]);
+      setin50km([]);
       ReqAds(data, lattitude, longitude, 5, 0);
     }
     setSearchKeyword(data);

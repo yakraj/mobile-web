@@ -56,6 +56,7 @@ export const UserContextProvider = ({ children }) => {
   const [userlocation, setuserlocation] = useState("");
   const [recentUserAddressauto, setrecentuseraddress] = useState("");
   const [LoadinguserAdd, setLoadinguserAdd] = useState(false);
+  const [settinguploc, setsettinguploc] = useState(false);
   var matchPassword = true;
   if (regnewpassword === regcnfpassword) {
     matchPassword = true;
@@ -259,13 +260,18 @@ export const UserContextProvider = ({ children }) => {
   };
 
   const GetAddress = (placeid) => {
-    getLatLong(placeid).then((response) => {
-      setlattitude(response.result.geometry.location.lat);
-      setlongitude(response.result.geometry.location.lng);
-    });
+    setsettinguploc(true);
+    getLatLong(placeid)
+      .then((response) => {
+        setlattitude(response.result.geometry.location.lat);
+        setlongitude(response.result.geometry.location.lng);
+        setsettinguploc(false);
+      })
+      .err((err) => setsettinguploc(false));
   };
 
   const GetLocation = (geo) => {
+    setsettinguploc(true);
     setlattitude(geo[0]);
     setlongitude(geo[1]);
     getTextLoc(geo)
@@ -284,9 +290,11 @@ export const UserContextProvider = ({ children }) => {
         // setsearchaddressName(response.results[0].formatted_address);
         // setLocationValue(response.results[0].formatted_address);
         // setloadingmyaddress(false);
+        setsettinguploc(false);
       })
       .catch((err) => {
-        // setloadingmyaddress(true);
+        // setloadingmyaddress(false);
+        setsettinguploc(false);
       });
   };
   const userAddress = (place) => {
@@ -432,6 +440,7 @@ export const UserContextProvider = ({ children }) => {
         setusercrd,
         loadreg,
         lodLogin,
+        settinguploc,
       }}
     >
       {children}

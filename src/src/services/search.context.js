@@ -37,6 +37,7 @@ export const SearchProvider = ({ children }) => {
 
   const [Status, setStatus] = useState([]);
 
+  // console.log(in5km, in10km, in20km, in50km);
   // const [, set] = useState([]);
   const [loadingautocomplete, setloadingautocomplete] = useState(false);
   const [autocomplete, setautocomplete] = useState([]);
@@ -46,6 +47,12 @@ export const SearchProvider = ({ children }) => {
   const [data10km, setdata10km] = useState();
   const [data20km, setdata20km] = useState();
   const [data50km, setdata50km] = useState();
+  const [data5kmload, setdata5kmload] = useState(true);
+  const [data10kmload, setdata10kmload] = useState(true);
+  const [data20kmload, setdata20kmload] = useState(true);
+  const [data50kmload, setdata50kmload] = useState(true);
+  const [responsss, setresponsss] = useState("");
+
   // this is for getSuggestion
   const getSuggestions = (keyword) => {
     Getautosuggest(keyword).then((json) => setAutoSuggest(json));
@@ -60,19 +67,47 @@ export const SearchProvider = ({ children }) => {
     setuserlocation,
   } = useContext(UserContext);
 
-  const ReqAds = (key, lat, long, r, offset) => {
+  var lengthh = 0;
+  const ReqAds = (key, lat, long, r) => {
+    if (r === 5) {
+      setdata5kmload(true);
+    } else if (r === 10) {
+      setdata10kmload(true);
+    } else if (r === 20) {
+      setdata20kmload(true);
+    } else if (r === 50) {
+      setdata50kmload(true);
+    }
+
+    const lenth = () => {
+      if (r === 5) {
+        return 0;
+      } else if (r === 10) {
+        return lengthh;
+      } else if (r === 20) {
+        return lengthh;
+      } else if (r === 50) {
+        return lengthh;
+      }
+    };
+
     setgottenAds([]);
     setLoadingAds(true);
-    RequestForAds(key, lat, long, r, offset)
+    RequestForAds(key, lat, long, r, lenth())
       .then((json) => {
+        lengthh = lengthh + json.length;
         if (r === 5) {
           setin5km(json);
+          setdata5kmload(false);
         } else if (r === 10) {
           setin10km(json);
+          setdata10kmload(false);
         } else if (r === 20) {
           setin20km(json);
+          setdata20kmload(false);
         } else if (r === 50) {
           setin50km(json);
+          setdata50kmload(false);
         }
 
         setLoadingAds(false);
@@ -81,11 +116,33 @@ export const SearchProvider = ({ children }) => {
         setFilter([]);
         setActiveFilterKey([]);
         setAdFilter([]);
+
+        if (json.length < 5) {
+          if (r === 5) {
+            ReqAds(key, lat, long, 10);
+          } else if (r === 10) {
+            ReqAds(key, lat, long, 20);
+            setresponsss("km10");
+          } else if (r === 20) {
+            ReqAds(key, lat, long, 50);
+            setresponsss("km20");
+          }
+        }
       })
       .catch((error) => {
+        if (r === 5) {
+          setdata5kmload(false);
+        } else if (r === 10) {
+          setdata10kmload(false);
+        } else if (r === 20) {
+          setdata20kmload(false);
+        } else if (r === 50) {
+          setdata50kmload(false);
+        }
         setLoadingAds(false);
       });
   };
+
   const AddressAutocomplete = (keyword) => {
     setloadingautocomplete(true);
     setRecentautocompleteKey(keyword);
@@ -148,6 +205,9 @@ export const SearchProvider = ({ children }) => {
         setloadingmyaddress(true);
       });
   };
+  useEffect(() => {
+    setStatus([...Status, responsss]);
+  }, [responsss]);
 
   return (
     <SearchContext.Provider
@@ -200,6 +260,14 @@ export const SearchProvider = ({ children }) => {
         in100km,
         Status,
         setStatus,
+        data5kmload,
+        data10kmload,
+        data20kmload,
+        data50kmload,
+        setin5km,
+        setin10km,
+        setin20km,
+        setin50km,
       }}
     >
       {children}
