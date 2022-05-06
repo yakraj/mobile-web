@@ -32,6 +32,7 @@ export const SearchResult = () => {
     data20kmload,
     data50kmload,
   } = useContext(SearchContext);
+  console.log(Status);
 
   const km5 = useRef();
   const km10 = useRef();
@@ -65,12 +66,21 @@ export const SearchResult = () => {
     };
   }, []);
 
+  console.log(in50km.length);
   useEffect(() => {
     const listner = () => {
       const topp = Lastload.current.getBoundingClientRect().top;
       const height = window.innerHeight;
 
-      console.log(height, topp);
+      if (topp < height) {
+        if (Status.includes("km5") && !Status.includes("km10")) {
+          console.log("i am waiting for 10 km data");
+        } else if (Status.includes("km10") && !Status.includes("km20")) {
+          console.log("i am waiting for 20 km data");
+        } else if (Status.includes("km20") && !Status.includes("km50")) {
+          console.log("i am waiting for 50 km data");
+        }
+      }
     };
     window.addEventListener("scroll", listner);
     return () => {
@@ -166,7 +176,7 @@ export const SearchResult = () => {
             style={{
               height: Status.includes("km5") && in5km.length ? "auto" : "0px",
 
-              overflow: !Status.includes("km5") && in5km.length && "hidden",
+              overflow: !Status.includes("km5") && !in5km.length && "hidden",
             }}
             className="Search-devide-basket"
           >
@@ -186,6 +196,7 @@ export const SearchResult = () => {
               <div
                 style={{
                   height: "auto",
+
                   flexWrap: "wrap",
                   width: "100%",
                   color: "#fff",
@@ -203,9 +214,10 @@ export const SearchResult = () => {
           {/* for first 10 km */}
           <div
             style={{
-              height: Status.includes("km5") && in10km.length ? "auto" : "0px",
+              height:
+                !Status.includes("km5") || !in10km.length ? "0px" : "auto",
 
-              overflow: !Status.includes("km5") && in10km.length && "hidden",
+              overflow: !Status.includes("km5") || (!in10km.length && "hidden"),
             }}
             className="Search-devide-basket"
           >
@@ -244,8 +256,7 @@ export const SearchResult = () => {
           <div
             style={{
               height: Status.includes("km10") && in20km.length ? "auto" : "0px",
-
-              overflow: !Status.includes("km10") && in20km.length && "hidden",
+              overflow: !Status.includes("km10") && !in20km.length && "hidden",
             }}
             className="Search-devide-basket"
           >
@@ -284,7 +295,7 @@ export const SearchResult = () => {
           <div
             style={{
               height: Status.includes("km20") && in50km.length ? "auto" : "0px",
-              overflow: !Status.includes("km20") && in50km.length && "hidden",
+              overflow: !Status.includes("km20") && !in50km.length && "hidden",
             }}
             className="Search-devide-basket"
           >
@@ -327,13 +338,13 @@ export const SearchResult = () => {
         style={{
           height: "50px",
           width: "100%",
-          // backgroundColor: "red",
+          backgroundColor: "red",
           display: "flex",
           justifyContent: "center",
         }}
       >
         <img
-          alt="loading"
+          alt="last loading"
           src={require("../../../assets/loading.gif")}
           height="50px"
           width="50px"
