@@ -5,14 +5,13 @@ import { UserContext } from "./../../services/user.contex";
 
 export const Topbar = ({ title, bcC, logout }) => {
   const navigate = useNavigate();
-  const { setusercrd, setSignedin } = useContext(UserContext);
+  const { setusercrd, setSignedin, Logout } = useContext(UserContext);
   const AskLogout = () => {
     const deleteImage = window.confirm(
       "Are you sure to Log Out your account ?"
     );
     if (deleteImage) {
-      setusercrd("");
-      setSignedin(false);
+      Logout();
       navigate("/login-user");
     } else {
       // console.log("i can not log out");

@@ -31,8 +31,11 @@ export const SearchResult = () => {
     data10kmload,
     data20kmload,
     data50kmload,
+    setdata5kmload,
+    setdata10kmload,
+    setdata20kmload,
+    setdata50kmload,
   } = useContext(SearchContext);
-  console.log(Status);
 
   const km5 = useRef();
   const km10 = useRef();
@@ -40,9 +43,36 @@ export const SearchResult = () => {
   const km50 = useRef();
   const container = useRef();
   const Lastload = useRef();
+  const [waitingKm, setwaitingKm] = useState();
   useEffect(() => {
     setStatus([...Status, "km5"]);
+    setwaitingKm("");
   }, []);
+
+  // useEffect(() => {
+  //   if (waitingKm === "10") {
+  //     !Status.includes("km10") &&
+  //       ReqAds(searchKeyword, lattitude, longitude, waitingKm, in5km.length);
+  //   } else if (waitingKm === "20") {
+  //     !Status.includes("km20") &&
+  //       ReqAds(
+  //         searchKeyword,
+  //         lattitude,
+  //         longitude,
+  //         waitingKm,
+  //         in5km.length + in10km.length
+  //       );
+  //   } else if (waitingKm === "50") {
+  //     !Status.includes("km50") &&
+  //       ReqAds(
+  //         searchKeyword,
+  //         lattitude,
+  //         longitude,
+  //         waitingKm,
+  //         in5km.length + in10km.length + in20km.length
+  //       );
+  //   }
+  // }, [waitingKm]);
 
   useEffect(() => {
     const listner = () => {
@@ -66,27 +96,27 @@ export const SearchResult = () => {
     };
   }, []);
 
-  console.log(in50km.length);
-  useEffect(() => {
-    const listner = () => {
-      const topp = Lastload.current.getBoundingClientRect().top;
-      const height = window.innerHeight;
-
-      if (topp < height) {
-        if (Status.includes("km5") && !Status.includes("km10")) {
-          console.log("i am waiting for 10 km data");
-        } else if (Status.includes("km10") && !Status.includes("km20")) {
-          console.log("i am waiting for 20 km data");
-        } else if (Status.includes("km20") && !Status.includes("km50")) {
-          console.log("i am waiting for 50 km data");
-        }
-      }
-    };
-    window.addEventListener("scroll", listner);
-    return () => {
-      window.removeEventListener("scroll", listner);
-    };
-  }, [Status]);
+  // useEffect(() => {
+  //   const listner = () => {
+  //     const topp = Lastload.current.getBoundingClientRect().top;
+  //     const height = window.innerHeight;
+  //     // console.log(Status);
+  //     if (topp < height) {
+  //       if (Status.includes("km5") && !Status.includes("km10")) {
+  //         setwaitingKm("10");
+  //         console.log("i am waiting for 10 km data", Status);
+  //       } else if (Status.includes("km10") && !Status.includes("km20")) {
+  //         setwaitingKm("20");
+  //       } else if (Status.includes("km20") && !Status.includes("km50")) {
+  //         setwaitingKm("50");
+  //       }
+  //     }
+  //   };
+  //   window.addEventListener("scroll", listner);
+  //   return () => {
+  //     window.removeEventListener("scroll", listner);
+  //   };
+  // }, [Status]);
 
   // useEffect(() => {
   //   Status.includes("km5") &&
@@ -124,7 +154,6 @@ export const SearchResult = () => {
   //     !Status.includes("km50") &&
   //     setStatus([...Status, "km50"]);
   // }, [data50km]);
-
   return (
     <div
       style={{ marginBottom: "70px" }}
@@ -153,7 +182,11 @@ export const SearchResult = () => {
         />
       </div>
 
-      {in5km.length + in10km.length + in20km.length + in50km.length < 1 ? (
+      {in5km.length + in10km.length + in20km.length + in50km.length < 1 ||
+      data5kmload ||
+      data10kmload ||
+      data20kmload ||
+      data50kmload ? (
         <div
           style={{
             display: "flex",
@@ -338,17 +371,18 @@ export const SearchResult = () => {
         style={{
           height: "50px",
           width: "100%",
-          backgroundColor: "red",
           display: "flex",
           justifyContent: "center",
         }}
       >
-        <img
-          alt="last loading"
-          src={require("../../../assets/loading.gif")}
-          height="50px"
-          width="50px"
-        />
+        {data5kmload || data10kmload || data20kmload || data50kmload ? (
+          <img
+            alt="last loading"
+            src={require("../../../assets/loading.gif")}
+            height="50px"
+            width="50px"
+          />
+        ) : null}
       </div>
     </div>
   );

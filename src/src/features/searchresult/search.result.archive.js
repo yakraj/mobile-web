@@ -7,7 +7,14 @@ import { useNavigate } from "react-router-dom";
 export const SearchResultArchive = (Archive) => {
   // console.log(Archive.Archive);
   const navigate = useNavigate();
-  const { gottenAds, loadingAds } = useContext(SearchContext);
+  const {
+    gottenAds,
+    loadingAds,
+    setdata5kmload,
+    setdata10kmload,
+    setdata20kmload,
+    setdata50kmload,
+  } = useContext(SearchContext);
 
   return Archive.loading ? (
     <div

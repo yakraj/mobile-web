@@ -10,7 +10,7 @@ export const SellSecondCat = (props) => {
   const { navigation, route } = props;
   return (
     <>
-      <Topbar title="Sell Now on NEPLX" />
+      <Topbar title="Sell Now on Sunaulo" />
 
       {uploadprocess ? (
         <div>A sell in onprogress</div>

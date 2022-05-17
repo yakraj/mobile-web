@@ -7,12 +7,15 @@ export const TopLanding = (props) => {
 
   return (
     <>
-      <div className="toplandingmain">
-        <img
+      <div
+        style={{ padding: "5px", boxSizing: "border-box" }}
+        className="toplandingmain"
+      >
+        {/* <img
           alt="branding"
-          style={{ width: "75px", height: "40px" }}
-          src={require("../../../assets/netflix.png")}
-        />
+          style={{ marginLeft: "15px", width: "40px", height: "40px" }}
+          src={require("../../../assets/full logo.png")}
+        /> */}
         {/* antoher for location */}
         {searchaddressName && (
           <Link

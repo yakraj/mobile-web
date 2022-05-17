@@ -22,7 +22,7 @@ import {
 export const UserContext = React.createContext();
 export const UserContextProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [username, sertusername] = useState("yakraj289");
+  const [username, setusername] = useState("");
   const [loadinguiads, setloadinguiads] = useState(false);
   const [useruiAds, setuseuiAds] = useState([]);
   const [signedin, setSignedin] = useState(false);
@@ -32,7 +32,7 @@ export const UserContextProvider = ({ children }) => {
   const [regnewpassword, setregnewpassword] = useState("");
   const [regcnfpassword, setregcnfpassword] = useState("");
   const [images, setImages] = useState();
-  const [usercrd, setusercrd] = useState();
+  const [usercrd, setusercrd] = useState({});
   const [loadreg, setlodreg] = useState(false);
   const [lodLogin, setlodlogin] = useState(false);
   const [userAds, setuserAds] = useState([]);
@@ -204,12 +204,13 @@ export const UserContextProvider = ({ children }) => {
   const Logout = () => {
     setusercrd([]);
     setFavAds([]);
-    setsearchaddressName();
-    setlattitude();
-    setlongitude();
+    setsearchaddressName("");
+    setlattitude("");
+    setlongitude("");
     setSignedin(false);
     setfavourites([]);
     // removeAllStoreData();
+    console.log("function executed");
   };
 
   const DeleteUserAd = (adid, user) => {
@@ -341,9 +342,21 @@ export const UserContextProvider = ({ children }) => {
     GetFavouriteAds(favourites);
   }, [lattitude, longitude]);
 
-  // storing datas
+  // useEffect(() => {
+  //   userAdui(lattitude, longitude)
+  //     .then((ads) => {
+  //       if (ads === "unable") {
+  //       } else {
+  //         setuseuiAds(ads);
+  //       }
 
-  // /////////////////////////////////////////////////
+  //       setloadinguiads(false);
+  //     })
+  //     .catch((err) => {
+  //       setuiadnterr(true);
+  //       setloadinguiads(false);
+  //     });
+  // }, [lattitude, longitude]);
 
   const UserSetAdd = (address, lat, lng) => {
     setuserlocation(address);
@@ -368,6 +381,113 @@ export const UserContextProvider = ({ children }) => {
   const StartOtpTimer = () => {
     startTimer();
   };
+
+  // Restoring data to browser
+  //
+  //
+  //
+  useEffect(() => {
+    const latt = localStorage.getItem("lattitude");
+    const long = localStorage.getItem("longitude");
+    setlattitude(latt ? JSON.parse(latt) : "");
+    setlongitude(latt ? JSON.parse(long) : "");
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("SignedIn");
+    setSignedin(data ? JSON.parse(data) : "");
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("registermobileNumber");
+    setregistermobileNumber(data ? JSON.parse(data) : "");
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("regfirstName");
+    setregfirstName(data ? JSON.parse(data) : "");
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("reglastName");
+    setreglastName(data ? JSON.parse(data) : "");
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("usercrd");
+    setusercrd(data ? JSON.parse(data) : "");
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("favourites");
+    setfavourites(data ? JSON.parse(data) : []);
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("FavAds");
+    setFavAds(data ? JSON.parse(data) : []);
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("gettnbinfo");
+    setgettnbinfo(data ? JSON.parse(data) : "");
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("messageExi");
+    setmessageExi(data ? JSON.parse(data) : "");
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("numberExiLoadi");
+    setnumberExiLoadi(data ? JSON.parse(data) : "");
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("searchaddressName");
+    setsearchaddressName(data ? JSON.parse(data) : "");
+  }, []);
+
+  // storing data to browser
+  //
+  //
+  //
+
+  useEffect(() => {
+    localStorage.setItem("lattitude", JSON.stringify(lattitude));
+    localStorage.setItem("longitude", JSON.stringify(longitude));
+  }, [lattitude, longitude]);
+
+  useEffect(() => {
+    localStorage.setItem("SignedIn", JSON.stringify(signedin));
+  }, [signedin]);
+  useEffect(() => {
+    localStorage.setItem(
+      "registermobileNumber",
+      JSON.stringify(registermobileNumber)
+    );
+  }, [registermobileNumber]);
+  useEffect(() => {
+    localStorage.setItem("regfirstName", JSON.stringify(regfirstName));
+  }, [regfirstName]);
+  useEffect(() => {
+    localStorage.setItem("reglastName", JSON.stringify(reglastName));
+  }, [reglastName]);
+  useEffect(() => {
+    localStorage.setItem("usercrd", JSON.stringify(usercrd));
+  }, [usercrd]);
+  useEffect(() => {
+    !favourites === undefined &&
+      favourites.localStorage.setItem("favourites", JSON.stringify(favourites));
+  }, [favourites]);
+  useEffect(() => {
+    !FavAds === undefined &&
+      FavAds.localStorage.setItem("FavAds", JSON.stringify(FavAds));
+  }, [FavAds]);
+  useEffect(() => {
+    localStorage.setItem("gettnbinfo", JSON.stringify(gettnbinfo));
+  }, [gettnbinfo]);
+  useEffect(() => {
+    localStorage.setItem("messageExi", JSON.stringify(messageExi));
+  }, [messageExi]);
+  useEffect(() => {
+    localStorage.setItem("numberExiLoadi", JSON.stringify(numberExiLoadi));
+  }, [numberExiLoadi]);
+  useEffect(() => {
+    localStorage.setItem(
+      "searchaddressName",
+      JSON.stringify(searchaddressName)
+    );
+  }, [searchaddressName]);
 
   return (
     <UserContext.Provider

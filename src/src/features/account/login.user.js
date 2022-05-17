@@ -21,7 +21,7 @@ export const LoginUser = () => {
       <Topbar title="Log In" />
       <div className="login-container">
         <div className="login-content">
-          <h2>Neplx</h2>
+          <h2>Sunaulo</h2>
           <input
             onChange={(e) => setmobile(e.target.value)}
             type="text"
