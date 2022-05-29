@@ -7,6 +7,7 @@ import { ThreeTotab } from "../../components/toptab/toptab";
 import { ProductArchive } from "./../productarchive/product.archive";
 import { Link } from "react-router-dom";
 import { UserContext } from "./../../services/user.contex";
+import { Imagehost } from "./../../services/host.network";
 export const Account = () => {
   const { usercrd, userAds, FavAds, searchaddressName } =
     useContext(UserContext);
@@ -113,7 +114,7 @@ export const Account = () => {
         <div
           // `url(http://localhost:5001/uploads/${x.thumbnail})
           style={{
-            backgroundImage: `url(http://localhost:5001/useravatar/${usercrd.image})`,
+            backgroundImage: `url(${Imagehost + "/" + usercrd.image})`,
           }}
           className="profileImage"
         />

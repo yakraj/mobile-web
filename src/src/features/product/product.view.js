@@ -15,6 +15,7 @@ import Slider from "react-slick";
 import { useLocation } from "react-router-dom";
 import { ProductContext } from "./../../services/product.context";
 import { host } from "../../services/host.network";
+import { Imagehost } from "../../services/host.network";
 import { UserContext } from "./../../services/user.contex";
 import { ChattingContext } from "./../../services/chatting.context";
 import { Gmap } from "./../GoogleMap/mapapi";
@@ -353,7 +354,7 @@ export const ProductView = () => {
             <div
               className="userimage"
               style={{
-                backgroundImage: `url(${host}/useravatar/${userViews[1].image})`,
+                backgroundImage: `url(${Imagehost}/${userViews[1].image})`,
               }}
             />
           )}

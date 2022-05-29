@@ -4,6 +4,7 @@ import "./updateprofile.css";
 import imageCompression from "browser-image-compression";
 import { Link } from "react-router-dom";
 import { host } from "../../../services/host.network";
+import { Imagehost } from "../../../services/host.network";
 
 import { UserContext } from "./../../../services/user.contex";
 export const EditProfile = () => {
@@ -47,7 +48,7 @@ export const EditProfile = () => {
           className="profile-image"
           style={{
             backgroundImage: `url(${
-              icon ? icon : host + "/useravatar/" + usercrd.image
+              icon ? icon : Imagehost + "/" + usercrd.image
             })`,
           }}
         >

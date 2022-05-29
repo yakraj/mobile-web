@@ -6,7 +6,7 @@ import FlatList from "flatlist-react";
 import { ChattingContext } from "./../../services/chatting.context";
 import { UserContext } from "./../../services/user.contex";
 // var people = [{ firstName: "Elson", lastName: "Correia", info: { age: 24 } }];
-
+import { Imagehost } from "./../../services/host.network";
 export const ChattingUI = (props) => {
   const {
     ReturnChats,
@@ -117,7 +117,7 @@ export const ChattingUI = (props) => {
               <div
                 className="chatperson"
                 style={{
-                  backgroundImage: `url(http://localhost:5001/useravatar/${userData[0].image}`,
+                  backgroundImage: `url(${Imagehost + "/" + userData[0].image}`,
                 }}
               />
             </div>
