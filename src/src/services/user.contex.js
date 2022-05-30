@@ -138,7 +138,7 @@ export const UserContextProvider = ({ children }) => {
             getUserAds(response[0].username);
             GetChatlist(response[0].username);
             GetFavourites(response[0].username);
-            if (response[0].location) {
+            if (response[0].location.length === 2) {
               setlattitude(response[0].location[0]);
               setlongitude(response[0].location[1]);
             }
@@ -204,9 +204,9 @@ export const UserContextProvider = ({ children }) => {
   const Logout = () => {
     setusercrd([]);
     setFavAds([]);
-    setsearchaddressName("");
-    setlattitude("");
-    setlongitude("");
+    // setsearchaddressName("");
+    // setlattitude("");
+    // setlongitude("");
     setSignedin(false);
     setfavourites([]);
     // removeAllStoreData();

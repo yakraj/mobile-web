@@ -215,7 +215,7 @@ export const ProductView = () => {
                       <img
                         width="100%"
                         alt="Test"
-                        src={`${Imagehost}/uploads/${x}`}
+                        src={`https://storage.googleapis.com/sunaulo-uploads/${x}`}
                       />
                     </PinchZoomPan>
                   </div>
@@ -263,7 +263,7 @@ export const ProductView = () => {
                 <div
                   onClick={() => LinkImage()}
                   style={{
-                    backgroundImage: `url(${host}/uploads/${x})`,
+                    backgroundImage: `url(https://storage.googleapis.com/sunaulo-uploads/${x})`,
                     // backgroundImage: `url(https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg)`,
                   }}
                   className="productImages"
