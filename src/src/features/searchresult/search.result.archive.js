@@ -45,7 +45,7 @@ export const SearchResultArchive = (Archive) => {
             <div
               className="search-result-image"
               style={{
-                backgroundImage: `url(${host}/product-thumbnail/${x.thumbnail})`,
+                backgroundImage: `url(https://storage.googleapis.com/post-thumbnail/${x.thumbnail})`,
                 height: "200px",
                 width: "100%",
                 backgroundSize: "cover",

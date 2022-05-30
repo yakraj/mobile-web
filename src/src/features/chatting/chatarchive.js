@@ -75,13 +75,13 @@ export const ChatArchive = (props) => {
               <div className="leftsidearchive">
                 <div
                   style={{
-                    backgroundImage: `url(http://localhost:5001/product-thumbnail/${x.thumbnail})`,
+                    backgroundImage: `url(https://storage.googleapis.com/post-thumbnail/${x.thumbnail})`,
                   }}
                   className="productimage"
                 />
                 <div className="chatproductinfo">
-                  <h3>{x.title}</h3>
-                  <p>{x.lastchat}</p>
+                  <h3>{x.title.substring(0, 20)}</h3>
+                  <p>{x.lastchat.substring(0, 35)}</p>
                 </div>
               </div>
             </Link>
@@ -130,9 +130,9 @@ export const ChatArchive = (props) => {
   const BuyMessage = () => {
     return (
       <ChatAllcontent
-        chatImage={buyProduct}
+        chatImage={sellProduct}
         Listchat={chatArchive.filter((x) =>
-          x.buyer.includes(usercrd && usercrd.username)
+          x.seller.includes(usercrd && usercrd.username)
         )}
       />
     );
@@ -140,9 +140,9 @@ export const ChatArchive = (props) => {
   const SellMessage = () => {
     return (
       <ChatAllcontent
-        chatImage={sellProduct}
+        chatImage={buyProduct}
         Listchat={chatArchive.filter((x) =>
-          x.seller.includes(usercrd && usercrd.username)
+          x.buyer.includes(usercrd && usercrd.username)
         )}
       />
     );

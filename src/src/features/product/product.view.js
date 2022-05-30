@@ -215,7 +215,7 @@ export const ProductView = () => {
                       <img
                         width="100%"
                         alt="Test"
-                        src={`${host}/uploads/${x}`}
+                        src={`${Imagehost}/uploads/${x}`}
                       />
                     </PinchZoomPan>
                   </div>

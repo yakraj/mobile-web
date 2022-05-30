@@ -21,7 +21,7 @@ export const ProductArchive = ({ deleter, sold, Archives = [] }) => {
               onClick={() => navigateNow(`/product/${x.adid}`)}
               className="productImage"
               style={{
-                backgroundImage: `url(http://localhost:5001/product-thumbnail/${x.thumbnail})`,
+                backgroundImage: `url(https://storage.googleapis.com/post-thumbnail/${x.thumbnail})`,
               }}
             ></div>
             {/* <img
