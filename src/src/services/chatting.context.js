@@ -190,10 +190,30 @@ export const ChattingProvider = ({ children }) => {
     });
     setReturnChats(ReturnChats.filter((x) => x.id !== chatid));
   };
-
+  // retrieving data from local machine
+  useEffect(() => {
+    const data = localStorage.getItem("chatarchive");
+    setChatArchive(data ? JSON.parse(data) : []);
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("userChats");
+    setReturnChats(data ? JSON.parse(data) : []);
+  }, []);
   // storing data for offline
-
-  // function workers
+  useEffect(() => {
+    !chatArchive === undefined &&
+      chatArchive.localStorage.setItem(
+        "chatarchive",
+        JSON.stringify(chatArchive)
+      );
+  }, [chatArchive]);
+  useEffect(() => {
+    !ReturnChats === undefined &&
+      ReturnChats.localStorage.setItem(
+        "userChats",
+        JSON.stringify(ReturnChats)
+      );
+  }, [ReturnChats]);
 
   return (
     <ChattingContext.Provider

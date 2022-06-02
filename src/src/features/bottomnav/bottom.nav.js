@@ -19,6 +19,7 @@ export const BottomNav = () => {
       <NavLink
         style={{
           textDecoration: "none",
+          display: "flex",
           position: "relative",
           margin: 0,
           padding: 0,
@@ -54,6 +55,7 @@ export const BottomNav = () => {
       <NavLink
         style={{
           textDecoration: "none",
+          display: "flex",
           position: "relative",
           color: "grey",
           margin: 0,
@@ -85,6 +87,7 @@ export const BottomNav = () => {
       <NavLink
         style={{
           textDecoration: "none",
+          display: "flex",
           position: "relative",
           margin: 0,
           padding: 0,
@@ -128,8 +131,10 @@ export const BottomNav = () => {
       <NavLink
         style={{
           textDecoration: "none",
+          display: "flex",
           position: "relative",
           margin: 0,
+          display: "flex",
           padding: 0,
         }}
         to="/catogeryfirst"
@@ -167,6 +172,7 @@ export const BottomNav = () => {
       <NavLink
         style={{
           textDecoration: "none",
+          display: "flex",
           position: "relative",
           margin: 0,
           padding: 0,

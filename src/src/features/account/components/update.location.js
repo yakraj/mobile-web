@@ -103,6 +103,7 @@ export const UpdateLocation = () => {
         <input
           className="location-update-input"
           type="text"
+          
           value={LocationValue}
           onChange={(e) => setLocationValue(e.target.value)}
           placeholder="Your city/locality"
@@ -116,6 +117,7 @@ export const UpdateLocation = () => {
                   setLocationValue(x.description);
                   setsearchaddressName(x.description);
                   GetAddress(x.place_id);
+                  navigate(-1);
                   // textinput.current.focus();
                 }}
                 key={i}

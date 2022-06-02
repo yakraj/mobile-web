@@ -436,6 +436,14 @@ export const UserContextProvider = ({ children }) => {
     const data = localStorage.getItem("searchaddressName");
     setsearchaddressName(data ? JSON.parse(data) : "");
   }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("favheart");
+    setfavourites(data ? JSON.parse(data) : "");
+  }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("userads");
+    setuserAds(data ? JSON.parse(data) : "");
+  }, []);
 
   // storing data to browser
   //
@@ -446,6 +454,13 @@ export const UserContextProvider = ({ children }) => {
     localStorage.setItem("lattitude", JSON.stringify(lattitude));
     localStorage.setItem("longitude", JSON.stringify(longitude));
   }, [lattitude, longitude]);
+
+  useEffect(() => {
+    localStorage.setItem("favheart", JSON.stringify(favourites));
+  }, [favourites]);
+  useEffect(() => {
+    localStorage.setItem("userads", JSON.stringify(userAds));
+  }, [userAds]);
 
   useEffect(() => {
     localStorage.setItem("SignedIn", JSON.stringify(signedin));
@@ -488,6 +503,10 @@ export const UserContextProvider = ({ children }) => {
       JSON.stringify(searchaddressName)
     );
   }, [searchaddressName]);
+
+  //   useEffect(() => {
+  //   signedin &&
+  // },[])
 
   return (
     <UserContext.Provider

@@ -126,7 +126,7 @@ export const ProductView = () => {
     slidesToScroll: 1,
   };
   const LinkImage = () => {
-    navigate("#images");
+    // navigate("#images");
   };
   const LinkBack = () => {
     navigate("");

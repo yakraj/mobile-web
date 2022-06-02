@@ -102,7 +102,7 @@ export const EditProfile = () => {
           Update Details
         </div>
       </div>
-      {/* update Mobile number */}
+      {/* update Mobile number
       <div class="update-user-mobile">
         <div class="contact-details-edit">Contact Details</div>
         <div class="contact-details-mobile-container">
@@ -123,7 +123,7 @@ export const EditProfile = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* update location */}
       <div class="update-location-container">
         <div class="contact-details-edit">Location</div>
