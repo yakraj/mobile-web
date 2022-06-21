@@ -6,7 +6,7 @@ import { InputSellContext } from "./../../services/sell.input.context";
 import { UserContext } from "./../../services/user.contex";
 import { SearchContext } from "./../../services/search.context";
 import { Gmap } from "../GoogleMap/mapapi";
-
+import { Imagehost } from "../../services/host.network";
 export const PersonalInfo = () => {
   const navigate = useNavigate();
   const {
@@ -61,15 +61,21 @@ export const PersonalInfo = () => {
     setLocationValue(searchaddressName);
   }, [searchaddressName, setLocationValue]);
 
+  console.log(usercrd);
   return (
     <>
       <Topbar title="Personal Information" />
       <div className="personal-information-container">
         <div className="person-info">
-          <div className="person-icon" />
+          <div
+            className="person-icon"
+            style={{
+              backgroundImage: `url(${Imagehost + "/" + usercrd.image})`,
+            }}
+          />
           <div className="person-info-right">
             <h4>Your name on Ad.</h4>
-            <h3>Tulsi Pariyar</h3>
+            <h3>{usercrd.firstname + " " + usercrd.lastname}</h3>
           </div>
         </div>
         <div className="phone-number-permission">

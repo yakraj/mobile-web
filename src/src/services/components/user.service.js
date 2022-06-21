@@ -8,6 +8,15 @@ export const userAdui = (lat, long, length) =>
     },
     body: JSON.stringify({ length: length, lat: lat, long: long }),
   }).then((response) => response.json());
+export const UserAuth = (user) =>
+  fetch(`${host}/userAuth`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ user: user }),
+  }).then((response) => response.json());
 
 export const NumberExistance = (number) =>
   fetch(`${host}/numberexistanceverify`, {

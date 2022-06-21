@@ -60,11 +60,6 @@ export const UpdateLocation = () => {
     lng: longitude ? parseFloat(longitude) : 81.63505579999999,
   };
 
-  // const { isLoaded } = useJsApiLoader({
-  //   id: "google-map-script",
-  //   googleMapsApiKey: "AIzaSyD-Fh1LhCtCgcsv_HWERqm4abtYpScMigs",
-  // });
-
   const [map, setMap] = React.useState(null);
 
   const onLoad = React.useCallback(function callback(map) {
@@ -103,7 +98,6 @@ export const UpdateLocation = () => {
         <input
           className="location-update-input"
           type="text"
-          
           value={LocationValue}
           onChange={(e) => setLocationValue(e.target.value)}
           placeholder="Your city/locality"

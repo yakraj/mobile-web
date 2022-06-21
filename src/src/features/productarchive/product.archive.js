@@ -3,7 +3,7 @@ import "./component/productarchive.css";
 import Background from "../../../assets/mobile.jpg";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "./../../services/user.contex";
-export const ProductArchive = ({ deleter, sold, Archives = [] }) => {
+export const ProductArchive = ({ deleter, sold, sellmsg, Archives = [] }) => {
   const { usercrd, signedin, UpdateFavourites, favourites } =
     useContext(UserContext);
   const navigate = useNavigate();
@@ -111,6 +111,14 @@ export const ProductArchive = ({ deleter, sold, Archives = [] }) => {
         alt="empty "
       />
       <h4>Did not found Anything</h4>
+      {sellmsg ? (
+        <div>
+          <h3 style={{ margin: 0 }}>Start Selling</h3>
+          <h4 onClick={() => navigate("sell-seco-catogery")} className="button">
+            Sell Now
+          </h4>
+        </div>
+      ) : null}
     </div>
   );
 };

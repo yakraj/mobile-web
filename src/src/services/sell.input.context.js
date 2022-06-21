@@ -1,12 +1,17 @@
-import React, { useState, useEffect, lodash } from "react";
+import React, { useState, useEffect, lodash, useContext } from "react";
 import { UploadImage, CreateAd, AdThumbnail } from "./components/sell.service";
 import { useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
+import { UserContext } from "./user.contex";
+
 export const InputSellContext = React.createContext();
 
 export const InputSellProvider = ({ children }) => {
   const navigate = useNavigate();
   // these are cagoterizing
+
+  const { usercrd, getUserAds } = useContext(UserContext);
+
   const [catogery, setcatogery] = useState();
   const [subcatogery, setsubcatogery] = useState();
   const [superCatogery, setsuperCatogery] = useState();
@@ -138,6 +143,8 @@ export const InputSellProvider = ({ children }) => {
   };
 
   const clearFunc = () => {
+    window.alert("Your Post is successfully published.");
+    getUserAds(usercrd.username);
     setuploadprocess(false);
     setcatogery("");
     setsubcatogery("");

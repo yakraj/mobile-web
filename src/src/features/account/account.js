@@ -149,11 +149,11 @@ export const Account = () => {
           icon={require(`../../../assets/icon/heart.png`)}
         />
         <NavigateIcon
-          route="usermyfavourite"
+          route="account"
           icon={require(`../../../assets/icon/settings.png`)}
         />
         <NavigateIcon
-          route="usermyfavourite"
+          route="account"
           icon={require(`../../../assets/icon/support.svg`).default}
         />
       </div>

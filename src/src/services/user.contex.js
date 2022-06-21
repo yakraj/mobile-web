@@ -17,6 +17,7 @@ import {
   GetUserLocSuggestion,
   Deleteuserad,
   Updateaddress,
+  UserAuth,
 } from "./components/user.service";
 
 export const UserContext = React.createContext();
@@ -204,6 +205,7 @@ export const UserContextProvider = ({ children }) => {
   const Logout = () => {
     setusercrd([]);
     setFavAds([]);
+    setuserAds([]);
     // setsearchaddressName("");
     // setlattitude("");
     // setlongitude("");
@@ -507,6 +509,26 @@ export const UserContextProvider = ({ children }) => {
   //   useEffect(() => {
   //   signedin &&
   // },[])
+
+  useEffect(() => {
+    setTimeout(() => {
+      const data = localStorage.getItem("usercrd");
+
+      JSON.parse(localStorage.getItem("SignedIn")) === true
+        ? UserAuth(JSON.parse(localStorage.getItem("usercrd")).username).then(
+            (response) => {
+              if (response === "Invalid user") {
+                setSignedin(false);
+                setusercrd([]);
+                navigate("/");
+              } else {
+                setusercrd(response[0]);
+              }
+            }
+          )
+        : console.log("");
+    }, 2000);
+  }, []);
 
   return (
     <UserContext.Provider

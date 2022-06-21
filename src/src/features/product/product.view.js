@@ -57,7 +57,7 @@ export const ProductView = () => {
     return (
       <div style={{ height: "500px", width: "100%" }}>
         <WrappedMap
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyD-Fh1LhCtCgcsv_HWERqm4abtYpScMigs`}
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAMv8ZFc-XKgXVZ0LLyM0_Sx-3PVhPcAZw`}
           loadingElement={<div style={{ height: "100%", width: "100%" }} />}
           containerElement={<div style={{ height: "100%", width: "100%" }} />}
           mapElement={<div style={{ height: "100%" }} />}

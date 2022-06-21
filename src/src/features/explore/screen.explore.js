@@ -31,7 +31,7 @@ export const Explore = () => {
     <div>
       <TopLanding>Home</TopLanding>
       <div ref={archiveBody} id="archiveContainer">
-        <ProductArchive Archives={useruiAds} />
+        <ProductArchive sellmsg Archives={useruiAds} />
         <div ref={last} />
         {loadinguiads && (
           <div
