@@ -115,7 +115,7 @@ export const InputSellProvider = ({ children }) => {
     // console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
 
     const options = {
-      maxSizeMB: 0.5,
+      maxSizeMB: 0.2,
       maxWidthOrHeight: 400,
       useWebWorker: true,
     };

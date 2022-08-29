@@ -50,6 +50,7 @@ export const SearchScreen = () => {
   const searchInput = useRef();
   const locationref = useRef();
   const SearchSubmit = (data) => {
+    setgottenAds([]);
     if (data.length >= 3) {
       setStatus([]);
       setdata5km("");

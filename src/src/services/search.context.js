@@ -13,6 +13,14 @@ import {
 } from "./components/search.service";
 export const SearchContext = createContext();
 export const SearchProvider = ({ children }) => {
+  const {
+    setloadingmyaddress,
+    setsearchaddressName,
+    setlattitude,
+    setlongitude,
+    setuserlocation,
+  } = useContext(UserContext);
+
   const [autosuggest, setAutoSuggest] = useState([]);
   const [subCatogeryreco, setsubCatogeryreco] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState();
@@ -47,126 +55,38 @@ export const SearchProvider = ({ children }) => {
   const [data10km, setdata10km] = useState();
   const [data20km, setdata20km] = useState();
   const [data50km, setdata50km] = useState();
-  const [data5kmload, setdata5kmload] = useState(true);
-  const [data10kmload, setdata10kmload] = useState(true);
-  const [data20kmload, setdata20kmload] = useState(true);
-  const [data50kmload, setdata50kmload] = useState(true);
-  const [responsss, setresponsss] = useState("");
-
   // this is for getSuggestion
   const getSuggestions = (keyword) => {
     Getautosuggest(keyword).then((json) => setAutoSuggest(json));
     subcatogeryRecomendation(keyword).then((json) => setsubCatogeryreco(json));
   };
 
-  const {
-    setloadingmyaddress,
-    setsearchaddressName,
-    setlattitude,
-    setlongitude,
-    setuserlocation,
-  } = useContext(UserContext);
+  const [localat, onLocalat] = useState();
+  const [localong, onLocalong] = useState();
 
-  var lengthh = 0;
-  const ReqAds = (key, lat, long, r, offset) => {
-    if (r === 5) {
-      setdata5kmload(true);
-    } else if (r === 10) {
-      setdata10kmload(true);
-    } else if (r === 20) {
-      setdata20kmload(true);
-    } else if (r === 50) {
-      setdata50kmload(true);
-    }
-
-    const lenth = () => {
-      if (lengthh) {
-        if (r === 5) {
-          return 0;
-        } else if (r === 10) {
-          return lengthh;
-        } else if (r === 20) {
-          return lengthh;
-        } else if (r === 50) {
-          return lengthh;
-        }
-      } else {
-        if (r === 10) {
-          return in5km.length;
-        } else if (r === 20) {
-          return in5km.length + in10km.length;
-        } else if (r === 50) {
-          return in5km.length + in10km.length + in20km.length;
-        }
-      }
-    };
-
-    setgottenAds([]);
+  const [Loadingscroll, setLoadingscroll] = useState(false);
+  const ReqAds = (keyword, lat, long, offset) => {
     setLoadingAds(true);
-    r &&
-      RequestForAds(key, lat, long, r, lenth() ? lenth() : offset)
-        .then((json) => {
-          // if (!in5km.length) {
-          //   setStatus([...Status, "km10"]);
-          // }
+    !localat && onLocalat(lat);
+    !localong && onLocalong(long);
 
-          // if (r === 10) {
-          //   setresponsss("km10");
-          // } else if (r === 20) {
-          //   setresponsss("km20");
-          // } else if (r === 50) {
-          //   setresponsss("km50");
-          // }
-
-          lengthh = lengthh + json.length;
-          if (r === 5) {
-            setin5km(json);
-            setdata5kmload(false);
-          } else if (r === 10) {
-            // setresponsss("km10");
-            setin10km(json);
-            setdata10kmload(false);
-          } else if (r === 20) {
-            // setresponsss("km20");
-            setin20km(json);
-            // console.log("it should set now", r);
-            setdata20kmload(false);
-          } else if (r === 50) {
-            setin50km(json);
-            setdata50kmload(false);
-          }
-
-          setLoadingAds(false);
-          setFilterKeys([]);
-          setFilterValues([]);
-          setFilter([]);
-          setActiveFilterKey([]);
-          setAdFilter([]);
-
-          if (json.length < 5) {
-            if (r === 5) {
-              ReqAds(key, lat, long, 10);
-            } else if (r === 10) {
-              ReqAds(key, lat, long, 20);
-              setresponsss("km10");
-            } else if (r === 20) {
-              ReqAds(key, lat, long, 50);
-              setresponsss("km20");
-            }
-          }
-        })
-        .catch((error) => {
-          if (r === 5) {
-            setdata5kmload(false);
-          } else if (r === 10) {
-            setdata10kmload(false);
-          } else if (r === 20) {
-            setdata20kmload(false);
-          } else if (r === 50) {
-            setdata50kmload(false);
-          }
-          setLoadingAds(false);
-        });
+    RequestForAds(keyword, lat, long, 0)
+      .then((json) => {
+        setLoadingAds(false);
+        setgottenAds(json);
+      })
+      .catch((err) => {
+        setLoadingAds(false);
+      });
+  };
+  const ReqAgain = (keyword, offset) => {
+    setLoadingscroll(true);
+    RequestForAds(keyword, localat, localong, offset)
+      .then((json) => {
+        setLoadingscroll(false);
+        setgottenAds([...gottenAds, ...json]);
+      })
+      .catch((err) => setLoadingscroll(false));
   };
 
   const AddressAutocomplete = (keyword) => {
@@ -231,9 +151,6 @@ export const SearchProvider = ({ children }) => {
         setloadingmyaddress(true);
       });
   };
-  useEffect(() => {
-    setStatus([...Status, responsss]);
-  }, [responsss]);
 
   // console.log(Status);
   return (
@@ -287,10 +204,7 @@ export const SearchProvider = ({ children }) => {
         in100km,
         Status,
         setStatus,
-        data5kmload,
-        data10kmload,
-        data20kmload,
-        data50kmload,
+        ReqAgain,
         setin5km,
         setin10km,
         setin20km,

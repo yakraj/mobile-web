@@ -109,7 +109,7 @@ export const FavouriteAds = (fav) =>
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ ads: fav }),
+    body: JSON.stringify({ ads: fav ? fav : [] }),
   }).then((response) => response.json());
 
 export const UpdateUserName = (firstname, lastname, username) =>
