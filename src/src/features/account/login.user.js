@@ -19,7 +19,10 @@ export const LoginUser = () => {
   return (
     <>
       <Topbar title="Log In" />
-      <div className="login-container">
+      <div
+        className="login-container"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         <div className="login-content">
           <h2>Sunaulo</h2>
           <input
@@ -58,6 +61,7 @@ export const LoginUser = () => {
             </p>
           </Link>
         </div>
+        <p>Please visit mobile for forget password.</p>
       </div>
     </>
   );

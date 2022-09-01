@@ -43,7 +43,11 @@ export const ProductArchive = ({ deleter, sold, sellmsg, Archives = [] }) => {
                 {deleter ? (
                   <div
                     style={{ background: "red" }}
-                    onClick={() => console.log("hearted")}
+                    onClick={() =>
+                      window.alert(
+                        "some features are not activated on web, plaease visit mobile app."
+                      )
+                    }
                     className="heart"
                   >
                     <img

@@ -85,7 +85,7 @@ export const Account = () => {
         <ProductArchive
           Archives={userAds.filter((x) => x.status === "active")}
           deleter={true}
-          sold
+          // sold
         />
       </div>
     );

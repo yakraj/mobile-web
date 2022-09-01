@@ -115,22 +115,24 @@ export const SearchResult = () => {
   var HundredK = gottenAds.filter(
     (x) => x.distanceAway / 1000 > 50 && x.distanceAway / 1000 < 100
   );
-
+  const [topval, ontapval] = useState(0);
   const [endscroll, onEndscroll] = useState();
   useEffect(() => {
+    if (endscroll > topval + 5 || endscroll < topval - 5) {
+      ReqAgain(searchKeyword, gottenAds.length);
+    }
     // console.log(endscroll, " trigerred");
     // endscroll && console.log("i am useEffect");
-    endscroll && ReqAgain(searchKeyword, endscroll);
-  }, [endscroll]);
+    // endscroll && ReqAgain(searchKeyword, endscroll);
+  }, [topval, endscroll]);
 
   useEffect(() => {
-    console.log("innner", gottenAds.length);
     ScrollEnd.current.addEventListener("scroll", function (e) {
       if (
         ScrollEnd.current.offsetHeight + ScrollEnd.current.scrollTop >=
         ScrollEnd.current.scrollHeight
       ) {
-        onEndscroll(gottenAds.length);
+        onEndscroll(ScrollEnd.current.scrollTop);
       }
     });
   }, [gottenAds]);

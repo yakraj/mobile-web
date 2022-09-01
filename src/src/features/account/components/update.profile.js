@@ -102,6 +102,14 @@ export const EditProfile = () => {
           Update Details
         </div>
       </div>
+      <h2 style={{ textAlign: "center", color: "grey" }}>
+        Plsase Download mobile app for more control.
+      </h2>
+      <div class="update-button">
+        <a href="https://www.google.com" rel="noreferrer" target="_blank">
+          Download Now
+        </a>
+      </div>
       {/* update Mobile number
       <div class="update-user-mobile">
         <div class="contact-details-edit">Contact Details</div>

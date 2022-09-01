@@ -68,7 +68,6 @@ export const UserContextProvider = ({ children }) => {
   useEffect(() => {}, [lattitude, longitude]);
 
   const GetuseruiAds = (length) => {
-    console.log("i am being runned");
     setuiadnterr(false);
     setloadinguiads(true);
     userAdui(lattitude, longitude, length ? length : useruiAds.length)
